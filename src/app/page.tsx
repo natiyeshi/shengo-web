@@ -1,9 +1,3 @@
-import React from 'react'
-
-const Page = () => {
-  return (
-    <div>Page</div>
-  )
+export default function Page() {
+  return <h1>Hellow Topia</h1>;
 }
-
-export default Page
