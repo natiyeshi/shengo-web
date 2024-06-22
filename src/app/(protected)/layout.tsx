@@ -13,65 +13,14 @@ function Layout({ children }: any) {
         </div>
         <div className="px-4 overflow-auto">
           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
+            trigger={<div>Sales</div>}
+            contents={[{ name: "Vehicle", url: "/dashboard/sales/vehicle" }]}
           />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-          <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
-           <MyAccordion
-            trigger={<div>Working</div>}
-            contents={[{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" },{ name: "one", url: "two" }]}
-          />
+         
         </div>
       </div>
 
-      <div className="w-[75%]">{children}</div>
+      <div className="w-[75%] h-full  pb-5 overflow-auto">{children}</div>
     </div>
   );
 }

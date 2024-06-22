@@ -22,7 +22,7 @@ const MyAccordion = ({ trigger, contents }: Props) => {
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1" className="border-none">
         <AccordionTrigger className="text-sm">{trigger}</AccordionTrigger>
-        <AccordionContent className="flex  dark px-2 py-3  flex-col gap-3 ">
+        <AccordionContent className="flex  dark px-2   flex-col gap-3 ">
           {contents.map((value, ind) => (
             <Link key={ind} className="hover:underline" href={value.url}>
               {value.name}
