@@ -130,11 +130,11 @@ const CustomerIdentityRegisteration = (props: Props) => {
       </Rows>
 
       <section className="flex justify-end gap-5 my-7">
-        <ButtonWithIcon size="lg" variant="destructive">
+        <ButtonWithIcon variant="destructive">
           <MdClear />
           <span>Clear</span>
         </ButtonWithIcon>
-        <ButtonWithIcon size="lg">
+        <ButtonWithIcon>
           <Save />
           <span>Save</span>
         </ButtonWithIcon>
