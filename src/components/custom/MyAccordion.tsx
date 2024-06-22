@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link"
+import Link from "next/link";
 import {
   Accordion,
   AccordionContent,
@@ -23,9 +23,11 @@ const MyAccordion = ({ trigger, contents }: Props) => {
       <AccordionItem value="item-1" className="border-none">
         <AccordionTrigger className="text-sm">{trigger}</AccordionTrigger>
         <AccordionContent className="flex  dark px-2 py-3  flex-col gap-3 ">
-          {contents.map((value) => {
-            return <Link className="hover:underline" href={value.url}>{value.name}</Link>;
-          })}
+          {contents.map((value, ind) => (
+            <Link key={ind} className="hover:underline" href={value.url}>
+              {value.name}
+            </Link>
+          ))}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
