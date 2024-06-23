@@ -8,7 +8,12 @@ type Props = {
 
 const Columns = ({ children, className }: Props) => {
   return (
-    <section className={cn("grid gap-3 grid-cols-3", className)}>
+    <section
+      className={cn(
+        "grid gap-3 grid-cols-1 sm:grid-cols-2  md:grid-cols-3",
+        className
+      )}
+    >
       {children}
     </section>
   );

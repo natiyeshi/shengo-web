@@ -8,7 +8,7 @@ import H3 from "@/components/custom/h3";
 import Selector from "./selector";
 import {
   CUSTOMER_TITLES,
-  CUSTOMET_TYPES,
+  CUSTOMER_TYPES,
   GENDERS,
   NATIONALITIES,
 } from "../_utils/constants";
@@ -21,24 +21,29 @@ import ButtonWithIcon from "./button-with-icon";
 import { MdClear } from "react-icons/md";
 import { Checkbox } from "@/components/ui/checkbox";
 import LabelMandatory from "./label-mandatory";
+import { Title } from "@mantine/core";
 
-type Props = {};
+type Props = {
+  type: string;
+};
 
-const CustomerIdentityRegisteration = (props: Props) => {
+const CustomerIdentityRegisteration = ({ type }: Props) => {
   const maxTinLength = 10;
   return (
     <section>
       <FieldControl className="">
         <LabelMandatory className="">Customer Type</LabelMandatory>
-        <Selector selectorData={CUSTOMET_TYPES} />
+        <Selector selectorData={CUSTOMER_TYPES} />
       </FieldControl>
-      <Rows className=" mt-5">
-        <H3>Saler</H3>
-        <section className="flex gap-5">
-          <FieldControl className="w-[20rem]">
-            <LabelMandatory className="">Title</LabelMandatory>
-            <Selector selectorData={CUSTOMER_TITLES} />
-          </FieldControl>
+      <Rows className="mt-5">
+        <Title order={2} className="">
+          {type}
+        </Title>
+        <FieldControl>
+          <LabelMandatory className="">Title</LabelMandatory>
+          <Selector selectorData={CUSTOMER_TITLES} />
+        </FieldControl>
+        <Columns>
           <FieldControl>
             <LabelMandatory className="">Name</LabelMandatory>
             <Input />
@@ -51,15 +56,19 @@ const CustomerIdentityRegisteration = (props: Props) => {
             <LabelMandatory className="">Grand Father Name</LabelMandatory>
             <Input />
           </FieldControl>
-        </section>
+        </Columns>
         <section className="flex gap-5">
+          <FieldControl className="w-[24rem]">
+            <LabelMandatory className="">Gender</LabelMandatory>
+            <Selector selectorData={GENDERS} />
+          </FieldControl>
           <FieldControl>
             <LabelMandatory className="">Nationality</LabelMandatory>
             <Selector
               selectorData={NATIONALITIES}
               defaultIndex={
                 NATIONALITIES.findIndex(
-                  (nation) => nation.value === "ethiopian"
+                  (nation) => nation.value === "ethiopian",
                 ) || 0
               }
             />
@@ -70,25 +79,25 @@ const CustomerIdentityRegisteration = (props: Props) => {
               selectorData={NATIONALITIES}
               defaultIndex={
                 NATIONALITIES.findIndex(
-                  (nation) => nation.value === "ethiopian"
+                  (nation) => nation.value === "ethiopian",
                 ) || 0
               }
             />
           </FieldControl>
-          <FieldControl className="w-[24rem]">
-            <LabelMandatory className="">Gender</LabelMandatory>
-            <Selector selectorData={GENDERS} />
-          </FieldControl>
-          <FieldControl>
-            <LabelMandatory className="">Tin</LabelMandatory>
-            <Input type="number" maxLength={10} />
-          </FieldControl>
         </section>
+
+        <FieldControl>
+          <LabelMandatory className="">Tin</LabelMandatory>
+          <Input type="number" maxLength={10} />
+        </FieldControl>
       </Rows>
-      <Rows className=" mt-5">
-        <H3>Address</H3>
-        <FieldControl className="flex-row gap-3 items-center">
-          <Checkbox />
+      <Rows className="mt-5">
+        <Title order={2} className="">
+          Address
+        </Title>
+
+        <FieldControl className="flex-row items-center gap-3">
+          <Checkbox className="rounded-sm" />
           <Label className="">Are you a foreigner ?</Label>
         </FieldControl>
         <Columns>
@@ -129,7 +138,7 @@ const CustomerIdentityRegisteration = (props: Props) => {
         </Columns>
       </Rows>
 
-      <section className="flex justify-end gap-5 my-7">
+      <section className="my-7 flex justify-end gap-5">
         <ButtonWithIcon variant="destructive">
           <MdClear />
           <span>Clear</span>

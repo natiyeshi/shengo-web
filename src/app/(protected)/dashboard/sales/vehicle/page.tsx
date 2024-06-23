@@ -4,18 +4,25 @@ import React from "react";
 import { SALES_TABS_MAP } from "../_utils/constants";
 import CustomerIdentityRegisteration from "../_components/customer-identity-registration";
 import VehicleRegistration from "../_components/vehicle-registration";
+import ServiceRequest from "../_components/service-request";
+import { Title } from "@mantine/core";
 
-// localhost:3000/dashboard/sales/vehicle
 const Page = () => {
   const defaultTabValue = Object.keys(SALES_TABS_MAP)[0];
   return (
     <main className="container">
-      <H1 className="my-5">Vehicle Sales</H1>
+      <Title order={1} className="my-5">
+        Vehicle Sales
+      </Title>
       <section className="">
         <Tabs defaultValue={defaultTabValue}>
-          <TabsList className="mb-3">
+          <TabsList className="mb-7 p-0">
             {Object.keys(SALES_TABS_MAP).map((tabKey) => (
-              <TabsTrigger className="px-4" key={tabKey} value={tabKey}>
+              <TabsTrigger
+                className="rounded-none px-6 py-3"
+                key={tabKey}
+                value={tabKey}
+              >
                 {SALES_TABS_MAP[tabKey]}
               </TabsTrigger>
             ))}
@@ -24,13 +31,19 @@ const Page = () => {
           {Object.keys(SALES_TABS_MAP).map((tabKey) => (
             <TabsContent key={tabKey} value={tabKey}>
               {SALES_TABS_MAP[tabKey] === SALES_TABS_MAP.saler && (
-                <CustomerIdentityRegisteration />
+                <CustomerIdentityRegisteration type="Saler" />
               )}
               {SALES_TABS_MAP[tabKey] === SALES_TABS_MAP.buyer && (
-                <CustomerIdentityRegisteration />
+                <CustomerIdentityRegisteration type="Buyer" />
               )}
               {SALES_TABS_MAP[tabKey] === SALES_TABS_MAP.vehicle && (
                 <VehicleRegistration />
+              )}
+              {SALES_TABS_MAP[tabKey] === SALES_TABS_MAP.withness && (
+                <CustomerIdentityRegisteration type="Witness" />
+              )}
+              {SALES_TABS_MAP[tabKey] === SALES_TABS_MAP.service && (
+                <ServiceRequest />
               )}
             </TabsContent>
           ))}

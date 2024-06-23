@@ -11,7 +11,7 @@ export const SALES_TABS_MAP: {
   service: "Service",
 };
 
-export const CUSTOMET_TYPES: SelectorData[] = [
+export const CUSTOMER_TYPES: SelectorData[] = [
   { title: "Individual", value: "individual" },
   {
     title: "Organization",
