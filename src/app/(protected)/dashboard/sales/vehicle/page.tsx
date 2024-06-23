@@ -16,13 +16,9 @@ const Page = () => {
       </Title>
       <section className="">
         <Tabs defaultValue={defaultTabValue}>
-          <TabsList className="mb-7 p-0">
+          <TabsList className="mb-7 rounded-md py-1">
             {Object.keys(SALES_TABS_MAP).map((tabKey) => (
-              <TabsTrigger
-                className="rounded-none px-6 py-3"
-                key={tabKey}
-                value={tabKey}
-              >
+              <TabsTrigger className="rounded-md" key={tabKey} value={tabKey}>
                 {SALES_TABS_MAP[tabKey]}
               </TabsTrigger>
             ))}

@@ -1,11 +1,11 @@
-import H1 from "@/components/custom/h1";
+import { Title } from "@mantine/core";
 import Link from "next/link";
 
 export default function Page() {
   return (
     <main className="container mt-5">
-      <H1>Links to area we are working for now.</H1>
-      <ol className="list-decimal list-inside">
+      <Title order={1}>Links to pages&apos; that we currently working on.</Title>
+      <ol className="list-inside list-decimal">
         <li>
           <Link href="/dashboard">Dashboard </Link>
         </li>
