@@ -71,15 +71,15 @@ const VehicleRegistration = (props: Props) => {
       <Columns>
         <FieldControl>
           <Label className="">Sales Value</Label>
-          <Input type="number" value={0.0} />
+          <Input type="number" defaultValue={0.0} />
         </FieldControl>
         <FieldControl>
           <Label className="">Penalty To Government</Label>
-          <Input type="number" value={0.0} />
+          <Input type="number" defaultValue={0.0} />
         </FieldControl>
         <FieldControl>
           <Label className="">Penalty</Label>
-          <Input type="number" value={0.0} />
+          <Input type="number" defaultValue={0.0} />
         </FieldControl>
       </Columns>
       <FieldControl>
@@ -90,7 +90,7 @@ const VehicleRegistration = (props: Props) => {
       <Columns className="">
         <FieldControl>
           <LabelMandatory className="">Prepayment</LabelMandatory>
-          <Input type="number" value={0.0} />
+          <Input type="number" defaultValue={0.0} />
         </FieldControl>
         <FieldControl>
           <LabelMandatory className="">Payment Type</LabelMandatory>
