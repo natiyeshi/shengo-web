@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import {
@@ -6,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { usePathname } from "next/navigation";
 
 export interface ContentInf {
   url: string;
@@ -14,20 +16,31 @@ export interface ContentInf {
 
 interface Props {
   contents: ContentInf[];
-  trigger: any;
+  trigger: string;
 }
 
 const MyAccordion = ({ trigger, contents }: Props) => {
+  const pathname = usePathname();
+  const mainPath = pathname.split("/")[2] == trigger.toLowerCase()
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible  >
       <AccordionItem value="item-1" className="border-none">
-        <AccordionTrigger className="text-sm">{trigger}</AccordionTrigger>
-        <AccordionContent className="flex  dark px-2   flex-col gap-3 ">
-          {contents.map((value, ind) => (
-            <Link key={ind} className="hover:underline" href={value.url}>
-              {value.name}
-            </Link>
-          ))}
+        <AccordionTrigger className="text-sm">
+          <div className="font-semibold">{trigger}</div>
+        </AccordionTrigger>
+        <AccordionContent  className="dark flex flex-col gap-2 px-2">
+          {contents.map((value, ind) => {
+            const isCurrent = value.url == pathname;
+            return (
+              <Link
+                key={ind}
+                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} duration-500 px-2 py-1 hover:underline`}
+                href={value.url}
+              >
+                {value.name}
+              </Link>
+            );
+          })}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
