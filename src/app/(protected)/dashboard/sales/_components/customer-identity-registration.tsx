@@ -1,142 +1,165 @@
+"use client";
 import { Label } from "@/components/ui/label";
-
 import FieldControl from "./field-control";
-import { Input } from "@/components/ui/input";
-import Rows from "./rows";
-import H3 from "@/components/custom/h3";
 
-import Selector from "./selector";
+import { CUSTOMER_TITLES, CUSTOMER_TYPES, GENDERS } from "../_utils/constants";
+
 import {
-  CUSTOMER_TITLES,
-  CUSTOMER_TYPES,
-  GENDERS,
-  NATIONALITIES,
-} from "../_utils/constants";
-import { getRegions, stringToObjectOfTitleValue } from "../_utils";
-import { Textarea } from "@/components/ui/textarea";
+  getNationalities,
+  getNationIndexFromNationalities,
+  getRegionsFromNationality,
+  stringToObjectOfTitleValue,
+} from "../_utils";
+
 import Columns from "./columns";
 import { Save } from "lucide-react";
 import ButtonWithIcon from "./button-with-icon";
 
 import { MdClear } from "react-icons/md";
-import { Checkbox } from "@/components/ui/checkbox";
-import LabelMandatory from "./label-mandatory";
-import { Title } from "@mantine/core";
+
+import { Stack, Title } from "@mantine/core";
+import { IndividualSalerSchemaType } from "../vehicle/_types/schema";
+import TextInput from "./text-input";
+import CheckboxController from "./checkbox-controller";
+import { useFormContext } from "react-hook-form";
 
 type Props = {
   type: string;
 };
+const NATIONALITIES = stringToObjectOfTitleValue(
+  getNationalities().nationalities,
+);
+
+console.log("🚀 ~ NATIONALITIES:", NATIONALITIES);
 
 const CustomerIdentityRegisteration = ({ type }: Props) => {
-  const maxTinLength = 10;
+  const { watch } = useFormContext<IndividualSalerSchemaType>();
   return (
     <section>
-      <FieldControl className="">
-        <LabelMandatory className="">Customer Type</LabelMandatory>
-        <Selector selectorData={CUSTOMER_TYPES} />
-      </FieldControl>
-      <Rows className="mt-5">
+      <TextInput<IndividualSalerSchemaType>
+        name="type"
+        selectorData={CUSTOMER_TYPES}
+        variants="select"
+        mandatory={"Customer Type"}
+      />
+      <Stack className="mt-5">
         <Title order={2} className="">
           {type}
         </Title>
-        <FieldControl>
-          <LabelMandatory className="">Title</LabelMandatory>
-          <Selector selectorData={CUSTOMER_TITLES} />
-        </FieldControl>
-        <Columns>
-          <FieldControl>
-            <LabelMandatory className="">Name</LabelMandatory>
-            <Input />
-          </FieldControl>
-          <FieldControl>
-            <LabelMandatory className="">Father Name</LabelMandatory>
-            <Input />
-          </FieldControl>
-          <FieldControl>
-            <LabelMandatory className="">Grand Father Name</LabelMandatory>
-            <Input />
-          </FieldControl>
-        </Columns>
-        <section className="flex gap-5">
-          <FieldControl className="w-[24rem]">
-            <LabelMandatory className="">Gender</LabelMandatory>
-            <Selector selectorData={GENDERS} />
-          </FieldControl>
-          <FieldControl>
-            <LabelMandatory className="">Nationality</LabelMandatory>
-            <Selector
-              selectorData={NATIONALITIES}
-              defaultIndex={
-                NATIONALITIES.findIndex(
-                  (nation) => nation.value === "ethiopian",
-                ) || 0
-              }
-            />
-          </FieldControl>
-          <FieldControl>
-            <LabelMandatory className="">Origin</LabelMandatory>
-            <Selector
-              selectorData={NATIONALITIES}
-              defaultIndex={
-                NATIONALITIES.findIndex(
-                  (nation) => nation.value === "ethiopian",
-                ) || 0
-              }
-            />
-          </FieldControl>
-        </section>
+        <TextInput<IndividualSalerSchemaType>
+          className="md:max-w-[33%]"
+          name="title"
+          selectorData={CUSTOMER_TITLES}
+          variants="select"
+          mandatory={"Title"}
+        />
 
-        <FieldControl>
-          <LabelMandatory className="">Tin</LabelMandatory>
-          <Input type="number" maxLength={10} />
-        </FieldControl>
-      </Rows>
-      <Rows className="mt-5">
+        <Columns>
+          <TextInput<IndividualSalerSchemaType>
+            name="name"
+            variants="input"
+            mandatory={"Name"}
+          />
+
+          <TextInput<IndividualSalerSchemaType>
+            name="fatherName"
+            variants="input"
+            mandatory={"Father Name"}
+          />
+
+          <TextInput<IndividualSalerSchemaType>
+            name="grandFatherName"
+            variants="input"
+            mandatory={"Grand Father Name"}
+          />
+        </Columns>
+        <Columns>
+          <TextInput<IndividualSalerSchemaType>
+            name="gender"
+            variants="select"
+            mandatory={"Gender"}
+            selectorData={GENDERS}
+          />
+
+          <TextInput<IndividualSalerSchemaType>
+            name="nationality"
+            variants="select"
+            mandatory={"Nationality"}
+            selectorData={NATIONALITIES}
+            defaultIndex={getNationIndexFromNationalities("ethiopian")}
+          />
+          <TextInput<IndividualSalerSchemaType>
+            name="nationality"
+            variants="select"
+            mandatory={"Origin"}
+            selectorData={NATIONALITIES}
+            defaultIndex={getNationIndexFromNationalities("ethiopian")}
+          />
+        </Columns>
+
+        <TextInput<IndividualSalerSchemaType>
+          name="tin"
+          variants="input"
+          type="number"
+          mandatory={"Tin"}
+        />
+      </Stack>
+      <Stack className="mt-5">
         <Title order={2} className="">
           Address
         </Title>
 
         <FieldControl className="flex-row items-center gap-3">
-          <Checkbox className="rounded-sm" />
+          <CheckboxController<IndividualSalerSchemaType> name="isForeigner" />
           <Label className="">Are you a foreigner ?</Label>
         </FieldControl>
         <Columns>
-          <FieldControl>
-            <LabelMandatory className="">Region</LabelMandatory>
-            <Selector
-              selectorData={stringToObjectOfTitleValue(getRegions().regions)}
-            />
-          </FieldControl>
-          <FieldControl>
-            <Label className="">City</Label>
-            <Input />
-          </FieldControl>
-          <FieldControl>
-            <Label className="">Sub city</Label>
-            <Input />
-          </FieldControl>
+          <TextInput<IndividualSalerSchemaType>
+            name="region"
+            variants="select"
+            mandatory={"Region"}
+            selectorData={stringToObjectOfTitleValue(
+              getRegionsFromNationality(watch("nationality")).regions,
+            )}
+          />
+          <TextInput<IndividualSalerSchemaType>
+            name="city"
+            variants="input"
+            label={"City"}
+          />
+          <TextInput<IndividualSalerSchemaType>
+            name="subCity"
+            variants="input"
+            label={"Sub city"}
+          />
         </Columns>
         <Columns>
-          <FieldControl>
-            <Label className="">Woreda</Label>
-            <Input />
-          </FieldControl>
-          <FieldControl>
-            <Label className="">House No.</Label>
-            <Input type="number" />
-          </FieldControl>
-          <FieldControl>
-            <Label className="">Phone No.</Label>
-            <Input type="number" maxLength={10} placeholder="0918232425" />
-          </FieldControl>
+          <TextInput<IndividualSalerSchemaType>
+            name="woreda"
+            variants="input"
+            label={"Woreda"}
+          />
+          <TextInput<IndividualSalerSchemaType>
+            name="houseNo"
+            variants="input"
+            type="number"
+            label={"House No."}
+          />
+          <TextInput<IndividualSalerSchemaType>
+            name="phoneNo"
+            variants="input"
+            type="number"
+            label={"Phone No."}
+            placeholder="0918223344"
+          />
         </Columns>
-        <Columns>
-          <FieldControl className="col-span-3">
-            <Label className="">Other Address</Label>
-            <Textarea className="resize-none" />
-          </FieldControl>
-        </Columns>
-      </Rows>
+        <TextInput<IndividualSalerSchemaType>
+          name="otherAddress"
+          variants="textarea"
+          label={"Other address"}
+          className="resize-none"
+        />
+      </Stack>
 
       <section className="my-7 flex justify-end gap-5">
         <ButtonWithIcon variant="destructive">

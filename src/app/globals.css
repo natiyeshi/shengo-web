@@ -54,3 +54,7 @@
   scrollbar-width: thin;
   scroll-behavior: smooth;
 }
+
+body {
+  @apply bg-neutral-50;
+}

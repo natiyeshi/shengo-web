@@ -1,4 +1,3 @@
-import { getNationalities } from "@/app/(protected)/dashboard/sales/_utils";
 import { SelectorData } from "../_types";
 
 export const SALES_TABS_MAP: {
@@ -67,13 +66,6 @@ export const CUSTOMER_TITLES: SelectorData[] = [
     value: "fifty-chief",
   },
 ];
-
-export const NATIONALITIES = Object.values(
-  getNationalities().nationalities
-).map((nation) => ({
-  title: nation,
-  value: nation.toLowerCase(),
-}));
 
 export const VEHICLE_CODES = [
   "3 Liu Tessabi",

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Select,
   SelectContent,
@@ -5,35 +7,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SelectorData } from "../_types";
 import { cn } from "@/lib/utils";
-type Props = {
+import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { DefaultFieldValues } from "@/types";
+
+type Props<SchemaType extends FieldValues = DefaultFieldValues> = {
   defaultIndex?: number;
   selectorData: SelectorData[];
   placeholder?: string;
   className?: string;
+  name: Path<SchemaType>;
 };
 
-const Selector = ({
+const Selector = <SchemaType extends FieldValues = DefaultFieldValues>({
   selectorData,
   defaultIndex = 0,
   placeholder = "Select",
   className,
-}: Props) => {
+  name,
+}: Props<SchemaType>) => {
+  const [data, setData] = useState<SelectorData[]>([]);
+  const { control } = useFormContext<SchemaType>();
+
+  useEffect(() => {
+    setData(selectorData);
+    console.log(selectorData);
+  }, [selectorData]);
+
   return (
-    <Select defaultValue={selectorData[defaultIndex].value}>
-      <SelectTrigger className={cn("", className)}>
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent>
-        {selectorData.map((data) => (
-          <SelectItem key={data.value} value={data.value}>
-            {data.title}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <Controller
+      name={name}
+      control={control}
+      render={({}) => (
+        <Select defaultValue={data[defaultIndex].value}>
+          <SelectTrigger className={cn("", className)}>
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {data.map((data) => (
+              <SelectItem key={data.value} value={data.value}>
+                {data.title}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+    />
   );
 };
 

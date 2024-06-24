@@ -1,7 +1,5 @@
 import nationalities from "i18n-nationality";
-import { allCountries, CountryData } from "country-region-data";
-
-//  const { CountryRegionData } = require('country-region-data');
+import { allCountries } from "country-region-data";
 
 export const getNationalities = () => {
   const nationalitiesValues = nationalities.getNames("en");
@@ -11,16 +9,23 @@ export const getNationalities = () => {
   };
 };
 
-export const getRegions = (nationality = "ethiopian") => {
+export const getNationIndexFromNationalities = (nationality: string) => {
+  const NATIONALITIES = stringToObjectOfTitleValue(
+    getNationalities().nationalities,
+  );
+  return NATIONALITIES.findIndex((nation) => nation.value === nationality) || 0;
+};
+
+export const getRegionsFromNationality = (nationality = "ethiopian") => {
   // Getting country code from nationality like ethiopian
   const countryCode = getNationalities().countryCodes.at(
     getNationalities().nationalities.findIndex(
-      (nation) => nation.toLowerCase() === nationality
-    )
+      (nation) => nation.toLowerCase() === nationality,
+    ),
   );
 
   const country = allCountries.find(
-    (country) => country[1].toLowerCase() === countryCode?.toLowerCase()
+    (country) => country[1].toLowerCase() === countryCode?.toLowerCase(),
   );
   if (country) {
     return {
@@ -35,8 +40,8 @@ export const getRegions = (nationality = "ethiopian") => {
   }
 };
 
-export const stringToObjectOfTitleValue = (datas: string[]) =>
-  datas.map((data) => ({
+export const stringToObjectOfTitleValue = (data: string[]) =>
+  data.map((data) => ({
     title: data,
     value: data.toLowerCase(),
   }));
