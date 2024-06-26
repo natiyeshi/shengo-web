@@ -6,11 +6,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React from "react";
-import { SelectorData } from "../_types";
+// import { SelectorData } from "../_types";
 import { cn } from "@/lib/utils";
 type Props = {
   defaultIndex?: number;
-  selectorData: SelectorData[];
+  selectorData: any[];
   placeholder?: string;
   className?: string;
 };

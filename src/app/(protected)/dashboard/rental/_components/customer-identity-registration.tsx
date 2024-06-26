@@ -146,7 +146,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
   const isOrganization = form.getValues()["customerType"] === "Organization";
 
   const submit = () => {
-    console.log(form.validate())
     const { hasErrors } = form.validate();
     if (hasErrors) return ;
     form.setValues(initialValues);
@@ -204,6 +203,7 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
         <div className="mb-4 flex w-full flex-wrap gap-3">
           {persons.map((person, ind) => (
             <Person
+            key={ind}
               editing={editing == ind}
               onEdit={() => {
                 setAlertInfo({

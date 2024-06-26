@@ -29,7 +29,11 @@ import useMyHook from "./useMyHook";
 import { HookProps } from "./types";
 import Person from "./person";
 
-const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: HookProps) => {
+const CustomerIdentityRegisteration = ({
+  type,
+  goBack,
+  goToNext,
+}: HookProps) => {
   const {
     toast,
     alertInfo,
@@ -47,13 +51,14 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: HookProps) =>
     setPersons,
     users,
     form,
-  } = useMyHook({ type, goBack, goToNext })
+  } = useMyHook({ type, goBack, goToNext });
   return (
     <div>
       {persons && (
         <div className="mb-4 flex w-full flex-wrap gap-3">
           {persons.map((person, ind) => (
             <Person
+              key={ind}
               editing={editing == ind}
               onEdit={() => {
                 setAlertInfo({
@@ -177,10 +182,7 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: HookProps) =>
           <section className="flex gap-5">
             <FieldControl className="w-[24rem]">
               <LabelMandatory className="">Gender</LabelMandatory>
-              <Select
-                {...form.getInputProps("gender")}
-                data={GENDERS}
-              />
+              <Select {...form.getInputProps("gender")} data={GENDERS} />
             </FieldControl>
             <FieldControl>
               <LabelMandatory className="">Nationality</LabelMandatory>
@@ -310,7 +312,5 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: HookProps) =>
     </div>
   );
 };
-
-
 
 export default CustomerIdentityRegisteration;
