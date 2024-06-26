@@ -1,5 +1,5 @@
 import { getNationalities } from "@/app/(protected)/dashboard/sales/_utils";
-import { SelectorData } from "../_types";
+import { PersonInf } from "./CustomeIdentityRegistration/types";
 
 export const RENTAL_VEHICLE_TABS_MAP: {
   [key: string]: string;
@@ -45,13 +45,6 @@ export const CUSTOMER_TITLES: string[] = [
   "Fifty-chief"
 ];
 
-
-// export const NATIONALITIES = Object.values(
-//   getNationalities().nationalities
-// ).map((nation) => ({
-//   title: nation,
-//   value: nation.toLowerCase(),
-// }));
 export const NATIONALITIES = [
   "ETHIOPIA",
   "KENYA",
@@ -85,3 +78,27 @@ export const BANK_NAMES = [
   "Addis Bank",
   "Zemzem Bank",
 ]
+
+export const initialValues: PersonInf = {
+  customerType: CUSTOMER_TYPES[0],
+  customerTitle: CUSTOMER_TITLES[0],
+  name: "",
+  fatherName: "",
+  grandFatherName: "",
+  gender: "",
+  nationality: "",
+  origin: "",
+  tin: 0,
+  foreign: false,
+  region: "",
+  city: "",
+  subcity: "",
+  houseNumber: 0,
+  phoneNumber: "",
+  otherAddress: "",
+
+  businessName: "",
+  grantorName: "",
+  jobPosition: "",
+};
+

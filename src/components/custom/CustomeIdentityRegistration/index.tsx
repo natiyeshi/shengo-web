@@ -1,11 +1,9 @@
 "use client";
 import { Label } from "@/components/ui/label";
-import FieldControl from "./field-control";
+import FieldControl from "../field-control";
 import { Input } from "@mantine/core";
-import Rows from "./rows";
-import H3 from "@/components/custom/h3";
+import Rows from "../rows";
 import { MdPerson } from "react-icons/md";
-import { Edit } from "lucide-react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -13,191 +11,43 @@ import {
   CUSTOMER_TYPES,
   GENDERS,
   NATIONALITIES,
-} from "../_utils/constants";
-import { getRegions, stringToObjectOfTitleValue } from "../_utils";
+} from "../constants";
+// import { getRegions, stringToObjectOfTitleValue } from "../_utils";
 import { Textarea } from "@mantine/core";
-import Columns from "./columns";
+import Columns from "../columns";
 import { Save } from "lucide-react";
-import ButtonWithIcon from "./button-with-icon";
 import { MdClear } from "react-icons/md";
 import { Checkbox } from "@mantine/core";
-import LabelMandatory from "./label-mandatory";
+import LabelMandatory from "../label-mandatory";
 import { Title } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { useState } from "react";
 import { useForm } from "@mantine/form";
 import { Button } from "@/components/ui/button";
-import AreYouSure, { AlertInf } from "./AreYouSure";
+import AreYouSure, { AlertInf } from "../AreYouSure";
+import useMyHook from "./useMyHook";
+import { HookProps } from "./types";
+import Person from "./person";
 
-type Props = {
-  type: string;
-  goBack: Function;
-  goToNext: Function;
-};
-
-interface PersonInf {
-  customerType: string;
-  customerTitle: string;
-  name: string;
-  fatherName: string;
-  grandFatherName: string;
-  gender: string;
-  nationality: string;
-  origin: string;
-  tin: number;
-  foreign: boolean;
-  region: string;
-  city: string;
-  subcity: string;
-  houseNumber: number;
-  phoneNumber: string;
-  otherAddress: string;
-
-  businessName: string;
-  grantorName: string;
-  jobPosition: string;
-}
-
-const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
-  const maxTinLength = 10;
-  const [value, setValue] = useState<string | null>("");
-  const isNotEmpty = (value: string) => {
-    return value && value.trim().length > 0;
-  };
-  const { toast } = useToast();
-  const initialValues: PersonInf = {
-    customerType: CUSTOMER_TYPES[0],
-    customerTitle: CUSTOMER_TITLES[0],
-    name: "",
-    fatherName: "",
-    grandFatherName: "",
-    gender: "",
-    nationality: "",
-    origin: "",
-    tin: 0,
-    foreign: false,
-    region: "",
-    city: "",
-    subcity: "",
-    houseNumber: 0,
-    phoneNumber: "",
-    otherAddress: "",
-
-    businessName: "",
-    grantorName: "",
-    jobPosition: "",
-  };
-  const form = useForm({
-    mode: "controlled",
-    initialValues,
-    validate: {
-      customerType: (value) =>
-        isNotEmpty(value) ? null : "Customer type is required",
-      customerTitle: (value) =>
-        isNotEmpty(value) ? null : "Customer title is required",
-      name: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Name is required",
-      fatherName: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Father name is required",
-      grandFatherName: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Grandfather name is required",
-      gender: (value) => (isNotEmpty(value) ? null : "Gender is required"),
-      nationality: (value) =>
-        isNotEmpty(value) ? null : "Nationality is required",
-      origin: (value) : any => ( form.getValues()["customerType"] === "Organization" || isNotEmpty(value) ? null : "Origin is required"),
-      tin: (value): any =>
-        form.getValues()["customerType"] === "Organization" || value
-          ? null
-          : "TIN must be a number",
-      region: (value) => (isNotEmpty(value) ? null : "Region is required"),
-      city: (value) => (isNotEmpty(value) ? null : "City is required"),
-      subcity: (value) => (isNotEmpty(value) ? null : "Subcity is required"),
-      houseNumber: (value) => (value ? null : "House number must be a number"),
-      phoneNumber: (value) =>
-        value.trim().length > 8
-          ? null
-          : "Phone number is required and must be a valid number",
-      otherAddress: (value) =>
-        isNotEmpty(value) ? null : "Other address is required",
-
-      businessName: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Business Name is required",
-      grantorName: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Grantor Name is required",
-      jobPosition: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Job Position is required",
-    },
-  });
-  const users: PersonInf[] = [];
-  const [persons, setPersons] = useState<PersonInf[]>([]);
-  const [editing, setEditing] = useState(-1);
-  const isOrganization = form.getValues()["customerType"] === "Organization";
-
-  const submit = () => {
-    console.log(form.validate())
-    const { hasErrors } = form.validate();
-    if (hasErrors) return ;
-    form.setValues(initialValues);
-    toast({
-      title: "Completed!",
-      description: `You successfully Added ${type}!`,
-    });
-    if (editing != -1) {
-      setPersons((p): any => {
-        let newValues = [...p];
-        newValues[editing] = form.values;
-        return newValues;
-      });
-      setEditing(-1);
-    } else {
-      setPersons((p): any => [...p, form.values]);
-    }
-  };
-
-  const nextAndContinue = () => {
-    submit();
-    goToNext();
-  };
-
-  const deleteAllPersons = () => {
-    setPersons([]);
-    toast({
-      title: "Task Completed!",
-      description: `You successfully deleted all ${type}!`,
-    });
-  };
-
-  const deleteCurrentForm = () => {
-    form.setValues(initialValues);
-  };
-
-  const deleteSinglePerson = (index: number) => {
-    setPersons((datas) => datas.filter((data, i) => index != i));
-    toast({
-      title: "Task Completed!",
-      description: `You successfully deleted a ${type}!`,
-    });
-  };
-
-  const editPerson = (index: number) => {
-    setEditing(index);
-    form.setValues(persons[index]);
-  };
-
-  const [alertInfo, setAlertInfo] = useState<AlertInf | null>(null);
-
+const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: HookProps) => {
+  const {
+    toast,
+    alertInfo,
+    editPerson,
+    setAlertInfo,
+    deleteSinglePerson,
+    deleteCurrentForm,
+    deleteAllPersons,
+    nextAndContinue,
+    submit,
+    isOrganization,
+    editing,
+    setEditing,
+    persons,
+    setPersons,
+    users,
+    form,
+  } = useMyHook({ type, goBack, goToNext })
   return (
     <div>
       {persons && (
@@ -248,7 +98,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
           <LabelMandatory className="">Customer Type</LabelMandatory>
           <Select
             {...form.getInputProps("customerType")}
-            placeholder="Select Customer Type"
             data={CUSTOMER_TYPES}
           />
         </FieldControl>
@@ -262,7 +111,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
                 <LabelMandatory className="">Title</LabelMandatory>
                 <Select
                   {...form.getInputProps("customerTitle")}
-                  placeholder="Select Customer Title"
                   data={CUSTOMER_TITLES}
                 />
               </FieldControl>
@@ -305,7 +153,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
                   <LabelMandatory className="">Title</LabelMandatory>
                   <Select
                     {...form.getInputProps("customerTitle")}
-                    placeholder="Select Customer Title"
                     data={CUSTOMER_TITLES}
                   />
                 </FieldControl>
@@ -321,7 +168,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
                   <LabelMandatory className=""> Job Position</LabelMandatory>
                   <Select
                     {...form.getInputProps("jobPosition")}
-                    placeholder="Job Position"
                     data={["Representative", "Vise Manager"]}
                   />
                 </FieldControl>
@@ -333,7 +179,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
               <LabelMandatory className="">Gender</LabelMandatory>
               <Select
                 {...form.getInputProps("gender")}
-                placeholder="Gender"
                 data={GENDERS}
               />
             </FieldControl>
@@ -341,7 +186,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
               <LabelMandatory className="">Nationality</LabelMandatory>
               <Select
                 {...form.getInputProps("nationality")}
-                placeholder="Nationality"
                 data={NATIONALITIES}
               />
             </FieldControl>
@@ -350,7 +194,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
                 <LabelMandatory className="">Origin</LabelMandatory>
                 <Select
                   {...form.getInputProps("origin")}
-                  placeholder="Origin"
                   data={NATIONALITIES}
                 />
               </FieldControl>
@@ -384,7 +227,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
               <LabelMandatory className="">Region</LabelMandatory>
               <Select
                 {...form.getInputProps("region")}
-                placeholder="Region"
                 data={["Somalia", "Amhara", "Tigrai", "Oromia"]}
               />
             </FieldControl>
@@ -469,56 +311,6 @@ const CustomerIdentityRegisteration = ({ type, goBack, goToNext }: Props) => {
   );
 };
 
-const Person = ({
-  person,
-  onDelete,
-  onEdit,
-  editing,
-}: {
-  person: PersonInf;
-  onDelete: Function;
-  onEdit: Function;
-  editing: boolean;
-}) => {
-  const isOrganization = person.customerType === "Organization";
-  return (
-    <div
-      className={`flex w-fit gap-4 rounded-xl border bg-gray-200 px-5 py-2 shadow-lg`}
-    >
-      <div className="flex">
-        <MdPerson className="my-auto text-3xl text-primary" />
-      </div>
-      <div className="flex flex-col justify-between gap-1">
-        <div className="flex gap-2 text-sm">
-          <p>
-            {person.customerTitle}
-            {isOrganization ? person.grantorName : person.name}
-          </p>
-        </div>
-        <div className="flex w-full justify-between gap-2">
-          <button
-            onClick={() => onEdit()}
-            className="flex gap-1 bg-transparent px-0 py-1 text-sm text-black hover:underline"
-          >
-            {/* <MdEdit className="my-auto text-sm" /> */}
-            <span>Edit</span>
-          </button>
-          <button
-            onClick={() => onDelete()}
-            className="text-destractive flex gap-1 bg-transparent px-0 py-1 text-sm hover:underline"
-          >
-            {/* <MdDelete className="my-auto text-sm" /> */}
-            <span>Delete</span>
-          </button>
-        </div>
-        {editing && (
-          <p className="text-xs font-semibold text-primary">
-            Editing this file...
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
+
 
 export default CustomerIdentityRegisteration;

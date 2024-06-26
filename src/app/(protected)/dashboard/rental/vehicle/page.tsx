@@ -3,8 +3,8 @@ import H1 from "@/components/custom/h1";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import { RENTAL_VEHICLE_TABS_MAP } from "../_utils/constants";
-import CustomerIdentityRegisteration from "../_components/customer-identity-registration";
-import VehicleRegistration from "../_components/vehicle-registration";
+import CustomerIdentityRegisteration from "@/components/custom/CustomeIdentityRegistration";
+import VehicleRegistration from "@/components/custom/VehicleRegistration";
 import ServiceRequest from "../_components/service-request";
 import { Title } from "@mantine/core";
 import {
@@ -13,6 +13,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { toast } from "@/components/ui/use-toast";
 
 const Page = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -32,18 +33,39 @@ const Page = () => {
   }, [api]);
 
   const defaultTabValue = Object.keys(RENTAL_VEHICLE_TABS_MAP)[0];
+
+  const goToNext = (ind: number | null) => {
+    api && api.scrollTo(ind ?? current);
+  };
+
+  const goBack = (ind: number | null) => {
+    api && api.scrollTo(ind ?? current - 2);
+  };
+
   return (
     <main className="container">
       <Title order={1} className="my-5">
-        Vehicle Rental 
+        Vehicle Rental
       </Title>
       <section className="">
         <Tabs defaultValue={defaultTabValue}>
           <TabsList className="mb-7 rounded-md py-1">
-            {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey,ind) => (
-              <TabsTrigger onClick={()=>api && api.scrollTo(ind)} className="rounded-md" key={tabKey} value={tabKey}>
+            {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey, ind) => (
+              <div
+                className={`${current - 1 === ind && "roundedmd border-b-4 border-primary px-2 py-1 font-semibold text-primary"} inline-flex cursor-pointer items-center justify-center px-3 py-1.5 text-sm transition-all`}
+                onClick={() => {
+                  if (current - 1 < ind) {
+                    return toast({
+                      description: "Please the current form first please!",
+                      variant: "destructive",
+                    });
+                  }
+                  api && api.scrollTo(ind);
+                }}
+                key={tabKey}
+              >
                 {RENTAL_VEHICLE_TABS_MAP[tabKey]}
-              </TabsTrigger>
+              </div>
             ))}
           </TabsList>
 
@@ -56,37 +78,34 @@ const Page = () => {
           >
             <CarouselContent>
               <CarouselItem>
-                <CustomerIdentityRegisteration type="Lessor" />
+                <CustomerIdentityRegisteration
+                  goBack={goBack}
+                  goToNext={goToNext}
+                  type="Lessor"
+                />
               </CarouselItem>
               <CarouselItem>
-                <CustomerIdentityRegisteration type="Renter" />
+                <CustomerIdentityRegisteration
+                  goBack={goBack}
+                  goToNext={goToNext}
+                  type="Renter"
+                />
               </CarouselItem>
               <CarouselItem>
-                <VehicleRegistration />
+                <VehicleRegistration goBack={goBack} goToNext={goToNext} />
               </CarouselItem>
               <CarouselItem>
-                <CustomerIdentityRegisteration type="Witness" />
+                <CustomerIdentityRegisteration
+                  goBack={goBack}
+                  goToNext={goToNext}
+                  type="Witness"
+                />
               </CarouselItem>
               <CarouselItem>
                 <ServiceRequest />
               </CarouselItem>
             </CarouselContent>
           </Carousel>
-
-          {/* {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey) => (
-            <TabsContent key={tabKey} value={tabKey}>
-              {RENTAL_VEHICLE_TABS_MAP[tabKey] === RENTAL_VEHICLE_TABS_MAP.lessor && (
-              )}
-              {RENTAL_VEHICLE_TABS_MAP[tabKey] === RENTAL_VEHICLE_TABS_MAP.renter && (
-              )}
-              {RENTAL_VEHICLE_TABS_MAP[tabKey] === RENTAL_VEHICLE_TABS_MAP.vehicle && (
-              )}
-              {RENTAL_VEHICLE_TABS_MAP[tabKey] === RENTAL_VEHICLE_TABS_MAP.withness && (
-              )}
-              {RENTAL_VEHICLE_TABS_MAP[tabKey] === RENTAL_VEHICLE_TABS_MAP.service && (
-              )}
-            </TabsContent>
-          ))} */}
         </Tabs>
       </section>
     </main>
