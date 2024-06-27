@@ -1,33 +1,26 @@
 "use client";
 import React from "react";
-import Columns from "./columns";
-import FieldControl from "./field-control";
+import Columns from "../columns";
+import FieldControl from "../field-control";
 
-import LabelMandatory from "./label-mandatory";
-import { Input } from "@mantine/core";
-import Selector from "./selector";
-import { getRegions, stringToObjectOfTitleValue } from "../_utils";
+import LabelMandatory from "../label-mandatory";
+import { Button, Input } from "@mantine/core";
 import {
   BANK_NAMES,
   PAYMENT_TYPES,
   VEHICLE_CODES,
   VEHICLE_TYPES,
-} from "../_utils/constants";
+} from "../constants";
 import { Label } from "@/components/ui/label";
-import ButtonWithIcon from "./button-with-icon";
-import { Save } from "lucide-react";
-
-import { Checkbox } from "@mantine/core";
-import { Title } from "@mantine/core";
 import { Select } from "@mantine/core";
-import { useState } from "react";
 import { useForm } from "@mantine/form";
-import { MdClear } from "react-icons/md";
-import AreYouSure from "./AreYouSure";
 
-type Props = {};
+interface props {
+  goBack: Function;
+  goToNext: Function;
+}
 
-const VehicleRegistration = (props: Props) => {
+const VehicleRegistration = ({ goBack, goToNext }: props) => {
   const isNotEmpty = (value: string) => {
     return value && value.trim().length > 0;
   };
@@ -88,7 +81,8 @@ const VehicleRegistration = (props: Props) => {
 
   const submit = () => {
     const hasErrors = form.validate().hasErrors;
-    console.log(hasErrors, "What??");
+    if (hasErrors) return;
+    goToNext();
   };
 
   return (
@@ -239,14 +233,14 @@ const VehicleRegistration = (props: Props) => {
       </Columns>
 
       <section className="my-7 flex justify-end gap-5">
-        <ButtonWithIcon variant="destructive">
-          <MdClear />
+        <Button variant="outline">
+          {/* <MdClear /> */}
           <span>Clear</span>
-        </ButtonWithIcon>
-        <ButtonWithIcon>
-          <Save />
+        </Button>
+        <Button type="submit">
+          {/* <Save /> */}
           <span>Save</span>
-        </ButtonWithIcon>
+        </Button>
       </section>
     </form>
   );
