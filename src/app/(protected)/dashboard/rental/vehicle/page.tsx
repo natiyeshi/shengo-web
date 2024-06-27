@@ -1,6 +1,5 @@
 "use client";
-import H1 from "@/components/custom/h1";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import { RENTAL_VEHICLE_TABS_MAP } from "../_utils/constants";
 import CustomerIdentityRegisteration from "@/components/custom/CustomeIdentityRegistration";
@@ -14,6 +13,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { toast } from "@/components/ui/use-toast";
+import { CustomerIdentitryRegistrationProvider } from "../../_contexts/customer-context";
 
 const Page = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -48,65 +48,67 @@ const Page = () => {
         Vehicle Rental
       </Title>
       <section className="">
-        <Tabs defaultValue={defaultTabValue}>
-          <TabsList className="mb-7 rounded-md py-1">
-            {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey, ind) => (
-              <div
-                className={`${current - 1 === ind && "roundedmd border-b-4 border-primary px-2 py-1 font-semibold text-primary"} inline-flex cursor-pointer items-center justify-center px-3 py-1.5 text-sm transition-all`}
-                onClick={() => {
-                  if (current - 1 < ind) {
-                    return toast({
-                      description: "Please the current form first please!",
-                      variant: "destructive",
-                    });
-                  }
-                  api && api.scrollTo(ind);
-                }}
-                key={tabKey}
-              >
-                {RENTAL_VEHICLE_TABS_MAP[tabKey]}
-              </div>
-            ))}
-          </TabsList>
+        <CustomerIdentitryRegistrationProvider>
+          <Tabs defaultValue={defaultTabValue}>
+            <TabsList className="mb-7 rounded-md py-1">
+              {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey, ind) => (
+                <div
+                  className={`${current - 1 === ind && "roundedmd border-b-4 border-primary px-2 py-1 font-semibold text-primary"} inline-flex cursor-pointer items-center justify-center px-3 py-1.5 text-sm transition-all`}
+                  onClick={() => {
+                    if (current - 1 < ind) {
+                      return toast({
+                        description: "Please the current form first please!",
+                        variant: "destructive",
+                      });
+                    }
+                    api && api.scrollTo(ind);
+                  }}
+                  key={tabKey}
+                >
+                  {RENTAL_VEHICLE_TABS_MAP[tabKey]}
+                </div>
+              ))}
+            </TabsList>
 
-          <Carousel
-            setApi={setApi}
-            opts={{
-              watchDrag: false,
-            }}
-            className=""
-          >
-            <CarouselContent>
-              <CarouselItem>
-                <CustomerIdentityRegisteration
-                  goBack={goBack}
-                  goToNext={goToNext}
-                  type="Lessor"
-                />
-              </CarouselItem>
-              <CarouselItem>
-                <CustomerIdentityRegisteration
-                  goBack={goBack}
-                  goToNext={goToNext}
-                  type="Renter"
-                />
-              </CarouselItem>
-              <CarouselItem>
-                <VehicleRegistration goBack={goBack} goToNext={goToNext} />
-              </CarouselItem>
-              <CarouselItem>
-                <CustomerIdentityRegisteration
-                  goBack={goBack}
-                  goToNext={goToNext}
-                  type="Witness"
-                />
-              </CarouselItem>
-              <CarouselItem>
-                <ServiceRequest />
-              </CarouselItem>
-            </CarouselContent>
-          </Carousel>
-        </Tabs>
+            <Carousel
+              setApi={setApi}
+              opts={{
+                watchDrag: false,
+              }}
+              className=""
+            >
+              <CarouselContent>
+                <CarouselItem>
+                  <CustomerIdentityRegisteration
+                    goBack={goBack}
+                    goToNext={goToNext}
+                    type="Lessor"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <CustomerIdentityRegisteration
+                    goBack={goBack}
+                    goToNext={goToNext}
+                    type="Renter"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <VehicleRegistration goBack={goBack} goToNext={goToNext} />
+                </CarouselItem>
+                <CarouselItem>
+                  <CustomerIdentityRegisteration
+                    goBack={goBack}
+                    goToNext={goToNext}
+                    type="Witness"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <ServiceRequest />
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+          </Tabs>
+        </CustomerIdentitryRegistrationProvider>
       </section>
     </main>
   );

@@ -1,33 +1,26 @@
 "use client";
-import { Label } from "@/components/ui/label";
-import FieldControl from "../field-control";
-import { Input } from "@mantine/core";
+import { Group, TextInput } from "@mantine/core";
 import Rows from "../rows";
-import { MdPerson } from "react-icons/md";
-import { MdEdit, MdDelete } from "react-icons/md";
-import { useToast } from "@/components/ui/use-toast";
-import {
-  CUSTOMER_TITLES,
-  CUSTOMER_TYPES,
-  GENDERS,
-  NATIONALITIES,
-} from "../constants";
-// import { getRegions, stringToObjectOfTitleValue } from "../_utils";
+
 import { Textarea } from "@mantine/core";
 import Columns from "../columns";
 import { Save } from "lucide-react";
 import { MdClear } from "react-icons/md";
 import { Checkbox } from "@mantine/core";
-import LabelMandatory from "../label-mandatory";
 import { Title } from "@mantine/core";
 import { Select } from "@mantine/core";
-import { useState } from "react";
-import { useForm } from "@mantine/form";
+
 import { Button } from "@/components/ui/button";
-import AreYouSure, { AlertInf } from "../AreYouSure";
+import AreYouSure from "../AreYouSure";
 import useMyHook from "./useMyHook";
 import { HookProps } from "./types";
 import Person from "./person";
+import { CUSTOMER_TITLES, CUSTOMER_TYPES, GENDERS } from "@/_utils/constants";
+import {
+  getNationalities,
+  getRegionsFromNationality,
+  strToObjOfLabelAndValue,
+} from "@/_utils";
 
 const CustomerIdentityRegisteration = ({
   type,
@@ -51,6 +44,7 @@ const CustomerIdentityRegisteration = ({
     setPersons,
     users,
     form,
+    nationality,
   } = useMyHook({ type, goBack, goToNext });
   return (
     <div>
@@ -99,117 +93,131 @@ const CustomerIdentityRegisteration = ({
           submit();
         }}
       >
-        <FieldControl className="">
-          <LabelMandatory className="">Customer Type</LabelMandatory>
-          <Select
-            {...form.getInputProps("customerType")}
-            data={CUSTOMER_TYPES}
-          />
-        </FieldControl>
+        <Select
+          label="Customer Type"
+          withAsterisk
+          key={form.key("customerType")}
+          {...form.getInputProps("customerType")}
+          data={CUSTOMER_TYPES}
+        />
+
         <Rows className="mt-5">
           <Title order={2} className="">
             {type}
           </Title>
           {!isOrganization && (
             <>
-              <FieldControl>
-                <LabelMandatory className="">Title</LabelMandatory>
-                <Select
-                  {...form.getInputProps("customerTitle")}
-                  data={CUSTOMER_TITLES}
-                />
-              </FieldControl>
+              <Select
+                label="Customer Title"
+                withAsterisk
+                key={form.key("customerTitle")}
+                {...form.getInputProps("customerTitle")}
+                data={CUSTOMER_TITLES}
+              />
+
               <Columns>
-                <FieldControl>
-                  <LabelMandatory className="">Name</LabelMandatory>
-                  <Input {...form.getInputProps("name")} placeholder="Name" />
-                </FieldControl>
-                <FieldControl>
-                  <LabelMandatory className="">Father Name</LabelMandatory>
-                  <Input
-                    {...form.getInputProps("fatherName")}
-                    placeholder="Father Name"
-                  />
-                </FieldControl>
-                <FieldControl>
-                  <LabelMandatory className="">
-                    Grand Father Name
-                  </LabelMandatory>
-                  <Input
-                    {...form.getInputProps("grandFatherName")}
-                    placeholder="Grand Father Name"
-                  />
-                </FieldControl>
+                <TextInput
+                  label="Name"
+                  placeholder="Abebe"
+                  withAsterisk
+                  key={form.key("name")}
+                  {...form.getInputProps("name")}
+                />
+
+                <TextInput
+                  label="Father name"
+                  placeholder="Doro"
+                  withAsterisk
+                  key={form.key("fatherName")}
+                  {...form.getInputProps("fatherName")}
+                />
+                <TextInput
+                  label="Grand Father Name"
+                  placeholder="Bela"
+                  withAsterisk
+                  key={form.key("grandFatherName")}
+                  {...form.getInputProps("grandFatherName")}
+                />
               </Columns>
             </>
           )}
 
           {isOrganization && (
             <>
-              <FieldControl>
-                <LabelMandatory className="">Business Name</LabelMandatory>
-                <Input
-                  {...form.getInputProps("businessName")}
-                  placeholder="Business Name"
-                />
-              </FieldControl>
+              <TextInput
+                label="Business Name"
+                placeholder="Business Name"
+                withAsterisk
+                key={form.key("businessName")}
+                {...form.getInputProps("businessName")}
+              />
               <Columns>
-                <FieldControl>
-                  <LabelMandatory className="">Title</LabelMandatory>
-                  <Select
-                    {...form.getInputProps("customerTitle")}
-                    data={CUSTOMER_TITLES}
-                  />
-                </FieldControl>
+                <Select
+                  label="Title"
+                  withAsterisk
+                  key={form.key("customerTitle")}
+                  {...form.getInputProps("customerTitle")}
+                  data={CUSTOMER_TITLES}
+                />
 
-                <FieldControl>
-                  <LabelMandatory className="">Grantor Name</LabelMandatory>
-                  <Input
-                    {...form.getInputProps("grantorName")}
-                    placeholder="Grantor Name"
-                  />
-                </FieldControl>
-                <FieldControl>
-                  <LabelMandatory className=""> Job Position</LabelMandatory>
-                  <Select
-                    {...form.getInputProps("jobPosition")}
-                    data={["Representative", "Vise Manager"]}
-                  />
-                </FieldControl>
+                <TextInput
+                  label="Grantor Name"
+                  placeholder="Grantor Name"
+                  withAsterisk
+                  key={form.key("grantorName")}
+                  {...form.getInputProps("grantorName")}
+                />
+
+                <Select
+                  label="Job Position"
+                  withAsterisk
+                  key={form.key("jobPosition")}
+                  {...form.getInputProps("jobPosition")}
+                  data={["Representative", "Vise Manager"]}
+                />
               </Columns>
             </>
           )}
-          <section className="flex gap-5">
-            <FieldControl className="w-[24rem]">
-              <LabelMandatory className="">Gender</LabelMandatory>
-              <Select {...form.getInputProps("gender")} data={GENDERS} />
-            </FieldControl>
-            <FieldControl>
-              <LabelMandatory className="">Nationality</LabelMandatory>
-              <Select
-                {...form.getInputProps("nationality")}
-                data={NATIONALITIES}
-              />
-            </FieldControl>
+          <Columns>
+            <Select
+              label="Gender"
+              withAsterisk
+              key={form.key("Gender")}
+              {...form.getInputProps("gender")}
+              data={GENDERS}
+            />
+
+            <Select
+              label="Nationality"
+              withAsterisk
+              key={form.key("nationality")}
+              {...form.getInputProps("nationality")}
+              data={strToObjOfLabelAndValue(
+                getNationalities().map((country) => country.nationality),
+              )}
+            />
+
             {!isOrganization && (
-              <FieldControl>
-                <LabelMandatory className="">Origin</LabelMandatory>
-                <Select
-                  {...form.getInputProps("origin")}
-                  data={NATIONALITIES}
-                />
-              </FieldControl>
-            )}
-          </section>
-          {!isOrganization && (
-            <FieldControl>
-              <LabelMandatory className="">Tin</LabelMandatory>
-              <Input
-                {...form.getInputProps("tin")}
-                type="number"
-                maxLength={10}
+              <Select
+                label="Origin"
+                withAsterisk
+                key={form.key("origin")}
+                {...form.getInputProps("origin")}
+                data={strToObjOfLabelAndValue(
+                  getNationalities().map((country) => country.nationality),
+                )}
               />
-            </FieldControl>
+            )}
+          </Columns>
+          {!isOrganization && (
+            <TextInput
+              type="number"
+              label="Tin"
+              key={form.key("tin")}
+              {...form.getInputProps("tin")}
+              maxLength={10}
+              withAsterisk
+            />
           )}
         </Rows>
         <Rows className="mt-5">
@@ -217,62 +225,73 @@ const CustomerIdentityRegisteration = ({
             Address
           </Title>
 
-          <FieldControl className="flex-row items-center gap-3">
+          <Group>
             <Checkbox
               defaultChecked={false}
+              key={form.key("foreign")}
               {...form.getInputProps("foreign")}
               label="Are you a foreigner ?"
             />
-          </FieldControl>
+          </Group>
           <Columns>
-            <FieldControl>
-              <LabelMandatory className="">Region</LabelMandatory>
-              <Select
-                {...form.getInputProps("region")}
-                data={["Somalia", "Amhara", "Tigrai", "Oromia"]}
-              />
-            </FieldControl>
-            <FieldControl>
-              <Label className="">City</Label>
-              <Input {...form.getInputProps("city")} placeholder="City" />
-            </FieldControl>
-            <FieldControl>
-              <Label className="">Sub city</Label>
-              <Input {...form.getInputProps("subcity")} placeholder="Subcity" />
-            </FieldControl>
+            <Select
+              label="Region"
+              withAsterisk
+              key={form.key("region")}
+              {...form.getInputProps("region")}
+              data={strToObjOfLabelAndValue(
+                getRegionsFromNationality(nationality).map(
+                  (item) => item.region,
+                ),
+              )}
+            />
+
+            <TextInput
+              label="City"
+              key={form.key("city")}
+              {...form.getInputProps("city")}
+              placeholder="City"
+            />
+
+            <TextInput
+              label="Sub City"
+              key={form.key("subcity")}
+              {...form.getInputProps("subcity")}
+              placeholder="Subcity"
+            />
           </Columns>
 
           <Columns>
-            <FieldControl>
-              <Label className="">Woreda</Label>
-              <Input {...form.getInputProps("woreda")} placeholder="Woreda" />
-            </FieldControl>
-            <FieldControl>
-              <Label className="">House No.</Label>
-              <Input
-                type="number"
-                {...form.getInputProps("houseNumber")}
-                placeholder="House Number"
-              />
-            </FieldControl>
-            <FieldControl>
-              <Label className="">Phone No.</Label>
-              <Input
-                type="number"
-                {...form.getInputProps("phoneNumber")}
-                placeholder="09..."
-              />
-            </FieldControl>
+            <TextInput
+              label="Woreda"
+              key={form.key("woreda")}
+              {...form.getInputProps("woreda")}
+              placeholder="Woreda"
+            />
+            <TextInput
+              label="House No."
+              type="number"
+              key={form.key("houseNumber")}
+              {...form.getInputProps("houseNumber")}
+              placeholder="House Number"
+            />
+
+            <TextInput
+              type="number"
+              label="Phone No."
+              key={form.key("phoneNumber")}
+              {...form.getInputProps("phoneNumber")}
+              placeholder="09..."
+            />
           </Columns>
-          <Columns>
-            <FieldControl className="col-span-3">
-              <Label className="">Other Address</Label>
-              <Textarea
-                {...form.getInputProps("otherAddress")}
-                placeholder="Other Address"
-              />
-            </FieldControl>
-          </Columns>
+
+          <Textarea
+            label="Other Address"
+            key={form.key("otherAddress")}
+            {...form.getInputProps("otherAddress")}
+            placeholder="Other Address"
+            rows={3}
+          />
         </Rows>
 
         <section className="my-7 flex justify-end gap-5">

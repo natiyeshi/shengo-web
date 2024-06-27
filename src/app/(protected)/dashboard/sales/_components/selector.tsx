@@ -36,6 +36,8 @@ const Selector = <SchemaType extends FieldValues = DefaultFieldValues>({
     console.log(selectorData);
   }, [selectorData]);
 
+  return "ji";
+
   return (
     <Controller
       name={name}

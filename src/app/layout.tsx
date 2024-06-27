@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { ColorSchemeScript, createTheme, MantineProvider } from "@mantine/core";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import "@mantine/core/styles.css";
 import "./globals.css";
 
@@ -42,7 +42,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={lexend.className}>
-        <NextTopLoader color="red" height={3} />
+        <NextTopLoader color="#7860d5" height={3} />
         <MantineProvider forceColorScheme="light" theme={theme}>
           {children}
         </MantineProvider>

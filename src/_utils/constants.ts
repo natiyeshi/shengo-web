@@ -1,37 +1,16 @@
-import { getNationalities } from "@/app/(protected)/dashboard/sales/_utils";
-import { SelectorData } from "../_types";
+import { Selector } from "@/types";
 
-export const GIFT_VEHICLE_TABS_MAP: {
+export const SALES_TABS_MAP: {
   [key: string]: string;
 } = {
-  giver: "Giver",
-  receiver: "Receiver",
+  saler: "Saler",
+  buyer: "Buyer",
   vehicle: "Vehicle",
   withness: "Withness",
   service: "Service",
 };
 
-export const GIFT_RESIDENCE_TABS_MAP: {
-  [key: string]: string;
-} = {
-  giver: "Giver",
-  receiver: "Receiver",
-  residence: "Residence",
-  withness: "Withness",
-  service: "Service",
-};
-
-export const GIFT_BUSINESS_TABS_MAP: {
-  [key: string]: string;
-} = {
-  giver: "Giver",
-  receiver: "Receiver",
-  business: "Business",
-  withness: "Withness",
-  service: "Service",
-};
-
-export const CUSTOMER_TYPES: SelectorData[] = [
+export const CUSTOMER_TYPES: Selector[] = [
   { label: "Individual", value: "individual" },
   {
     label: "Organization",
@@ -55,12 +34,12 @@ export const CUSTOMER_TYPES: SelectorData[] = [
   },
 ];
 
-export const GENDERS: SelectorData[] = [
+export const GENDERS: Selector[] = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
 ];
 
-export const CUSTOMER_TITLES: SelectorData[] = [
+export const CUSTOMER_TITLES: Selector[] = [
   { label: "Mr", value: "mr" },
   {
     label: "Mrs",
@@ -87,13 +66,6 @@ export const CUSTOMER_TITLES: SelectorData[] = [
     value: "fifty-chief",
   },
 ];
-
-export const NATIONALITIES = Object.values(
-  getNationalities().nationalities,
-).map((nation) => ({
-  label: nation,
-  value: nation.toLowerCase(),
-}));
 
 export const VEHICLE_CODES = [
   "3 Liu Tessabi",

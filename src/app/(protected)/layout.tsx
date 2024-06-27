@@ -23,14 +23,14 @@ function Layout({ children }: any) {
   // "/dashboard/sales/residence"
   return (
     <div className="flex h-[100vh] w-full">
-      <div className="flex h-full w-[25%] flex-col overflow-auto bg-primary text-primary-foreground">
+      <section className="flex h-full w-[25%] flex-col overflow-auto bg-primary text-primary-foreground">
         <div className="flex w-full gap-2 py-8 ps-4">
           <MenuIcon />
           <div>SHENGO SOLUTIONS</div>
         </div>
         <div className="px-4 overflow-auto">
           <MyAccordion
-            trigger={<div>Sales</div>}
+            trigger={"Sales"}
             contents={[{ name: "Vehicle", url: "/dashboard/sales/vehicle" }]}
           />
          

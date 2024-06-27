@@ -1,4 +1,4 @@
 export type SelectorData = {
-  title: string;
+  label: string;
   value: string;
 };

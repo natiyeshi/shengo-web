@@ -3,81 +3,40 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { initialValues } from "../constants";
+import { AlertInf } from "../AreYouSure";
+import { HookProps } from "./types";
+
 import {
-  initialValues,
-} from "../constants";
-import { useForm } from "@mantine/form";
-import AreYouSure, { AlertInf } from "../AreYouSure";
-import { PersonInf, HookProps } from "./types";
-import { isNotEmpty } from "@/lib/utils";
+  PersonInfo,
+  useCustomerFormContext,
+} from "@/app/(protected)/dashboard/_contexts/customer-context";
 
 const useMyHook = ({ type, goBack, goToNext }: HookProps) => {
   const { toast } = useToast();
+  const form = useCustomerFormContext();
 
-  const form = useForm({
-    mode: "controlled",
-    initialValues,
-    validate: {
-      customerType: (value) =>
-        isNotEmpty(value) ? null : "Customer type is required",
-      customerTitle: (value) =>
-        isNotEmpty(value) ? null : "Customer title is required",
-      name: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Name is required",
-      fatherName: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Father name is required",
-      grandFatherName: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Grandfather name is required",
-      gender: (value) => (isNotEmpty(value) ? null : "Gender is required"),
-      nationality: (value) =>
-        isNotEmpty(value) ? null : "Nationality is required",
-      origin: (value): any =>
-        form.getValues()["customerType"] === "Organization" || isNotEmpty(value)
-          ? null
-          : "Origin is required",
-      tin: (value): any =>
-        form.getValues()["customerType"] === "Organization" || value
-          ? null
-          : "TIN must be a number",
-      region: (value) => (isNotEmpty(value) ? null : "Region is required"),
-      city: (value) => (isNotEmpty(value) ? null : "City is required"),
-      subcity: (value) => (isNotEmpty(value) ? null : "Subcity is required"),
-      houseNumber: (value) => (value ? null : "House number must be a number"),
-      phoneNumber: (value) =>
-        value.trim().length > 8
-          ? null
-          : "Phone number is required and must be a valid number",
-      otherAddress: (value) =>
-        isNotEmpty(value) ? null : "Other address is required",
+  const users: PersonInfo[] = [];
+  const [persons, setPersons] = useState<PersonInfo[]>([]);
+  const [customerType, setCustomerType] = useState(
+    form.getValues().customerType,
+  );
+  const [nationality, setNationality] = useState(form.getValues().nationality);
+  const [editing, setEditing] = useState(-1);
 
-      businessName: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Business Name is required",
-      grantorName: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Grantor Name is required",
-      jobPosition: (value): any =>
-        form.getValues()["customerType"] === "Individual" || isNotEmpty(value)
-          ? null
-          : "Job Position is required",
-    },
+  form.watch("customerType", ({ value }) => {
+    setCustomerType(value);
   });
 
-  const users: PersonInf[] = [];
-  const [persons, setPersons] = useState<PersonInf[]>([]);
-  const [editing, setEditing] = useState(-1);
-  const isOrganization = form.getValues()["customerType"] === "Organization";
+  form.watch("nationality", ({ value }) => {
+    setNationality(value);
+  });
+
+  const isOrganization = customerType === "organization";
 
   const submit = () => {
     console.log(form.validate());
+    console.log(form.getValues());
     const { hasErrors } = form.validate();
     if (hasErrors) return;
     form.setValues(initialValues);
@@ -145,6 +104,7 @@ const useMyHook = ({ type, goBack, goToNext }: HookProps) => {
     setPersons,
     users,
     form,
+    nationality,
   };
 };
 

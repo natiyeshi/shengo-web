@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import React, { ReactNode } from "react";
-import { Star } from "lucide-react";
 
 type Props = {
   children: ReactNode;
