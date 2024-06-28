@@ -41,7 +41,7 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body className={lexend.className}>
+      <body className={`${lexend.className}`}>
         <NextTopLoader color="#7860d5" height={3} />
         <MantineProvider forceColorScheme="light" theme={theme}>
           {children}

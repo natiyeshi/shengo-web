@@ -4,245 +4,194 @@ import Columns from "../columns";
 import FieldControl from "../field-control";
 
 import LabelMandatory from "../label-mandatory";
-import { Button, Input } from "@mantine/core";
+import { TextInput, Select, Input } from "@mantine/core";
 import {
   BANK_NAMES,
   PAYMENT_TYPES,
   VEHICLE_CODES,
   VEHICLE_TYPES,
 } from "../constants";
-import { Label } from "@/components/ui/label";
-import { Select } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import FormFooterButtons from "../form-footer-buttons";
+import { useVehicleFormContext } from "@/app/(protected)/dashboard/_contexts/vehicle-form-context";
+import { useVehicleOperation } from "@/app/(protected)/dashboard/_contexts/vehicle-operation-context";
+import AreYouSure from "../AreYouSure";
+import VehicleListDrawer from "./vehicle-list-drawer";
+import { Button } from "@/components/ui/button";
+import { Car } from "lucide-react";
+import { useDisclosure } from "@mantine/hooks";
 
-interface props {
-  goBack: Function;
-  goToNext: Function;
-}
-
-const VehicleRegistration = ({ goBack, goToNext }: props) => {
-  const isNotEmpty = (value: string) => {
-    return value && value.trim().length > 0;
-  };
-
-  const initialValues = {
-    engineNumber: "",
-    chassisNumber: "",
-    libreNumber: "",
-    region: "",
-    code: "",
-    plateNumber: "",
-    vehicleType: "",
-    determinationKernNo: "",
-    determinationPrice: "",
-    salesValue: "",
-    penaltyGov: "",
-    penalty: "",
-    bankName: "",
-    prePayment: "",
-    paymentType: "",
-    chequeNumber: "",
-  };
-
-  const form = useForm({
-    mode: "uncontrolled",
-    initialValues,
-    validate: {
-      engineNumber: (value) =>
-        isNotEmpty(value) ? null : "Engine Number is required",
-      chassisNumber: (value) =>
-        isNotEmpty(value) ? null : "Chassis Number is required",
-      libreNumber: (value) =>
-        isNotEmpty(value) ? null : "Libre Number is required",
-      region: (value) => (isNotEmpty(value) ? null : "Region is required"),
-      code: (value) => (isNotEmpty(value) ? null : "Code is required"),
-      plateNumber: (value) =>
-        isNotEmpty(value) ? null : "Plate Number is required",
-      vehicleType: (value) =>
-        isNotEmpty(value) ? null : "Vehicle Type is required",
-      determinationKernNo: (value) =>
-        isNotEmpty(value) ? null : "Determination Kern No is required",
-      determinationPrice: (value) =>
-        isNotEmpty(value) ? null : "Determination Price is required",
-      salesValue: (value) =>
-        isNotEmpty(value) ? null : "Sales Value is required",
-      penaltyGov: (value) =>
-        isNotEmpty(value) ? null : "Penalty Gov is required",
-      penalty: (value) => (isNotEmpty(value) ? null : "Penalty is required"),
-      bankName: (value) => (isNotEmpty(value) ? null : "Bank Name is required"),
-      prePayment: (value) =>
-        isNotEmpty(value) ? null : "Pre-Payment is required",
-      paymentType: (value) =>
-        isNotEmpty(value) ? null : "Payment Type is required",
-      chequeNumber: (value) =>
-        isNotEmpty(value) ? null : "Cheque Number is required",
-    },
-  });
-
-  const submit = () => {
-    const hasErrors = form.validate().hasErrors;
-    if (hasErrors) return;
-    goToNext();
-  };
-
+const VehicleRegistration = () => {
+  const form = useVehicleFormContext();
+  const {
+    submit,
+    alertInfo,
+    vehicles,
+    editing,
+    nextAndContinue,
+    deleteCurrentForm,
+  } = useVehicleOperation();
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit();
-      }}
-      className="flex flex-col gap-5"
-    >
-      <Columns>
-        <FieldControl>
-          <LabelMandatory>Engine No.</LabelMandatory>
-          <Input
-            {...form.getInputProps("engineNumber")}
+    <section>
+      <VehicleListDrawer title={`Vehicle's list`} opened={opened} close={close}>
+        <Button
+          onClick={open}
+          size="icon"
+          variant="outline"
+          className="relative rounded-full"
+        >
+          <Car />
+          <span className="absolute -right-0 -top-2 bg-white text-lg font-semibold text-primary">
+            {vehicles.length}
+          </span>
+        </Button>
+      </VehicleListDrawer>
+      {alertInfo && <AreYouSure {...alertInfo} />}
+      <form onSubmit={form.onSubmit(submit)} className="flex flex-col gap-5">
+        <Input hidden {...form.getInputProps("_id")} key={form.key("_id")} />
+        <Columns>
+          <TextInput
+            label="Engine No."
             placeholder="Engine Number"
+            withAsterisk
+            key={form.key("engineNumber")}
+            {...form.getInputProps("engineNumber")}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory>Chassis No.</LabelMandatory>
-          <Input
-            {...form.getInputProps("chassisNumber")}
+          <TextInput
+            label="Chassis No."
             placeholder="Chassis Number"
+            withAsterisk
+            key={form.key("chassisNumber")}
+            {...form.getInputProps("chassisNumber")}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory>Libre No.</LabelMandatory>
-          <Input
-            {...form.getInputProps("libreNumber")}
+          <TextInput
+            label="Libre No."
             placeholder="Libre Number"
+            withAsterisk
+            key={form.key("libreNumber")}
+            {...form.getInputProps("libreNumber")}
           />
-        </FieldControl>
-      </Columns>
-      <Columns>
-        <FieldControl>
-          <LabelMandatory className="">Region</LabelMandatory>
+        </Columns>
+        <Columns>
           <Select
+            label="Region"
+            withAsterisk
             {...form.getInputProps("region")}
             placeholder="Region"
             data={["Somalia", "Amhara", "Tigrai", "Oromia"]}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory className="">Code</LabelMandatory>
+
           <Select
+            label="Code"
+            withAsterisk
             {...form.getInputProps("code")}
             placeholder="Code"
             data={VEHICLE_CODES}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory className="">Plate No.</LabelMandatory>
-          <Input
-            {...form.getInputProps("plateNumber")}
-            placeholder="Plate Number"
-          />
-        </FieldControl>
-      </Columns>
 
-      <Columns>
-        <FieldControl>
-          <LabelMandatory className="">Vehicle Type</LabelMandatory>
+          <TextInput
+            label="Plate No."
+            placeholder="Plate Number"
+            withAsterisk
+            key={form.key("plateNumber")}
+            {...form.getInputProps("plateNumber")}
+          />
+        </Columns>
+        <Columns>
           <Select
+            label="Vehicle Type"
+            withAsterisk
             {...form.getInputProps("vehicleType")}
             placeholder="Vehicle Type"
             data={VEHICLE_TYPES}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory className="">Determination Kern No.</LabelMandatory>
-          <Input
-            {...form.getInputProps("determinationKernNo")}
+          <TextInput
+            label="Determination Kern No."
             placeholder="Determination Kern Number"
+            withAsterisk
+            key={form.key("determinationKernNo")}
+            {...form.getInputProps("determinationKernNo")}
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory className="">Determination Price</LabelMandatory>
-          <Input
-            {...form.getInputProps("determinationPrice")}
+          <TextInput
+            label="Determination Price"
             placeholder="Determination Price"
+            withAsterisk
+            key={form.key("determinationPrice")}
+            {...form.getInputProps("determinationPrice")}
           />
-        </FieldControl>
-      </Columns>
-
-      <Columns>
-        <FieldControl>
-          <Label className="">Sales Value</Label>
-          <Input
+        </Columns>
+        <Columns>
+          <TextInput
+            label="Sales Value"
+            placeholder="Sales Value"
+            key={form.key("salesValue")}
             type="number"
             defaultValue={0.0}
             {...form.getInputProps("salesValue")}
-            placeholder="Sales Value"
           />
-        </FieldControl>
-        <FieldControl>
-          <Label className="">Penalty To Government</Label>
-          <Input
+          <TextInput
+            label="Penalty To Government"
+            placeholder="Penalty To Government"
+            key={form.key("penaltyGov")}
             type="number"
             defaultValue={0.0}
             {...form.getInputProps("penaltyGov")}
-            placeholder="Penalty To Government"
           />
-        </FieldControl>
-        <FieldControl>
-          <Label className="">Penalty</Label>
-          <Input
+          <TextInput
+            label="Penalty"
+            placeholder="Penalty"
+            key={form.key("penalty")}
             type="number"
             defaultValue={0.0}
             {...form.getInputProps("penalty")}
-            placeholder="Penalty"
           />
-        </FieldControl>
-      </Columns>
-      <FieldControl>
-        <LabelMandatory className="">Bank Name</LabelMandatory>
+        </Columns>
+
         <Select
+          label="Bank Name"
+          withAsterisk
           {...form.getInputProps("bankName")}
           placeholder="Bank Name"
           data={BANK_NAMES}
         />
-      </FieldControl>
-      <Columns className="">
-        <FieldControl>
-          <LabelMandatory className="">Prepayment</LabelMandatory>
-          <Input
+
+        <Columns>
+          <TextInput
+            label="Prepayment"
+            placeholder="Prepayment"
+            key={form.key("prePayment")}
             type="number"
             defaultValue={0.0}
             {...form.getInputProps("prePayment")}
-            placeholder="Prepayment"
           />
-        </FieldControl>
-        <FieldControl>
-          <LabelMandatory className="">Payment Type</LabelMandatory>
+
           <Select
+            label="Payment Type"
             data={PAYMENT_TYPES}
             {...form.getInputProps("paymentType")}
             placeholder="Payment Type"
           />
-        </FieldControl>
-        <FieldControl>
-          <Label className="">Cheque/CPO No</Label>
-          <Input
+
+          <TextInput
+            label="Cheque/CPO No"
+            placeholder="Cheque Number"
+            key={form.key("chequeNumber")}
             type="number"
             {...form.getInputProps("chequeNumber")}
-            placeholder="Cheque Number"
           />
-        </FieldControl>
-      </Columns>
+        </Columns>
 
-      <section className="my-7 flex justify-end gap-5">
-        <Button variant="outline">
-          {/* <MdClear /> */}
-          <span>Clear</span>
-        </Button>
-        <Button type="submit">
-          {/* <Save /> */}
-          <span>Save</span>
-        </Button>
-      </section>
-    </form>
+        <FormFooterButtons
+          clearAction={() => {
+            deleteCurrentForm();
+            form.reset();
+          }}
+          showNextButton={vehicles.length > 0}
+          nextAction={nextAndContinue}
+          isEditing={!!editing}
+        />
+      </form>
+    </section>
   );
 };
 

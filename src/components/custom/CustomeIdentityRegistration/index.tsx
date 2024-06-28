@@ -1,90 +1,66 @@
 "use client";
-import { Group, TextInput } from "@mantine/core";
+import { Group, Input, TextInput } from "@mantine/core";
 import Rows from "../rows";
 
 import { Textarea } from "@mantine/core";
 import Columns from "../columns";
-import { Save } from "lucide-react";
-import { MdClear } from "react-icons/md";
+import { User } from "lucide-react";
+
 import { Checkbox } from "@mantine/core";
 import { Title } from "@mantine/core";
 import { Select } from "@mantine/core";
 
 import { Button } from "@/components/ui/button";
 import AreYouSure from "../AreYouSure";
-import useMyHook from "./useMyHook";
-import { HookProps } from "./types";
-import Person from "./person";
+
 import { CUSTOMER_TITLES, CUSTOMER_TYPES, GENDERS } from "@/_utils/constants";
 import {
   getNationalities,
   getRegionsFromNationality,
   strToObjOfLabelAndValue,
 } from "@/_utils";
+import CustomerListDrawer from "./customer-list-drawer";
+import { useDisclosure } from "@mantine/hooks";
 
-const CustomerIdentityRegisteration = ({
-  type,
-  goBack,
-  goToNext,
-}: HookProps) => {
+import { useCustomerOperation } from "../../../app/(protected)/dashboard/_contexts/customer-operation-provider";
+
+import { useCustomerFormContext } from "@/app/(protected)/dashboard/_contexts/customer-form-context";
+import FormFooterButtons from "../form-footer-buttons";
+
+const CustomerIdentityRegisteration = () => {
   const {
-    toast,
-    alertInfo,
-    editPerson,
-    setAlertInfo,
-    deleteSinglePerson,
     deleteCurrentForm,
-    deleteAllPersons,
     nextAndContinue,
     submit,
     isOrganization,
-    editing,
-    setEditing,
     persons,
-    setPersons,
-    users,
-    form,
     nationality,
-  } = useMyHook({ type, goBack, goToNext });
+    type,
+    alertInfo,
+    editing,
+  } = useCustomerOperation();
+
+  const form = useCustomerFormContext();
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <div>
-      {persons && (
-        <div className="mb-4 flex w-full flex-wrap gap-3">
-          {persons.map((person, ind) => (
-            <Person
-              key={ind}
-              editing={editing == ind}
-              onEdit={() => {
-                setAlertInfo({
-                  title: "Edit information!",
-                  description:
-                    "If you edit this information, you will lose the current form, are you sure ?",
-                  execute: (cont: boolean) => {
-                    if (cont) {
-                      editPerson(ind);
-                    }
-                    setAlertInfo(null);
-                  },
-                });
-              }}
-              onDelete={() => {
-                setAlertInfo({
-                  title: "Delete information!",
-                  description:
-                    "Are you sure you want to delete this information ?",
-                  execute: (cont: boolean) => {
-                    if (cont) {
-                      deleteSinglePerson(ind);
-                    }
-                    setAlertInfo(null);
-                  },
-                });
-              }}
-              person={person}
-            />
-          ))}
-        </div>
-      )}
+      <CustomerListDrawer
+        title={`${type}'s list`}
+        opened={opened}
+        close={close}
+      >
+        <Button
+          onClick={open}
+          size="icon"
+          variant="outline"
+          className="relative rounded-full"
+        >
+          <User />
+          <span className="absolute -right-0 -top-2 bg-white text-lg font-semibold text-primary">
+            {persons.length}
+          </span>
+        </Button>
+      </CustomerListDrawer>
       {alertInfo && <AreYouSure {...alertInfo} />}
 
       <form
@@ -100,7 +76,7 @@ const CustomerIdentityRegisteration = ({
           {...form.getInputProps("customerType")}
           data={CUSTOMER_TYPES}
         />
-
+        <Input hidden {...form.getInputProps("_id")} key={form.key("_id")} />
         <Rows className="mt-5">
           <Title order={2} className="">
             {type}
@@ -250,6 +226,7 @@ const CustomerIdentityRegisteration = ({
               label="City"
               key={form.key("city")}
               {...form.getInputProps("city")}
+              withAsterisk
               placeholder="City"
             />
 
@@ -257,6 +234,7 @@ const CustomerIdentityRegisteration = ({
               label="Sub City"
               key={form.key("subcity")}
               {...form.getInputProps("subcity")}
+              withAsterisk
               placeholder="Subcity"
             />
           </Columns>
@@ -273,6 +251,7 @@ const CustomerIdentityRegisteration = ({
               type="number"
               key={form.key("houseNumber")}
               {...form.getInputProps("houseNumber")}
+              withAsterisk
               placeholder="House Number"
             />
 
@@ -281,6 +260,7 @@ const CustomerIdentityRegisteration = ({
               label="Phone No."
               key={form.key("phoneNumber")}
               {...form.getInputProps("phoneNumber")}
+              withAsterisk
               placeholder="09..."
             />
           </Columns>
@@ -294,39 +274,15 @@ const CustomerIdentityRegisteration = ({
           />
         </Rows>
 
-        <section className="my-7 flex justify-end gap-5">
-          <Button
-            type="button"
-            className="text-destructive"
-            onClick={() => {
-              setAlertInfo({
-                title: "Clear form!",
-                description: "Are you sure you want to clear this form ?",
-                execute: (cont: boolean) => {
-                  if (cont) {
-                    deleteCurrentForm();
-                  }
-                  setAlertInfo(null);
-                },
-              });
-            }}
-            variant={"outline"}
-          >
-            <MdClear className="text-bold me-1 text-xl" />
-            <span>Clear</span>
-          </Button>
-          <Button variant={"outline"}>
-            <Save className="text-bold me-1 text-xl" />
-            <span>Save</span>
-          </Button>
-        </section>
-        {persons.length > 0 && (
-          <section className="my-7 flex justify-end gap-5">
-            <Button onClick={() => nextAndContinue()} type="button">
-              <span>Next</span>
-            </Button>
-          </section>
-        )}
+        <FormFooterButtons
+          clearAction={() => {
+            deleteCurrentForm();
+            form.reset();
+          }}
+          showNextButton={persons.length > 0}
+          nextAction={nextAndContinue}
+          isEditing={!!editing}
+        />
       </form>
     </div>
   );

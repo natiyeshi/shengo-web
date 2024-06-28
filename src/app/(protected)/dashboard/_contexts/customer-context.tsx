@@ -1,117 +1,112 @@
-import { createFormContext } from "@mantine/form";
-import { ReactNode } from "react";
-import { CUSTOMER_TITLES, CUSTOMER_TYPES } from "@/_utils/constants";
-import { isNotEmpty } from "@/lib/utils";
+import {
+  PersonInfo,
+  customerFormContextInitial,
+} from "@/app/(protected)/dashboard/_contexts/customer-form-context";
+import { createContext, ReactNode, useContext, useState } from "react";
 
-export type PersonInfo = {
-  customerType: string;
-  customerTitle: string;
-  name: string;
-  fatherName: string;
-  grandFatherName: string;
-  gender: string;
-  nationality: string;
-  origin: string;
-  tin: number;
-  foreign: boolean;
-  region: string;
-  city: string;
-  subcity: string;
-  houseNumber: number;
-  phoneNumber: string;
-  otherAddress: string;
-
-  businessName: string;
-  grantorName: string;
-  jobPosition: string;
+export type EnhancedCustomerType = PersonInfo & { type: string };
+type CustomerContextType = {
+  customers: EnhancedCustomerType[];
+  getCustomerById: (_id: string) => PersonInfo | undefined
+  getCustomersByType: (type: string) => EnhancedCustomerType[];
+  addCustomer: (type: string, customer: PersonInfo) => void;
+  updateCustomerById: (
+    _id: string,
+    updatedCustomer: Partial<PersonInfo>,
+  ) => void;
+  removeCustomerById: (id: string) => void;
+  removeCustomersByType: (type: string) => void;
+  clearCustomers: () => void;
 };
 
-export const initialValues: PersonInfo = {
-  customerType: CUSTOMER_TYPES[0].value,
-  customerTitle: CUSTOMER_TITLES[0].value,
-  name: "nesru",
-  fatherName: "",
-  grandFatherName: "",
-  gender: "",
-  nationality: "ethiopian",
-  origin: "ethiopian",
-  tin: 0,
-  foreign: false,
-  region: "",
-  city: "",
-  subcity: "",
-  houseNumber: 0,
-  phoneNumber: "",
-  otherAddress: "",
-
-  businessName: "",
-  grantorName: "",
-  jobPosition: "",
+const customerContextInitial = {
+  customers: [],
+  getCustomerById: (_id: string) => undefined,
+  getCustomersByType: (type: string) => [],
+  addCustomer: () => {},
+  updateCustomerById: (id: string, updatedCustomer: Partial<PersonInfo>) => {},
+  removeCustomerById: (id: string) => {},
+  removeCustomersByType: (type: string) => {},
+  clearCustomers: () => {},
 };
 
-const [CustomerFormProvider, useCustomerFormContext, useCustomerForm] =
-  createFormContext<PersonInfo>();
+const CustomerContext = createContext<CustomerContextType>(
+  customerContextInitial,
+);
 
-export { useCustomerFormContext };
+type CustomerContextProviderProps = {
+  children: ReactNode;
+};
+export const CustomerContextProvider = ({
+  children,
+}: CustomerContextProviderProps) => {
+  const [customers, setCustomers] = useState<EnhancedCustomerType[]>([]);
 
-type Props = { children: ReactNode };
-export const CustomerIdentitryRegistrationProvider = ({ children }: Props) => {
-  const form = useCustomerForm({
-    mode: "uncontrolled",
-    initialValues,
-    validate: {
-      customerType: (value) =>
-        isNotEmpty(value) ? null : "Customer type is required",
-      customerTitle: (value) =>
-        isNotEmpty(value) ? null : "Customer title is required",
-      name: (value): any =>
-        form.getValues().customerType === "organization" || isNotEmpty(value)
-          ? null
-          : "Name is required",
-      fatherName: (value): any =>
-        form.getValues().customerType === "organization" || isNotEmpty(value)
-          ? null
-          : "Father name is required",
-      grandFatherName: (value): any =>
-        form.getValues().customerType === "organization" || isNotEmpty(value)
-          ? null
-          : "Grandfather name is required",
-      gender: (value) => (isNotEmpty(value) ? null : "Gender is required"),
-      nationality: (value) =>
-        isNotEmpty(value) ? null : "Nationality is required",
-      origin: (value): any =>
-        form.getValues().customerType === "organization" || isNotEmpty(value)
-          ? null
-          : "Origin is required",
-      tin: (value): any =>
-        form.getValues().customerType === "organization" || value
-          ? null
-          : "TIN must be a number",
-      region: (value) => (isNotEmpty(value) ? null : "Region is required"),
-      city: (value) => (isNotEmpty(value) ? null : "City is required"),
-      subcity: (value) => (isNotEmpty(value) ? null : "Subcity is required"),
-      houseNumber: (value) =>
-        value < 1 ? "House number must be a valid number" : null,
-      phoneNumber: (value) =>
-        value.trim().length > 8
-          ? null
-          : "Phone number is required and must be a valid number",
-      otherAddress: (value) =>
-        isNotEmpty(value) ? null : "Other address is required",
+  const addCustomer = (type: string, customer: PersonInfo) => {
+    setCustomers((prev) => [
+      ...prev,
+      { type, ...customer, _id: Date.now().toString() },
+    ]);
+  };
 
-      businessName: (value): any =>
-        form.getValues().customerType === "individual" || isNotEmpty(value)
-          ? null
-          : "Business Name is required",
-      grantorName: (value): any =>
-        form.getValues().customerType === "individual" || isNotEmpty(value)
-          ? null
-          : "Grantor Name is required",
-      jobPosition: (value): any =>
-        form.getValues().customerType === "individual" || isNotEmpty(value)
-          ? null
-          : "Job Position is required",
-    },
-  });
-  return <CustomerFormProvider form={form}>{children}</CustomerFormProvider>;
+  const getCustomerById = (id: string) => {
+    const customer = customers.find((customer) => customer._id === id);
+    if (customer) {
+      const { type, ...response } = customer;
+      return response;
+    }
+    return customer;
+  };
+  const getCustomersByType = (type: string) => {
+    return customers.filter((customer) => customer.type === type);
+  };
+
+  const updateCustomerById = (
+    id: string,
+    updatedCustomer: Partial<PersonInfo>,
+  ) => {
+    setCustomers((prev) =>
+      prev.map((customer) =>
+        customer._id === id ? { ...customer, ...updatedCustomer } : customer,
+      ),
+    );
+  };
+
+  const removeCustomerById = (id: string) => {
+    setCustomers((prev) => prev.filter((customer) => customer._id !== id));
+  };
+
+  const removeCustomersByType = (type: string) => {
+    setCustomers((prev) => prev.filter((customer) => customer.type !== type));
+  };
+
+  const clearCustomers = () => {
+    setCustomers([]);
+  };
+  return (
+    <CustomerContext.Provider
+      value={{
+        customers,
+        getCustomerById,
+        getCustomersByType,
+        addCustomer,
+        updateCustomerById,
+        removeCustomerById,
+        removeCustomersByType,
+        clearCustomers,
+      }}
+    >
+      {children}
+    </CustomerContext.Provider>
+  );
+};
+
+export const useCustomerContext = () => {
+  const context = useContext(CustomerContext);
+  if (!context) {
+    throw new Error(
+      "useCustomerContextProvider must be used within a CustomerContextProvider",
+    );
+  }
+  return context;
 };

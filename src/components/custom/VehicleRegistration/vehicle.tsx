@@ -1,18 +1,17 @@
 import React from "react";
-import { PersonInfo } from "@/app/(protected)/dashboard/_contexts/customer-form-context";
 import { Avatar, Group } from "@mantine/core";
 import { Edit, Trash } from "lucide-react";
-import { useCustomerOperation } from "@/app/(protected)/dashboard/_contexts/customer-operation-provider";
+import { Vehicle as VehicleType } from "@/app/(protected)/dashboard/_contexts/vehicle-form-context";
+import { useVehicleOperation } from "@/app/(protected)/dashboard/_contexts/vehicle-operation-context";
 
-interface props {
-  person: PersonInfo;
+type Props = {
+  vehicle: VehicleType;
   handelDrawerclose: Function;
-}
+};
 
-const Person = ({ person, handelDrawerclose }: props) => {
-  const isOrganization = person.customerType === "organization";
-  const { editPerson, editing, setAlertInfo, deleteSinglePerson } =
-    useCustomerOperation();
+const Vehicle = ({ vehicle, handelDrawerclose }: Props) => {
+  const { editVehicle, editing, setAlertInfo, deleteSingleVehicle } =
+    useVehicleOperation();
 
   const handleEdit = () => {
     handelDrawerclose();
@@ -22,7 +21,7 @@ const Person = ({ person, handelDrawerclose }: props) => {
         "If you edit this information, you will lose the current form, are you sure ?",
       execute: (cont: boolean) => {
         if (cont) {
-          editPerson(person._id);
+          editVehicle(vehicle._id);
         }
         setAlertInfo(null);
       },
@@ -36,7 +35,7 @@ const Person = ({ person, handelDrawerclose }: props) => {
       description: "Are you sure you want to delete this information ?",
       execute: (cont: boolean) => {
         if (cont) {
-          deleteSinglePerson(person._id);
+          deleteSingleVehicle(vehicle._id);
         }
         setAlertInfo(null);
       },
@@ -48,17 +47,9 @@ const Person = ({ person, handelDrawerclose }: props) => {
       <Group justify="space-between">
         <Group>
           <Avatar size="md" color="initials">
-            {isOrganization && person.businessName.charAt(0).toUpperCase()}
-            {!isOrganization && person.name.charAt(0).toUpperCase()}
+            {Vehicle.name.charAt(0).toUpperCase()}
           </Avatar>
-          {isOrganization && (
-            <span className="text-sm">{person.businessName}</span>
-          )}
-          {!isOrganization && (
-            <span className="text-sm">
-              {person.customerTitle}. {person.name}
-            </span>
-          )}
+          <span className="text-sm">{vehicle.vehicleType}</span>
         </Group>
 
         <Group>
@@ -74,4 +65,4 @@ const Person = ({ person, handelDrawerclose }: props) => {
   );
 };
 
-export default Person;
+export default Vehicle;

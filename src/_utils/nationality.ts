@@ -6,10 +6,7 @@ nationalities.registerLocale(require("i18n-nationality/langs/en.json"));
 
 export const getNationalities = () => {
   const nationalitiesValues = nationalities.getNames("en");
-  console.log(
-    "🚀 ~ getNationalities ~ nationalitiesValues:",
-    nationalitiesValues,
-  );
+
   return Object.keys(nationalitiesValues).map((countryCode) => ({
     countryCode,
     nationality: nationalitiesValues[countryCode],

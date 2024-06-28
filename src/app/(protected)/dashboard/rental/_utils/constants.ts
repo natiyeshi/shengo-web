@@ -1,9 +1,4 @@
-import { getNationalities } from "@/app/(protected)/dashboard/sales/_utils";
-import { SelectorData } from "../_types";
-
-export const RENTAL_VEHICLE_TABS_MAP: {
-  [key: string]: string;
-} = {
+export const RENTAL_VEHICLE_TABS_MAP = {
   lessor: "Lessor",
   renter: "Renter",
   vehicle: "Vehicle",
@@ -30,10 +25,7 @@ export const CUSTOMER_TYPES: string[] = [
   // "Insurance"
 ];
 
-export const GENDERS: string[] = [
-  "Male",
-  "Female"
-];
+export const GENDERS: string[] = ["Male", "Female"];
 
 export const CUSTOMER_TITLES: string[] = [
   "Mr",
@@ -42,9 +34,8 @@ export const CUSTOMER_TITLES: string[] = [
   "Miss",
   "W/t",
   "Ten-boss",
-  "Fifty-chief"
+  "Fifty-chief",
 ];
-
 
 // export const NATIONALITIES = Object.values(
 //   getNationalities().nationalities
@@ -52,12 +43,7 @@ export const CUSTOMER_TITLES: string[] = [
 //   title: nation,
 //   value: nation.toLowerCase(),
 // }));
-export const NATIONALITIES = [
-  "ETHIOPIA",
-  "KENYA",
-  "USA",
-  "ENGLAND"
-]
+export const NATIONALITIES = ["ETHIOPIA", "KENYA", "USA", "ENGLAND"];
 
 export const VEHICLE_CODES = [
   "3 Liu Tessabi",
@@ -67,16 +53,16 @@ export const VEHICLE_CODES = [
   "sk",
   "Daily",
   "Tellalfi",
-]
+];
 
-export const VEHICLE_TYPES = ["Car", "Truck", "Van", "Bus"]
+export const VEHICLE_TYPES = ["Car", "Truck", "Van", "Bus"];
 export const PAYMENT_TYPES = [
   "In Cash",
   "Cheque",
   "CPO",
   "In Kind",
   "In Transfer",
-]
+];
 
 export const BANK_NAMES = [
   "Commercial Bank",
@@ -84,4 +70,4 @@ export const BANK_NAMES = [
   "Dhashen Bank",
   "Addis Bank",
   "Zemzem Bank",
-]
+];

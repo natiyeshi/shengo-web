@@ -1,7 +1,7 @@
 // hooks/useWindowWidth.js
 "use client";
 
-import { useState } from "react";
+import {  useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { initialValues } from "../constants";
 import { AlertInf } from "../AreYouSure";
@@ -10,8 +10,7 @@ import { HookProps } from "./types";
 import {
   PersonInfo,
   useCustomerFormContext,
-} from "@/app/(protected)/dashboard/_contexts/customer-context";
-
+} from "@/app/(protected)/dashboard/_contexts/customer-form-context";
 const useMyHook = ({ type, goBack, goToNext }: HookProps) => {
   const { toast } = useToast();
   const form = useCustomerFormContext();
@@ -35,8 +34,6 @@ const useMyHook = ({ type, goBack, goToNext }: HookProps) => {
   const isOrganization = customerType === "organization";
 
   const submit = () => {
-    console.log(form.validate());
-    console.log(form.getValues());
     const { hasErrors } = form.validate();
     if (hasErrors) return;
     form.setValues(initialValues);
