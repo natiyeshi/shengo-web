@@ -44,7 +44,10 @@ const Sidebar = (props: Props) => {
       >
         <MyAccordion
           trigger={"Sales"}
-          contents={[{ name: "Vehicle", url: "/dashboard/sales/vehicle" }]}
+          contents={[
+            { name: "Vehicle", url: "/dashboard/sales/vehicle" },
+            { name: "Residence", url: "/dashboard/sales/residence" },
+          ]}
         />
         <MyAccordion
           trigger={"Rental"}
