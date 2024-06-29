@@ -1,21 +1,17 @@
 "use client";
 
 import { MenuIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import MyAccordion from "./MyAccordion";
 import { cn } from "@/lib/utils";
-import { useViewportSize } from "@mantine/hooks";
+import { useSidebarVisibilityDeterminer } from "@/hooks/use-sidebar-visibility-determiner";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
-  const { width } = useViewportSize();
-  const [isSidebarOpended, setIsSidebarOpended] = useState(true);
-
-  useEffect(() => {
-    if (width <= 650) setIsSidebarOpended(false);
-    else setIsSidebarOpended(true);
-  }, [width]);
+  const { isSidebarOpended, setIsSidebarOpended } =
+    useSidebarVisibilityDeterminer({
+      minViewportSize: 650,
+    });
   return (
     <section
       className={cn(
@@ -49,6 +45,10 @@ const Sidebar = (props: Props) => {
         <MyAccordion
           trigger={"Sales"}
           contents={[{ name: "Vehicle", url: "/dashboard/sales/vehicle" }]}
+        />
+        <MyAccordion
+          trigger={"Rental"}
+          contents={[{ name: "Vehicle", url: "/dashboard/rental/vehicle" }]}
         />
       </div>
     </section>

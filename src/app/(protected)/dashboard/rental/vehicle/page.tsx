@@ -1,51 +1,30 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { RENTAL_VEHICLE_TABS_MAP } from "../_utils/constants";
-import CustomerIdentityRegisteration from "@/components/custom/CustomeIdentityRegistration";
-import VehicleRegistration from "@/components/custom/VehicleRegistration";
-import ServiceRequest from "../_components/service-request";
+import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
+import VehicleRegistration from "@/components/custom/vehicle-registration";
+
 import { Title } from "@mantine/core";
 import {
   Carousel,
-  CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { toast } from "@/components/ui/use-toast";
-import { CustomerFormProvider } from "../../_contexts/customer-form-context";
-import { CustomerOperationProvider } from "@/app/(protected)/dashboard/_contexts/customer-operation-provider";
-import { CustomerContextProvider } from "@/app/(protected)/dashboard/_contexts/customer-context";
-import { VehicleContextProvider } from "../../_contexts/vehicle-context";
-import { VehicleOperationProvider } from "../../_contexts/vehicle-operation-context";
-import { VehicleFormProvider } from "../../_contexts/vehicle-form-context";
-type RentalVehicleTabKeys = keyof typeof RENTAL_VEHICLE_TABS_MAP;
+import { CustomerFormProvider } from "../../_contexts/customer/customer-form-context";
+import { CustomerOperationProvider } from "@/app/(protected)/dashboard/_contexts/customer/customer-operation-provider";
+import { CustomerContextProvider } from "@/app/(protected)/dashboard/_contexts/customer/customer-context";
+import { VehicleContextProvider } from "../../_contexts/vehicle/vehicle-context";
+import { VehicleOperationProvider } from "../../_contexts/vehicle/vehicle-operation-context";
+import { VehicleFormProvider } from "../../_contexts/vehicle/vehicle-form-context";
+import ServiceRequest from "@/components/custom/service-request";
+import Tabs from "@/components/custom/tabs";
+import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 
 const Page = () => {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(1);
-  const [count, setCount] = useState(5);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
+  const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
+    useCarouselAPI({
+      tabsMap: RENTAL_VEHICLE_TABS_MAP,
     });
-  }, [api]);
-
-  const defaultTabValue = Object.keys(RENTAL_VEHICLE_TABS_MAP)[0];
-
-  const goToNext = (ind: number | null) => {
-    api && api.scrollTo(ind ?? current);
-  };
-
-  const goBack = (ind: number | null) => {
-    api && api.scrollTo(ind ?? current - 2);
-  };
 
   return (
     <main className="container">
@@ -56,29 +35,14 @@ const Page = () => {
         <VehicleContextProvider>
           <section>
             <section defaultValue={defaultTabValue}>
-              <div className="mb-7 rounded-md bg-muted py-1">
-                {Object.keys(RENTAL_VEHICLE_TABS_MAP).map((tabKey, ind) => (
-                  <div
-                    className={`${current - 1 === ind && "rounded-sm border-b-4 border-primary px-2 py-1 font-semibold text-primary"} inline-flex cursor-pointer items-center justify-center px-3 py-1.5 text-sm transition-all`}
-                    onClick={() => {
-                      if (current - 1 < ind) {
-                        return toast({
-                          title: "Warning",
-                          description: "Please fill the current form first!",
-                          variant: "destructive",
-                        });
-                      }
-                      api && api.scrollTo(ind);
-                    }}
-                    key={tabKey}
-                  >
-                    {RENTAL_VEHICLE_TABS_MAP[tabKey as RentalVehicleTabKeys]}
-                  </div>
-                ))}
-              </div>
+              <Tabs
+                carouselApi={api}
+                current={current}
+                tabsMap={RENTAL_VEHICLE_TABS_MAP}
+              />
 
               <Carousel
-                setApi={setApi}
+                setApi={setAPI}
                 opts={{
                   watchDrag: false,
                   align: "start",

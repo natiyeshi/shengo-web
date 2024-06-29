@@ -1,14 +1,4 @@
-import { Selector } from "@/types";
-
-export const SALES_TABS_MAP: {
-  [key: string]: string;
-} = {
-  saler: "Saler",
-  buyer: "Buyer",
-  vehicle: "Vehicle",
-  withness: "Withness",
-  service: "Service",
-};
+import { Selector } from "../app/(protected)/dashboard/_types";
 
 export const CUSTOMER_TYPES: Selector[] = [
   { label: "Individual", value: "individual" },

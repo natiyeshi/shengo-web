@@ -6,13 +6,12 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogOverlay,
   AlertDialogTitle,
-  AlertDialogTrigger,
+
 } from "@/components/ui/alert-dialog";
 import { Group } from "@mantine/core";
 
-export type AlertInf = {
+export type AlertInfo = {
   open?: boolean;
   title: string;
   description: string;
@@ -24,7 +23,7 @@ export default function AreYouSure({
   description,
   open = true,
   execute,
-}: AlertInf) {
+}: AlertInfo) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent className="w-[85%] max-w-[30rem]">

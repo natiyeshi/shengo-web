@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/accordion";
 import { usePathname } from "next/navigation";
 
-export interface ContentInf {
+export interface ContentInfo {
   url: string;
   name: string;
 }
 
 interface Props {
-  contents: ContentInf[];
+  contents: ContentInfo[];
   trigger: string;
 }
 
