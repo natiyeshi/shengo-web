@@ -9,32 +9,32 @@ import {
 } from "@/components/ui/accordion";
 import { usePathname } from "next/navigation";
 
-export interface ContentInf {
+export interface ContentInfo {
   url: string;
   name: string;
 }
 
 interface Props {
-  contents: ContentInf[];
+  contents: ContentInfo[];
   trigger: string;
 }
 
 const MyAccordion = ({ trigger, contents }: Props) => {
   const pathname = usePathname();
-  const mainPath = pathname.split("/")[2] == trigger.toLowerCase()
+  const mainPath = pathname.split("/")[2] == trigger.toLowerCase();
   return (
-    <Accordion type="single" collapsible  >
-      <AccordionItem value="item-1" className="border-none">
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1" className="overflow-hidden border-none">
         <AccordionTrigger className="text-sm">
           <div className="font-semibold">{trigger}</div>
         </AccordionTrigger>
-        <AccordionContent  className="dark flex flex-col gap-2 px-2">
+        <AccordionContent className="dark flex flex-col gap-2 px-2">
           {contents.map((value, ind) => {
             const isCurrent = value.url == pathname;
             return (
               <Link
                 key={ind}
-                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} duration-500 px-2 py-1 hover:underline`}
+                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} px-2 py-1 duration-500 hover:underline`}
                 href={value.url}
               >
                 {value.name}

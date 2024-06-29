@@ -1,8 +1,8 @@
-
 import MyAccordion from "@/components/custom/MyAccordion";
+import Sidebar from "@/components/custom/side-bar";
 import { MenuIcon } from "lucide-react";
 import React from "react";
-
+import Header from "./dashboard/_components/header";
 
 function Layout({ children }: any) {
   const salesOptions = [
@@ -22,20 +22,12 @@ function Layout({ children }: any) {
   ];
   // "/dashboard/sales/residence"
   return (
-    <div className="flex h-[100vh] w-full">
-      <div className="flex h-full w-[25%] flex-col overflow-auto bg-primary text-primary-foreground">
-        <div className="flex w-full gap-2 py-8 ps-4">
-          <MenuIcon />
-          <div>SHENGO SOLUTIONS</div>
-        </div>
-        <div className="overflow-auto px-4">
-          <MyAccordion trigger={"Sales"} contents={salesOptions} />
-          <MyAccordion trigger={"Gifts"} contents={giftsOptions} />
-          <MyAccordion trigger={"Rental"} contents={rentalOptions} />
-        </div>
-      </div>
-
-      <div className="h-full w-[75%] overflow-auto pb-5">{children}</div>
+    <div className="flex h-screen w-screen overflow-hidden">
+      <Sidebar />
+      <section className="flex w-full flex-col overflow-x-auto">
+        <Header />
+        <div className="overflow-y-auto">{children}</div>
+      </section>
     </div>
   );
 }
