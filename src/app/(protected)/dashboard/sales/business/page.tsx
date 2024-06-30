@@ -6,15 +6,15 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Title } from "@mantine/core";
-import { SALES_VEHICLE_TABS_MAP } from "../_utils/constants";
+import { SALES_BUSINESS_TABS_MAP } from "../_utils/constants";
 import { CustomerContextProvider } from "../../_contexts/customer/customer-context";
-import { VehicleContextProvider } from "../../_contexts/vehicle/vehicle-context";
+import { BusinessContextProvider } from "../../_contexts/business/business-context";
 import { CustomerFormProvider } from "../../_contexts/customer/customer-form-context";
 import { CustomerOperationProvider } from "../../_contexts/customer/customer-operation-provider";
 import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
-import { VehicleFormProvider } from "../../_contexts/vehicle/vehicle-form-context";
-import { VehicleOperationProvider } from "../../_contexts/vehicle/vehicle-operation-context";
-import VehicleRegistration from "@/components/custom/vehicle-registration";
+import { BusinessFormProvider } from "../../_contexts/business/business-form-context";
+import { BusinessOperationProvider } from "../../_contexts/business/business-operation-context";
+import BusinessRegistration from "@/components/custom/business-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
@@ -22,21 +22,21 @@ import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
     useCarouselAPI({
-      tabsMap: SALES_VEHICLE_TABS_MAP,
+      tabsMap: SALES_BUSINESS_TABS_MAP,
     });
   return (
     <main className="container">
       <Title order={1} className="my-5">
-        Vehicle Rental
+        Business 
       </Title>
       <CustomerContextProvider>
-        <VehicleContextProvider>
+        <BusinessContextProvider>
           <section>
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}
                 current={current}
-                tabsMap={SALES_VEHICLE_TABS_MAP}
+                tabsMap={SALES_BUSINESS_TABS_MAP}
               />
 
               <Carousel
@@ -51,7 +51,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_VEHICLE_TABS_MAP.saler}
+                        type={SALES_BUSINESS_TABS_MAP.saler}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -61,7 +61,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_VEHICLE_TABS_MAP.buyer}
+                        type={SALES_BUSINESS_TABS_MAP.buyer}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -69,18 +69,18 @@ const Page = () => {
                     </CustomerFormProvider>
                   </CarouselItem>
                   <CarouselItem>
-                    <VehicleFormProvider>
-                      <VehicleOperationProvider
+                    <BusinessFormProvider>
+                      <BusinessOperationProvider
                         carouselAction={{ goBack, goToNext }}
                       >
-                        <VehicleRegistration />
-                      </VehicleOperationProvider>
-                    </VehicleFormProvider>
+                        <BusinessRegistration />
+                      </BusinessOperationProvider>
+                    </BusinessFormProvider>
                   </CarouselItem>
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_VEHICLE_TABS_MAP.withness}
+                        type={SALES_BUSINESS_TABS_MAP.withness}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -94,7 +94,7 @@ const Page = () => {
               </Carousel>
             </section>
           </section>
-        </VehicleContextProvider>
+        </BusinessContextProvider>
       </CustomerContextProvider>
     </main>
   );

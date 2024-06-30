@@ -8,6 +8,22 @@ import { useSidebarVisibilityDeterminer } from "@/hooks/use-sidebar-visibility-d
 type Props = {};
 
 const Sidebar = (props: Props) => {
+  const salesOptions = [
+    { name: "Vehicle", url: "/dashboard/sales/vehicle" },
+    { name: "Residence", url: "/dashboard/sales/residence" },
+    { name: "Business", url: "/dashboard/sales/business" },
+  ];
+  const giftsOptions = [
+    { name: "Vehicle", url: "/dashboard/gifts/vehicle" },
+    { name: "Residence", url: "/dashboard/gifts/residence" },
+    { name: "Business", url: "/dashboard/gifts/business" },
+  ];
+  const rentalOptions = [
+    { name: "Vehicle", url: "/dashboard/rental/vehicle" },
+    { name: "Residence", url: "/dashboard/rental/residence" },
+    { name: "Business", url: "/dashboard/rental/business" },
+  ];
+
   const { isSidebarOpended, setIsSidebarOpended } =
     useSidebarVisibilityDeterminer({
       minViewportSize: 650,
@@ -44,7 +60,7 @@ const Sidebar = (props: Props) => {
       >
         <MyAccordion
           trigger={"Sales"}
-          contents={[{ name: "Vehicle", url: "/dashboard/sales/vehicle" }]}
+          contents={salesOptions}
         />
         <MyAccordion
           trigger={"Rental"}
