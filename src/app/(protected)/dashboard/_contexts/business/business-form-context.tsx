@@ -25,7 +25,6 @@ export type Business = {
 export const businessInitialValues: Business = {
   _id: "1323",
   licenseNumber: "L789012", 
-  
   registrationNumber: "B123456", 
   businessName: "Tech Innovations", 
   businessType: "IT Services", 

@@ -12,6 +12,10 @@ const Sidebar = (props: Props) => {
     { name: "Vehicle", url: "/dashboard/sales/vehicle" },
     { name: "Residence", url: "/dashboard/sales/residence" },
     { name: "Business", url: "/dashboard/sales/business" },
+    { name: "Other Property", url: "/dashboard/sales/otherproperty" },
+    { name: "Vehicle Spare Part", url: "/dashboard/sales/vehiclespare" },
+    { name: "Motor Cycle", url: "/dashboard/sales/motorcycle" },
+    { name: "Construction Machine", url: "/dashboard/sales/constructionmachine" },
   ];
   const giftsOptions = [
     { name: "Vehicle", url: "/dashboard/gifts/vehicle" },
