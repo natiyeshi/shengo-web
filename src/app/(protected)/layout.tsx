@@ -5,21 +5,7 @@ import React from "react";
 import Header from "./dashboard/_components/header";
 
 function Layout({ children }: any) {
-  const salesOptions = [
-    { name: "Vehicle", url: "/dashboard/sales/vehicle" },
-    { name: "Residence", url: "/dashboard/sales/residence" },
-    { name: "Business", url: "/dashboard/sales/business" },
-  ];
-  const giftsOptions = [
-    { name: "Vehicle", url: "/dashboard/gifts/vehicle" },
-    { name: "Residence", url: "/dashboard/gifts/residence" },
-    { name: "Business", url: "/dashboard/gifts/business" },
-  ];
-  const rentalOptions = [
-    { name: "Vehicle", url: "/dashboard/rental/vehicle" },
-    { name: "Residence", url: "/dashboard/rental/residence" },
-    { name: "Business", url: "/dashboard/rental/business" },
-  ];
+  
   // "/dashboard/sales/residence"
   return (
     <div className="flex h-screen w-screen overflow-hidden">

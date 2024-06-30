@@ -13,3 +13,12 @@ export const SALES_RESIDENCE_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
+
+
+export const SALES_BUSINESS_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "business",
+  withness: "Withness",
+  service: "Service",
+};
