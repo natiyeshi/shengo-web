@@ -70,10 +70,51 @@ export const VEHICLE_CODES = [
   value: code,
 }));
 
+
+export const MOTORCYCLE_CODES = [
+  "3 Liu Tessabi",
+  "UN Code",
+  "AU Code",
+  "ED Code",
+  "sk",
+  "Daily",
+  "Tellalfi",
+].map((code) => ({
+  label: code,
+  value: code,
+}));
+
+
+export const CONSTRUCTIONMACHINE_CODES  = [
+  "3 Liu Tessabi",
+  "UN Code",
+  "AU Code",
+  "ED Code",
+  "sk",
+  "Daily",
+  "Tellalfi",
+].map((code) => ({
+  label: code,
+  value: code,
+}));
+
+
 export const VEHICLE_TYPES = ["Car", "Truck", "Van", "Bus"].map((vehicle) => ({
   label: vehicle,
   value: vehicle.toLowerCase(),
 }));
+
+export const MOTORCYCLE_TYPES = ["Car", "Truck", "Van", "Bus"].map((motorycle) => ({
+  label: motorycle,
+  value: motorycle.toLowerCase(),
+}));
+
+export const CONSTRUCTIONMACHINE_TYPES = ["Car", "Truck", "Van", "Bus"].map((constructionmachine) => ({
+  label: constructionmachine,
+  value: constructionmachine.toLowerCase(),
+}));
+
+
 export const PAYMENT_TYPES = [
   "In Cash",
   "Cheque",

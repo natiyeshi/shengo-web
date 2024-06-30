@@ -22,3 +22,39 @@ export const SALES_BUSINESS_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
+
+
+export const SALES_PROPERTY_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "otherproperty",
+  withness: "Withness",
+  service: "Service",
+};
+
+
+export const SALES_VEHICLESPARE_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "Vehicle Spare Part",
+  withness: "Withness",
+  service: "Service",
+};
+
+
+export const SALES_MOTORCYCLE_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "Motor Cycle",
+  withness: "Withness",
+  service: "Service",
+};
+
+
+export const SALES_CONSTRUCTIONMACHINE_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "Construction Machine",
+  withness: "Withness",
+  service: "Service",
+};
