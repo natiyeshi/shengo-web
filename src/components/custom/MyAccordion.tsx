@@ -34,7 +34,7 @@ const MyAccordion = ({ trigger, contents }: Props) => {
             return (
               <Link
                 key={ind}
-                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} px-2 py-1 duration-500 hover:underline`}
+                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} px-2 py-1 transition-all duration-300 hover:bg-white/10`}
                 href={value.url}
               >
                 {value.name}
