@@ -24,15 +24,15 @@ const Page = () => {
     useCarouselAPI({
       tabsMap: SALES_PROPERTY_TABS_MAP,
     });
-    
+
   return (
     <main className="container">
-      <Title order={1} className="my-5">
+      {/* <Title order={1} className="my-5">
         Other Properties 
-      </Title>
+      </Title> */}
       <CustomerContextProvider>
         <PropertyContextProvider>
-          <section>
+          <section className="mt-5">
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}
