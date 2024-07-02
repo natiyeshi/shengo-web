@@ -28,12 +28,12 @@ const Page = () => {
 
   return (
     <main className="container">
-      <Title order={1} className="my-5">
+      {/* <Title order={1} className="my-5">
         Vehicle Rental
-      </Title>
+      </Title> */}
       <CustomerContextProvider>
         <VehicleContextProvider>
-          <section>
+          <section className="mt-5">
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}

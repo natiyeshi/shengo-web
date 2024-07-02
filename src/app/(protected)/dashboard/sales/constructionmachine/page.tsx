@@ -14,7 +14,7 @@ import { CustomerOperationProvider } from "../../_contexts/customer/customer-ope
 import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
 import { ConstructionmachineFormProvider } from "../../_contexts/constructionmachine/constructionmachine-form-context";
 import { ConstructionmachineOperationProvider } from "../../_contexts/constructionmachine/constructionmachine-operation-context";
-import ConstructionmachineRegistration from "@/components/custom/constructionmachine-registration";
+import ConstructionmachineRegistration from "@/components/custom/construction-machine-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
@@ -24,15 +24,15 @@ const Page = () => {
     useCarouselAPI({
       tabsMap: SALES_CONSTRUCTIONMACHINE_TABS_MAP,
     });
-    
+
   return (
     <main className="container">
-      <Title order={1} className="my-5">
+      {/* <Title order={1} className="my-5">
         Construction Machine 
-      </Title>
+      </Title> */}
       <CustomerContextProvider>
         <ConstructionmachineContextProvider>
-          <section>
+          <section className="mt-5">
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}

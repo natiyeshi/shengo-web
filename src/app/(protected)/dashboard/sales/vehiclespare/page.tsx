@@ -20,17 +20,18 @@ import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 
 const Page = () => {
-  const { defaultTabValue, current, api, setAPI, goBack, goToNext } = useCarouselAPI({
-    tabsMap: SALES_VEHICLESPARE_TABS_MAP,
-  });
+  const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
+    useCarouselAPI({
+      tabsMap: SALES_VEHICLESPARE_TABS_MAP,
+    });
   return (
     <main className="container">
-      <Title order={1} className="my-5">
+      {/* <Title order={1} className="my-5">
         Vehicle Spare Part
-      </Title>
+      </Title> */}
       <CustomerContextProvider>
         <VehiclespareContextProvider>
-          <section>
+          <section className="mt-5">
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}
@@ -38,7 +39,7 @@ const Page = () => {
                 tabsMap={SALES_VEHICLESPARE_TABS_MAP}
               />
 
-              <Carousel 
+              <Carousel
                 setApi={setAPI}
                 opts={{
                   watchDrag: false,
