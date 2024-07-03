@@ -41,6 +41,7 @@ const useResidenceOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully updated a Residence!`,
+        duration : 3000,
       });
       updateResidenceById(form.getValues()._id, form.getValues());
       setEditing(undefined);
@@ -48,6 +49,7 @@ const useResidenceOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully added a Residence!`,
+        duration : 3000,
       });
       addResidence(form.getValues());
     }
@@ -64,6 +66,7 @@ const useResidenceOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted all Residence!`,
+      duration : 3000,
     });
   };
 
@@ -76,6 +79,7 @@ const useResidenceOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted a Residence`,
+      duration : 3000,
     });
   };
 

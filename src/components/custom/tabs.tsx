@@ -20,6 +20,7 @@ const Tabs = ({ current, tabsMap, carouselApi }: Props) => {
                 title: "Warning",
                 description: "Please fill the current form first!",
                 variant: "destructive",
+                duration: 3000,
               });
             }
             carouselApi && carouselApi.scrollTo(ind);
