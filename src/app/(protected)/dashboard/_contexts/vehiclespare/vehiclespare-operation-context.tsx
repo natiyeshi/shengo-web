@@ -41,6 +41,7 @@ const useVehiclespareOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully updated a Vehiclespare!`,
+        duration : 3000,
       });
       updateVehiclespareById(form.getValues()._id, form.getValues());
       setEditing(undefined);
@@ -48,6 +49,7 @@ const useVehiclespareOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully added a Vehiclespare!`,
+        duration : 3000,
       });
       addVehiclespare(form.getValues());
     }
@@ -64,6 +66,7 @@ const useVehiclespareOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted all Vehiclespare!`,
+      duration : 3000,
     });
   };
 
@@ -76,6 +79,7 @@ const useVehiclespareOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted a Vehiclespare`,
+      duration : 3000,
     });
   };
 

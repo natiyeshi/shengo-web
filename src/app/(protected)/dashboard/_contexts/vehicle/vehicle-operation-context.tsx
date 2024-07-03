@@ -40,6 +40,7 @@ const useVehicleOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully updated a Vehicle!`,
+        duration: 3000,
       });
       updateVehicleById(form.getValues()._id, form.getValues());
       setEditing(undefined);
@@ -47,6 +48,7 @@ const useVehicleOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully added a Vehicle!`,
+        duration: 3000,
       });
       addVehicle(form.getValues());
     }
@@ -63,6 +65,7 @@ const useVehicleOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted all Vehicle!`,
+      duration: 3000,
     });
   };
 
@@ -75,6 +78,7 @@ const useVehicleOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted a Vehicle`,
+      duration: 3000,
     });
   };
 

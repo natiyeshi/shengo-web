@@ -40,6 +40,7 @@ const usePropertyOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully updated a Property!`,
+        duration : 3000,
       });
       updatePropertyById(form.getValues()._id, form.getValues());
       setEditing(undefined);
@@ -47,6 +48,7 @@ const usePropertyOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully added a Property!`,
+        duration : 3000,
       });
       addProperty(form.getValues());
     }
@@ -63,6 +65,7 @@ const usePropertyOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted all Property!`,
+      duration : 3000,
     });
   };
 
@@ -75,6 +78,7 @@ const usePropertyOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted a Property`,
+      duration : 3000,
     });
   };
 

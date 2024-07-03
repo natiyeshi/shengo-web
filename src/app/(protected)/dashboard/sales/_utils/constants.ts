@@ -58,3 +58,11 @@ export const SALES_CONSTRUCTIONMACHINE_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
+
+export const SALES_LEASE_TABS_MAP = {
+  saler: "Saler",
+  buyer: "Buyer",
+  business: "Lease",
+  withness: "Withness",
+  service: "Service",
+}

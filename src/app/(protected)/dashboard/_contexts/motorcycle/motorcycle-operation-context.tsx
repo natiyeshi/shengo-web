@@ -40,6 +40,7 @@ const useMotorcycleOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully updated a Motorcycle!`,
+        duration : 3000,
       });
       updateMotorcycleById(form.getValues()._id, form.getValues());
       setEditing(undefined);
@@ -47,6 +48,7 @@ const useMotorcycleOperationUtilities = ({
       toast({
         title: "Completed!",
         description: `You successfully added a Motorcycle!`,
+        duration : 3000,
       });
       addMotorcycle(form.getValues());
     }
@@ -63,6 +65,7 @@ const useMotorcycleOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted all Motorcycle!`,
+      duration : 3000,
     });
   };
 
@@ -75,6 +78,7 @@ const useMotorcycleOperationUtilities = ({
     toast({
       title: "Task Completed!",
       description: `You successfully deleted a Motorcycle`,
+      duration : 3000,
     });
   };
 
