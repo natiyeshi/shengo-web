@@ -6,15 +6,15 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Title } from "@mantine/core";
-import { SALES_MOTORCYCLE_TABS_MAP } from "../_utils/constants";
+import { GIFTS_PROPERTY_TABS_MAP } from "../_utils/constants";
 import { CustomerContextProvider } from "../../_contexts/customer/customer-context";
-import { MotorcycleContextProvider } from "../../_contexts/motorcycle/motorcycle-context";
+import { PropertyContextProvider } from "../../_contexts/property/property-context";
 import { CustomerFormProvider } from "../../_contexts/customer/customer-form-context";
 import { CustomerOperationProvider } from "../../_contexts/customer/customer-operation-provider";
 import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
-import { MotorcycleFormProvider } from "../../_contexts/motorcycle/motorcycle-form-context";
-import { MotorcycleOperationProvider } from "../../_contexts/motorcycle/motorcycle-operation-context";
-import MotorcycleRegistration from "@/components/custom/motorcycle-registration";
+import { PropertyFormProvider } from "../../_contexts/property/property-form-context";
+import { PropertyOperationProvider } from "../../_contexts/property/property-operation-context";
+import PropertyRegistration from "@/components/custom/property-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
@@ -22,22 +22,22 @@ import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
     useCarouselAPI({
-      tabsMap: SALES_MOTORCYCLE_TABS_MAP,
+      tabsMap: GIFTS_PROPERTY_TABS_MAP,
     });
-    
+
   return (
     <main className="container">
       {/* <Title order={1} className="my-5">
-        Motor Cycle 
+        Other Properties 
       </Title> */}
       <CustomerContextProvider>
-        <MotorcycleContextProvider>
-          <section>
+        <PropertyContextProvider>
+          <section className="mt-5">
             <section defaultValue={defaultTabValue}>
               <Tabs
                 carouselApi={api}
                 current={current}
-                tabsMap={SALES_MOTORCYCLE_TABS_MAP}
+                tabsMap={GIFTS_PROPERTY_TABS_MAP}
               />
 
               <Carousel
@@ -52,7 +52,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_MOTORCYCLE_TABS_MAP.saler}
+                        type={GIFTS_PROPERTY_TABS_MAP.saler}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -62,7 +62,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_MOTORCYCLE_TABS_MAP.buyer}
+                        type={GIFTS_PROPERTY_TABS_MAP.buyer}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -70,18 +70,18 @@ const Page = () => {
                     </CustomerFormProvider>
                   </CarouselItem>
                   <CarouselItem>
-                    <MotorcycleFormProvider>
-                      <MotorcycleOperationProvider
+                    <PropertyFormProvider>
+                      <PropertyOperationProvider
                         carouselAction={{ goBack, goToNext }}
                       >
-                        <MotorcycleRegistration />
-                      </MotorcycleOperationProvider>
-                    </MotorcycleFormProvider>
+                        <PropertyRegistration />
+                      </PropertyOperationProvider>
+                    </PropertyFormProvider>
                   </CarouselItem>
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={SALES_MOTORCYCLE_TABS_MAP.withness}
+                        type={GIFTS_PROPERTY_TABS_MAP.withness}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -95,7 +95,7 @@ const Page = () => {
               </Carousel>
             </section>
           </section>
-        </MotorcycleContextProvider>
+        </PropertyContextProvider>
       </CustomerContextProvider>
     </main>
   );

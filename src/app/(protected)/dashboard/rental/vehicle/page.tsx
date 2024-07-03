@@ -53,7 +53,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={RENTAL_VEHICLE_TABS_MAP.lessor}
+                        type={RENTAL_VEHICLE_TABS_MAP.saler}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
@@ -63,7 +63,7 @@ const Page = () => {
                   <CarouselItem>
                     <CustomerFormProvider>
                       <CustomerOperationProvider
-                        type={RENTAL_VEHICLE_TABS_MAP.renter}
+                        type={RENTAL_VEHICLE_TABS_MAP.buyer}
                         carouselAction={{ goBack, goToNext }}
                       >
                         <CustomerIdentityRegisteration />
