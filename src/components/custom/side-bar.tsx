@@ -15,20 +15,41 @@ const Sidebar = (props: Props) => {
     { name: "Other Property", url: "/dashboard/sales/otherproperty" },
     { name: "Vehicle Spare Part", url: "/dashboard/sales/vehiclespare" },
     { name: "Motor Cycle", url: "/dashboard/sales/motorcycle" },
-    { name: "Construction Machine", url: "/dashboard/sales/constructionmachine" },
+    {
+      name: "Construction Machine",
+      url: "/dashboard/sales/constructionmachine",
+    },
     { name: "Lease", url: "/dashboard/sales/lease" },
-  ]
-
-  const giftsOptions = [
-    { name: "Vehicle", url: "/dashboard/gifts/vehicle" },
-    { name: "Residence", url: "/dashboard/gifts/residence" },
-    { name: "Business", url: "/dashboard/gifts/business" },
   ];
+
   const rentalOptions = [
     { name: "Vehicle", url: "/dashboard/rental/vehicle" },
     { name: "Residence", url: "/dashboard/rental/residence" },
     { name: "Business", url: "/dashboard/rental/business" },
+    { name: "Other Property", url: "/dashboard/rental/otherproperty" },
+    { name: "Vehicle Spare Part", url: "/dashboard/rental/vehiclespare" },
+    { name: "Motor Cycle", url: "/dashboard/rental/motorcycle" },
+    {
+      name: "Construction Machine",
+      url: "/dashboard/rental/constructionmachine",
+    },
+    { name: "Lease", url: "/dashboard/rental/lease" },
   ];
+  const giftsOptions = [
+    { name: "Vehicle", url: "/dashboard/gifts/vehicle" },
+    { name: "Residence", url: "/dashboard/gifts/residence" },
+    { name: "Business", url: "/dashboard/gifts/business" },
+    { name: "Other Property", url: "/dashboard/gifts/otherproperty" },
+    { name: "Vehicle Spare Part", url: "/dashboard/gifts/vehiclespare" },
+    { name: "Motor Cycle", url: "/dashboard/gifts/motorcycle" },
+    {
+      name: "Construction Machine",
+      url: "/dashboard/gifts/constructionmachine",
+    },
+    { name: "Lease", url: "/dashboard/gifts/lease" },
+  ];
+
+  const loanOptions = [{ name: "Normal", url: "/dashboard/loan/normal" }];
 
   const { isSidebarOpended, setIsSidebarOpended } =
     useSidebarVisibilityDeterminer({
@@ -64,14 +85,10 @@ const Sidebar = (props: Props) => {
           hidden: !isSidebarOpended,
         })}
       >
-        <MyAccordion
-          trigger={"Sales"}
-          contents={salesOptions}
-        />
-        <MyAccordion
-          trigger={"Rental"}
-          contents={[{ name: "Vehicle", url: "/dashboard/rental/vehicle" }]}
-        />
+        <MyAccordion trigger={"Sales"} contents={salesOptions} />
+        <MyAccordion trigger={"Rental"} contents={rentalOptions} />
+        <MyAccordion trigger={"Gifts"} contents={giftsOptions} />
+        <MyAccordion trigger={"Loan"} contents={loanOptions} />
       </div>
     </section>
   );
