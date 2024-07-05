@@ -48,6 +48,9 @@ const Sidebar = (props: Props) => {
     },
     { name: "Lease", url: "/dashboard/gifts/lease" },
   ];
+  const familyOptions = [
+    { name: "Normal", url: "/dashboard/familyRepresentation/normal" },
+  ];
 
   const loanOptions = [{ name: "Normal", url: "/dashboard/loan/normal" }];
 
@@ -89,6 +92,10 @@ const Sidebar = (props: Props) => {
         <MyAccordion trigger={"Rental"} contents={rentalOptions} />
         <MyAccordion trigger={"Gifts"} contents={giftsOptions} />
         <MyAccordion trigger={"Loan"} contents={loanOptions} />
+        <MyAccordion
+          trigger={"Family Representation"}
+          contents={familyOptions}
+        />
       </div>
     </section>
   );

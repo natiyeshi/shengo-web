@@ -6,7 +6,6 @@ import Header from "./dashboard/_components/header";
 
 function Layout({ children }: any) {
   
-  // "/dashboard/sales/residence"
   return (
     <div className="flex h-screen w-screen overflow-hidden">
       <Sidebar />
