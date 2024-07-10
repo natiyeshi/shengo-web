@@ -3,7 +3,6 @@ import React from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
-  PasswordInput,
   Paper,
   Group,
   Button,
@@ -16,30 +15,24 @@ import Link from "next/link";
 
 interface FormValues {
   email: string;
-  password: string;
 }
 
-const LoginPage: React.FC = () => {
+const ForgetPasswordPage: React.FC = () => {
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
       email: "",
-      password: "",
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid Email"),
-      password: (value) =>
-        value.length >= 6 ? null : "Password should be 6 or more",
     },
   });
 
   const handleSubmit = (e: any) => {
-    // Handle form submission
-    // console.log("Form values:", values);
     e.preventDefault();
     const { hasErrors } = form.validate();
     if (hasErrors) return;
-    alert("nop");
+    alert("Password reset link sent to your email");
   };
 
   return (
@@ -47,41 +40,24 @@ const LoginPage: React.FC = () => {
       <Container size={520} py={40} className="">
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <Title className="text-center" style={{ fontWeight: 900 }}>
-            Welcome To <span className="text-primary">Shengo</span>
+            Forgot Password?
           </Title>
           <Text color="dimmed" size="sm" className="text-center" mt={5}>
-            Sign in here!
+            Enter your email to reset your password
           </Text>
-          {/* <form onSubmit={form.onSubmit((values) => handleSubmit(values))}> */}
           <form onSubmit={handleSubmit}>
             <TextInput
               label="Email"
               placeholder="you@example.com"
               {...form.getInputProps("email")}
             />
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              mt="md"
-              {...form.getInputProps("password")}
-            />
-            <Box mt="md" display="flex">
-              <Button type="submit">Login</Button>
+            <Box mt="md" display="flex" >
+              <Button type="submit">Send Reset Link</Button>
             </Box>
-            <Link href={"/auth/forget"}>
-              <Text
-                color="dimmed"
-                size="sm"
-                className="text-center hover:text-primary"
-                mt={10}
-              >
-                Forget your password.
-              </Text>
-            </Link>
-            <Text color="dimmed" size="sm" className="text-center" mt={5}>
-              Do not have an account yet?{" "}
-              <Link href={"/auth/register"} className="text-primary">
-                Register
+            <Text color="dimmed" size="sm" className="text-center" mt={10}>
+              Remember your password?{" "}
+              <Link href={"/auth/login"} className="text-primary">
+                Login
               </Link>
             </Text>
           </form>
@@ -91,4 +67,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default ForgetPasswordPage;

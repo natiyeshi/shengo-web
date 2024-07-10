@@ -17,47 +17,67 @@ import Link from "next/link";
 interface FormValues {
   email: string;
   password: string;
+  confirmPassword: string;
+  phoneNumber: string;
+  fullName: string;
 }
 
-const LoginPage: React.FC = () => {
+const RegistrationPage: React.FC = () => {
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
       email: "",
       password: "",
+      confirmPassword: "",
+      phoneNumber: "",
+      fullName: "",
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid Email"),
       password: (value) =>
         value.length >= 6 ? null : "Password should be 6 or more",
+      confirmPassword: (value, values) =>
+        value === values.password ? null : "Passwords do not match",
+      phoneNumber: (value) =>
+        /^[0-9]+$/.test(value) ? null : "Invalid phone number",
+      fullName: (value) => (value.trim() !== "" ? null : "Full name is required"),
     },
   });
 
   const handleSubmit = (e: any) => {
-    // Handle form submission
-    // console.log("Form values:", values);
     e.preventDefault();
     const { hasErrors } = form.validate();
     if (hasErrors) return;
-    alert("nop");
+    alert("Registration successful");
   };
 
   return (
-    <div className="mt-0 bg-primary pt-0" style={{ height: "100vh" }}>
+    <div className="mt-0 bg-primary pt-0 overflow-auto" style={{ height: "100vh" }}>
       <Container size={520} py={40} className="">
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <Title className="text-center" style={{ fontWeight: 900 }}>
             Welcome To <span className="text-primary">Shengo</span>
           </Title>
           <Text color="dimmed" size="sm" className="text-center" mt={5}>
-            Sign in here!
+            Register here!
           </Text>
-          {/* <form onSubmit={form.onSubmit((values) => handleSubmit(values))}> */}
           <form onSubmit={handleSubmit}>
+            <TextInput
+              label="Full Name"
+              placeholder="John Doe"
+              {...form.getInputProps("fullName")}
+            />
             <TextInput
               label="Email"
               placeholder="you@example.com"
+              mt="md"
               {...form.getInputProps("email")}
+            />
+            <TextInput
+              label="Phone Number"
+              placeholder="1234567890"
+              mt="md"
+              {...form.getInputProps("phoneNumber")}
             />
             <PasswordInput
               label="Password"
@@ -65,23 +85,19 @@ const LoginPage: React.FC = () => {
               mt="md"
               {...form.getInputProps("password")}
             />
+            <PasswordInput
+              label="Confirm Password"
+              placeholder="Confirm your password"
+              mt="md"
+              {...form.getInputProps("confirmPassword")}
+            />
             <Box mt="md" display="flex">
-              <Button type="submit">Login</Button>
+              <Button type="submit">Register</Button>
             </Box>
-            <Link href={"/auth/forget"}>
-              <Text
-                color="dimmed"
-                size="sm"
-                className="text-center hover:text-primary"
-                mt={10}
-              >
-                Forget your password.
-              </Text>
-            </Link>
             <Text color="dimmed" size="sm" className="text-center" mt={5}>
-              Do not have an account yet?{" "}
-              <Link href={"/auth/register"} className="text-primary">
-                Register
+              Already have an account? {" "}
+              <Link href={"/auth/login"} className="text-primary">
+                Login
               </Link>
             </Text>
           </form>
@@ -91,4 +107,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;
