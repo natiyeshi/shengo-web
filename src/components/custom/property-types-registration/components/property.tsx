@@ -68,46 +68,38 @@ const Property = ({
 
   let content: ReactNode = "";
 
-  type === "Vehicle" &&
-    (content = (
+  if (type === "Vehicle")
+    content = (
       <Group>
         <Avatar size="md" color="initials">
           {property.vehicleType.charAt(0).toUpperCase()}
         </Avatar>
         <span className="text-sm">{property.vehicleType}</span>
       </Group>
-    ));
-
-  type === "Residence" &&
-    (content = (
+    );
+  else if (type === "Residence")
+    content = (
       <Group>
         <Avatar size="md" color="initials">
           {property.city.charAt(0).toUpperCase()}
         </Avatar>
         <span className="text-sm">{property.city}</span>
       </Group>
-    ));
-
-  type === "Organization" &&
-    (content = (
+    );
+  else if (type === "Organization")
+    content = (
       <Group>
         <Avatar size="md" color="initials">
           {property.companyName.charAt(0).toUpperCase()}
         </Avatar>
         <span className="text-sm">{property.companyName}</span>
       </Group>
-    ));
+    );
 
   return (
     <section className="border-t border-t-muted py-3">
       <Group justify="space-between">
-        <Group>
-          <Avatar size="md" color="initials">
-            {type === "Vehicle" && property.vehicleType.charAt(0).toUpperCase()}
-          </Avatar>
-          <span className="text-sm">{property._id}</span>
-        </Group>
-
+        {content}
         <Group>
           {editing ? (
             "..."
