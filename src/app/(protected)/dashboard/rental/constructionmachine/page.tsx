@@ -18,6 +18,7 @@ import ConstructionmachineRegistration from "@/components/custom/construction-ma
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
+import { useEffect } from "react";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -27,74 +28,67 @@ const Page = () => {
 
   return (
     <main className="container">
-      {/* <Title order={1} className="my-5">
-        Construction Machine 
-      </Title> */}
       <CustomerContextProvider>
         <ConstructionmachineContextProvider>
-          <section className="mt-5">
-            <section defaultValue={defaultTabValue}>
-              <Tabs
-                carouselApi={api}
-                current={current}
-                tabsMap={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP}
-              />
+          <Tabs
+            carouselApi={api}
+            current={current}
+            tabsMap={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP}
+          />
 
-              <Carousel
-                setApi={setAPI}
-                opts={{
-                  watchDrag: false,
-                  align: "start",
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.saler}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.buyer}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ConstructionmachineFormProvider>
-                      <ConstructionmachineOperationProvider
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <ConstructionmachineRegistration />
-                      </ConstructionmachineOperationProvider>
-                    </ConstructionmachineFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.withness}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ServiceRequest />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </section>
-          </section>
+          <Carousel
+            setApi={setAPI}
+            opts={{
+              watchDrag: false,
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.saler}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.buyer}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ConstructionmachineFormProvider>
+                  <ConstructionmachineOperationProvider
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <ConstructionmachineRegistration />
+                  </ConstructionmachineOperationProvider>
+                </ConstructionmachineFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_CONSTRUCTIONMACHINE_TABS_MAP.withness}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ServiceRequest />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </ConstructionmachineContextProvider>
       </CustomerContextProvider>
     </main>

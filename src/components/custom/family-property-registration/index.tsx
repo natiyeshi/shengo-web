@@ -1,100 +1,111 @@
 "use client";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { Title } from "@mantine/core";
-// import { FAMILIY_PROPERTY_TABS_MAP } from "../_utils/constants";
-// import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
-import LeaseRegistration from "@/components/custom/lease-registration";
-import ServiceRequest from "@/components/custom/service-request";
-import Tabs from "@/components/custom/tabs";
-import { useCarouselAPI } from "@/hooks/use-carouselAPI";
-import { VehicleFormProvider } from "@/app/(protected)/dashboard/_contexts/vehicle/vehicle-form-context";
-import { VehicleOperationProvider } from "@/app/(protected)/dashboard/_contexts/vehicle/vehicle-operation-context";
-import VehicleRegistration from "../vehicle-registration";
-import { VehicleContextProvider } from "@/app/(protected)/dashboard/_contexts/vehicle/vehicle-context";
-import { ResidenceContextProvider } from "@/app/(protected)/dashboard/_contexts/residence/residence-context";
-import { ResidenceFormProvider } from "@/app/(protected)/dashboard/_contexts/residence/residence-form-context";
-import { ResidenceOperationProvider } from "@/app/(protected)/dashboard/_contexts/residence/residence-operation-context";
-import ResidenceRegistration from "../residence-registration";
-import { PropertyContextProvider } from "@/app/(protected)/dashboard/_contexts/property/property-context";
-import { PropertyFormProvider } from "@/app/(protected)/dashboard/_contexts/property/property-form-context";
-import { PropertyOperationProvider } from "@/app/(protected)/dashboard/_contexts/property/property-operation-context";
-import PropertyRegistration from "../property-registration";
+import { Group, Select } from "@mantine/core";
 
-const FamilyProperty = () => {
-  const FAMILIY_PROPERTY_TABS_MAP = {
-    Vehicle: "Vehicle",
-    Residence: "Residence",
-    OtherProperty: "OtherProperty",
+import { strToObjOfLabelAndValue } from "@/_utils";
+import { ReactNode, useState } from "react";
+
+import VehicleRegistration from "./components/vehicle-reg";
+import ResidenceRegistration from "./components/residence-reg";
+import OrganizationRegistration from "./components/organization-reg";
+import { useVehicleContext } from "./contexts/vehicle/vehicle-context";
+import { useResidenceContext } from "./contexts/residence/residence-context";
+import { useOrganizationContext } from "./contexts/organization/organization-context";
+import { VehicleFormProvider } from "./contexts/vehicle/vehicle-form-context";
+import { VehicleOperationProvider } from "./contexts/vehicle/vehicle-operation-context";
+import { ResidenceFormProvider } from "./contexts/residence/residence-form-context";
+import { ResidenceOperationProvider } from "./contexts/residence/residence-operation-context";
+import { OrganizationFormProvider } from "./contexts/organization/organization-form-context";
+import { OrganizationOperationProvider } from "./contexts/organization/organization-operation-context";
+import { Car } from "lucide-react";
+import { useDisclosure } from "@mantine/hooks";
+import PropertyListDrawer from "./components/property-list-drawer";
+import { CarouselAction } from "@/types";
+import { Button } from "@/components/ui/button";
+const FAMILY_PROPERTY_TYPE = {
+  vehicle: "Vehicle",
+  residence: "Residence",
+  organization: "Organization",
+};
+type FamilyPropertyProps = {
+  carouselAction: CarouselAction;
+};
+const FamilyProperty = ({ carouselAction }: FamilyPropertyProps) => {
+  const [propertyType, setPropertyType] = useState(
+    FAMILY_PROPERTY_TYPE.vehicle,
+  );
+
+  console.log({ propertyType });
+
+  const handelPropertyTypeSelection = (type: string | null) => {
+    if (!type) return;
+    setPropertyType(type);
   };
-  const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
-    useCarouselAPI({
-      tabsMap: FAMILIY_PROPERTY_TABS_MAP,
-    });
 
+  const properties = [
+    ...useVehicleContext().vehicles,
+    ...useResidenceContext().residences,
+    ...useOrganizationContext().organizations,
+  ];
+
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <VehicleContextProvider>
-      <ResidenceContextProvider>
-        <PropertyContextProvider>
-          <main className="">
-            <section className="mt-2">
-              <section defaultValue={defaultTabValue}>
-                <div className="mx-5 bg-red-300" style={{paddingLeft : "14px"}}>
-                  <Tabs
-                    carouselApi={api}
-                    current={current}
-                    tabsMap={FAMILIY_PROPERTY_TABS_MAP}
-                  />
-                </div>
+    <main>
+      <VehicleFormProvider>
+        <VehicleOperationProvider carouselAction={carouselAction}>
+          <ResidenceFormProvider>
+            <ResidenceOperationProvider carouselAction={carouselAction}>
+              <OrganizationFormProvider>
+                <OrganizationOperationProvider carouselAction={carouselAction}>
+                  <Group justify="space-between" align="center">
+                    <Select
+                      label="Select property type"
+                      name="propertyType"
+                      value={propertyType}
+                      onChange={(value) => handelPropertyTypeSelection(value)}
+                      data={strToObjOfLabelAndValue(
+                        Object.values(FAMILY_PROPERTY_TYPE),
+                      )}
+                    />
 
-                <Carousel
-                  setApi={setAPI}
-                  opts={{
-                    watchDrag: false,
-                    align: "start",
-                  }}
-                  className="w-full"
-                >
-                  <CarouselContent>
-                    <CarouselItem>
-                      <VehicleFormProvider>
-                        <VehicleOperationProvider
-                          carouselAction={{ goBack, goToNext }}
-                        >
-                          <VehicleRegistration />
-                        </VehicleOperationProvider>
-                      </VehicleFormProvider>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <ResidenceFormProvider>
-                        <ResidenceOperationProvider
-                          carouselAction={{ goBack, goToNext }}
-                        >
-                          <ResidenceRegistration />
-                        </ResidenceOperationProvider>
-                      </ResidenceFormProvider>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <PropertyFormProvider>
-                        <PropertyOperationProvider
-                          carouselAction={{ goBack, goToNext }}
-                        >
-                          <PropertyRegistration />
-                        </PropertyOperationProvider>
-                      </PropertyFormProvider>
-                    </CarouselItem>
-                  </CarouselContent>
-                </Carousel>
-              </section>
-            </section>
-          </main>
-        </PropertyContextProvider>
-      </ResidenceContextProvider>
-    </VehicleContextProvider>
+                    <PropertyListDrawer
+                      title={`Property's list`}
+                      opened={opened}
+                      close={close}
+                    >
+                      <Button
+                        onClick={open}
+                        size="icon"
+                        variant="outline"
+                        className="relative rounded-full"
+                      >
+                        <Car />
+                        <span className="absolute -right-0 -top-0 font-semibold text-primary">
+                          {properties.length}
+                        </span>
+                      </Button>
+                    </PropertyListDrawer>
+                  </Group>
+
+                  {propertyType ===
+                    FAMILY_PROPERTY_TYPE.vehicle.toLowerCase() && (
+                    <VehicleRegistration />
+                  )}
+                  {propertyType ===
+                    FAMILY_PROPERTY_TYPE.residence.toLowerCase() && (
+                    <ResidenceRegistration />
+                  )}
+                  {propertyType ===
+                    FAMILY_PROPERTY_TYPE.organization.toLowerCase() && (
+                    <OrganizationRegistration />
+                  )}
+                </OrganizationOperationProvider>
+              </OrganizationFormProvider>
+            </ResidenceOperationProvider>
+          </ResidenceFormProvider>
+        </VehicleOperationProvider>
+      </VehicleFormProvider>
+    </main>
   );
 };
 

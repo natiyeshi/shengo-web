@@ -1,11 +1,8 @@
-import MyAccordion from "@/components/custom/MyAccordion";
 import Sidebar from "@/components/custom/side-bar";
-import { MenuIcon } from "lucide-react";
 import React from "react";
 import Header from "./dashboard/_components/header";
 
 function Layout({ children }: any) {
-  
   return (
     <div className="flex h-screen w-screen overflow-hidden">
       <Sidebar />

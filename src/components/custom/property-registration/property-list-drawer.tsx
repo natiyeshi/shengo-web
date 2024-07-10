@@ -31,7 +31,7 @@ const PropertyListDrawer = ({
   return (
     <>
       {children}
-      <DrawerRoot size="sm" opened={opened} onClose={close} position="right">
+      <DrawerRoot opened={opened} onClose={close} position="right">
         <DrawerOverlay className="bg-white/5 backdrop-blur-sm" />
         <DrawerContent>
           <DrawerHeader>

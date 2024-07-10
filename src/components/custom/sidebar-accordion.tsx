@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export interface ContentInfo {
   url: string;
@@ -34,7 +35,13 @@ const MyAccordion = ({ trigger, contents }: Props) => {
             return (
               <Link
                 key={ind}
-                className={`rounded-xl ${isCurrent && "bg-foreground text-background"} px-2 py-1 transition-all duration-300 hover:bg-white/10`}
+                className={cn(
+                  `rounded-xl px-2 py-1 transition-all duration-300 hover:bg-white/10`,
+                  {
+                    "bg-foreground text-background hover:bg-white/90":
+                      isCurrent,
+                  },
+                )}
                 href={value.url}
               >
                 {value.name}

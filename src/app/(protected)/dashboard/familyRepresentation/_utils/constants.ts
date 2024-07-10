@@ -1,8 +1,8 @@
 
-export const RENTAL_LEASE_TABS_MAP = {
-  saler: "Grantor",
-  buyer: "Representative",
-  business: "Property",
+export const FAMILY_REPRESETATION_TABS_MAP = {
+  grantor: "Grantor",
+  representative: "Representative",
+  propery: "Property",
   withness: "Withness",
   service: "Service",
 }

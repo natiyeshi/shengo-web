@@ -7,7 +7,7 @@ const Page = () => {
         className="h-fit w-1/2 bg-white"
         // style={{ width: "50%", height: "fit-content" }}
       >
-        a
+       
       </div>
     </div>
   );

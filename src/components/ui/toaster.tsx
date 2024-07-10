@@ -19,13 +19,15 @@ export function Toaster() {
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
+              <div className="flex items-center justify-between">
+                {title && <ToastTitle>{title}</ToastTitle>}
+                <ToastClose />
+              </div>
               {description && (
                 <ToastDescription>{description}</ToastDescription>
               )}
             </div>
             {action}
-            <ToastClose />
           </Toast>
         );
       })}

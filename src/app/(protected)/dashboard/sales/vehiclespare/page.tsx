@@ -5,7 +5,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Title } from "@mantine/core";
 import { SALES_VEHICLESPARE_TABS_MAP } from "../_utils/constants";
 import { CustomerContextProvider } from "../../_contexts/customer/customer-context";
 import { VehiclespareContextProvider } from "../../_contexts/vehiclespare/vehiclespare-context";
@@ -26,75 +25,68 @@ const Page = () => {
     });
   return (
     <main className="container">
-      {/* <Title order={1} className="my-5">
-        Vehicle Spare Part
-      </Title> */}
       <CustomerContextProvider>
         <VehiclespareContextProvider>
-          <section className="mt-5">
-            <section defaultValue={defaultTabValue}>
-              <Tabs
-                carouselApi={api}
-                current={current}
-                tabsMap={SALES_VEHICLESPARE_TABS_MAP}
-              />
+          <Tabs
+            carouselApi={api}
+            current={current}
+            tabsMap={SALES_VEHICLESPARE_TABS_MAP}
+          />
 
-              <Carousel
-                setApi={setAPI}
-                opts={{
-                  watchDrag: false,
-                  align: "start",
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={SALES_VEHICLESPARE_TABS_MAP.saler}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
+          <Carousel
+            setApi={setAPI}
+            opts={{
+              watchDrag: false,
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_VEHICLESPARE_TABS_MAP.saler}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
 
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={SALES_VEHICLESPARE_TABS_MAP.buyer}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <VehiclespareFormProvider>
-                      <VehiclespareOperationProvider
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <VehiclespareRegistration />
-                      </VehiclespareOperationProvider>
-                    </VehiclespareFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={SALES_VEHICLESPARE_TABS_MAP.withness}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ServiceRequest />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </section>
-          </section>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_VEHICLESPARE_TABS_MAP.buyer}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <VehiclespareFormProvider>
+                  <VehiclespareOperationProvider
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <VehiclespareRegistration />
+                  </VehiclespareOperationProvider>
+                </VehiclespareFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_VEHICLESPARE_TABS_MAP.withness}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ServiceRequest />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </VehiclespareContextProvider>
       </CustomerContextProvider>
     </main>

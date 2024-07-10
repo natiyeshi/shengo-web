@@ -18,82 +18,77 @@ import BusinessRegistration from "@/components/custom/business-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
+import { useEffect } from "react";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
     useCarouselAPI({
       tabsMap: GIFTS_BUSINESS_TABS_MAP,
     });
+
   return (
     <main className="container">
-      {/* <Title order={1} className="my-5">
-        Business 
-      </Title> */}
       <CustomerContextProvider>
         <BusinessContextProvider>
-          <section className="mt-5">
-            <section defaultValue={defaultTabValue}>
-              <Tabs
-                carouselApi={api}
-                current={current}
-                tabsMap={GIFTS_BUSINESS_TABS_MAP}
-              />
+          <Tabs
+            carouselApi={api}
+            current={current}
+            tabsMap={GIFTS_BUSINESS_TABS_MAP}
+          />
 
-              <Carousel
-                setApi={setAPI}
-                opts={{
-                  watchDrag: false,
-                  align: "start",
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={GIFTS_BUSINESS_TABS_MAP.saler}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={GIFTS_BUSINESS_TABS_MAP.buyer}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <BusinessFormProvider>
-                      <BusinessOperationProvider
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <BusinessRegistration />
-                      </BusinessOperationProvider>
-                    </BusinessFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={GIFTS_BUSINESS_TABS_MAP.withness}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ServiceRequest />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </section>
-          </section>
+          <Carousel
+            setApi={setAPI}
+            opts={{
+              watchDrag: false,
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={GIFTS_BUSINESS_TABS_MAP.saler}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={GIFTS_BUSINESS_TABS_MAP.buyer}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <BusinessFormProvider>
+                  <BusinessOperationProvider
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <BusinessRegistration />
+                  </BusinessOperationProvider>
+                </BusinessFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={GIFTS_BUSINESS_TABS_MAP.withness}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ServiceRequest />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </BusinessContextProvider>
       </CustomerContextProvider>
     </main>

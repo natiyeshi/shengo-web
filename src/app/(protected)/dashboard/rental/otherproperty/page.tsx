@@ -18,6 +18,7 @@ import PropertyRegistration from "@/components/custom/property-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
+import { useEffect } from "react";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -27,74 +28,67 @@ const Page = () => {
 
   return (
     <main className="container">
-      {/* <Title order={1} className="my-5">
-        Other Properties 
-      </Title> */}
       <CustomerContextProvider>
         <PropertyContextProvider>
-          <section className="mt-5">
-            <section defaultValue={defaultTabValue}>
-              <Tabs
-                carouselApi={api}
-                current={current}
-                tabsMap={RENTAL_PROPERTY_TABS_MAP}
-              />
+          <Tabs
+            carouselApi={api}
+            current={current}
+            tabsMap={RENTAL_PROPERTY_TABS_MAP}
+          />
 
-              <Carousel
-                setApi={setAPI}
-                opts={{
-                  watchDrag: false,
-                  align: "start",
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_PROPERTY_TABS_MAP.saler}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_PROPERTY_TABS_MAP.buyer}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <PropertyFormProvider>
-                      <PropertyOperationProvider
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <PropertyRegistration />
-                      </PropertyOperationProvider>
-                    </PropertyFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_PROPERTY_TABS_MAP.withness}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ServiceRequest />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </section>
-          </section>
+          <Carousel
+            setApi={setAPI}
+            opts={{
+              watchDrag: false,
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_PROPERTY_TABS_MAP.saler}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_PROPERTY_TABS_MAP.buyer}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <PropertyFormProvider>
+                  <PropertyOperationProvider
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <PropertyRegistration />
+                  </PropertyOperationProvider>
+                </PropertyFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={RENTAL_PROPERTY_TABS_MAP.withness}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ServiceRequest />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </PropertyContextProvider>
       </CustomerContextProvider>
     </main>
