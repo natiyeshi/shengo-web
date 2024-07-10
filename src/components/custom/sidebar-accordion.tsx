@@ -27,7 +27,7 @@ const MyAccordion = ({ trigger, contents }: Props) => {
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1" className="overflow-hidden border-none">
         <AccordionTrigger className="text-sm">
-          <div className="font-semibold">{trigger}</div>
+          <div className="font-medium text-nowrap">{trigger}</div>
         </AccordionTrigger>
         <AccordionContent className="dark flex flex-col gap-2 px-2">
           {contents.map((value, ind) => {
@@ -36,7 +36,7 @@ const MyAccordion = ({ trigger, contents }: Props) => {
               <Link
                 key={ind}
                 className={cn(
-                  `rounded-xl px-2 py-1 transition-all duration-300 hover:bg-white/10`,
+                  `rounded-md px-2 py-1 transition-all duration-300 hover:bg-white/10`,
                   {
                     "bg-foreground text-background hover:bg-white/90":
                       isCurrent,
