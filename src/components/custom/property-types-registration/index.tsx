@@ -3,7 +3,7 @@
 import { Group, Select } from "@mantine/core";
 
 import { strToObjOfLabelAndValue } from "@/_utils";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 import VehicleRegistration from "./components/vehicle-reg";
 import ResidenceRegistration from "./components/residence-reg";
@@ -22,21 +22,18 @@ import { useDisclosure } from "@mantine/hooks";
 import PropertyListDrawer from "./components/property-list-drawer";
 import { CarouselAction } from "@/types";
 import { Button } from "@/components/ui/button";
-const FAMILY_PROPERTY_TYPE = {
+const PROPERTY_TYPE = {
   vehicle: "Vehicle",
   residence: "Residence",
   organization: "Organization",
 };
-type FamilyPropertyProps = {
+type PropertyTypesProps = {
   carouselAction: CarouselAction;
 };
-const FamilyProperty = ({ carouselAction }: FamilyPropertyProps) => {
+const PropertyType = ({ carouselAction }: PropertyTypesProps) => {
   const [propertyType, setPropertyType] = useState(
-    FAMILY_PROPERTY_TYPE.vehicle,
+    PROPERTY_TYPE.vehicle.toLowerCase(),
   );
-
-  console.log({ propertyType });
-
   const handelPropertyTypeSelection = (type: string | null) => {
     if (!type) return;
     setPropertyType(type);
@@ -64,7 +61,7 @@ const FamilyProperty = ({ carouselAction }: FamilyPropertyProps) => {
                       value={propertyType}
                       onChange={(value) => handelPropertyTypeSelection(value)}
                       data={strToObjOfLabelAndValue(
-                        Object.values(FAMILY_PROPERTY_TYPE),
+                        Object.values(PROPERTY_TYPE),
                       )}
                     />
 
@@ -87,16 +84,14 @@ const FamilyProperty = ({ carouselAction }: FamilyPropertyProps) => {
                     </PropertyListDrawer>
                   </Group>
 
-                  {propertyType ===
-                    FAMILY_PROPERTY_TYPE.vehicle.toLowerCase() && (
+                  {propertyType === PROPERTY_TYPE.vehicle.toLowerCase() && (
                     <VehicleRegistration />
                   )}
-                  {propertyType ===
-                    FAMILY_PROPERTY_TYPE.residence.toLowerCase() && (
+                  {propertyType === PROPERTY_TYPE.residence.toLowerCase() && (
                     <ResidenceRegistration />
                   )}
                   {propertyType ===
-                    FAMILY_PROPERTY_TYPE.organization.toLowerCase() && (
+                    PROPERTY_TYPE.organization.toLowerCase() && (
                     <OrganizationRegistration />
                   )}
                 </OrganizationOperationProvider>
@@ -109,4 +104,4 @@ const FamilyProperty = ({ carouselAction }: FamilyPropertyProps) => {
   );
 };
 
-export default FamilyProperty;
+export default PropertyType;

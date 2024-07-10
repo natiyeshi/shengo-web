@@ -1,9 +1,11 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
+import { LogOut, MenuIcon, SettingsIcon } from "lucide-react";
 import MyAccordion from "./sidebar-accordion";
 import { cn } from "@/lib/utils";
 import { useSidebarVisibilityDeterminer } from "@/hooks/use-sidebar-visibility-determiner";
+import { Group, isOptionsGroup, Stack, Tooltip } from "@mantine/core";
+import Link from "next/link";
 
 type Props = {};
 
@@ -49,7 +51,14 @@ const Sidebar = (props: Props) => {
     { name: "Lease", url: "/dashboard/gifts/lease" },
   ];
   const familyOptions = [
-    { name: "Normal", url: "/dashboard/familyRepresentation/normal" },
+    { name: "Normal", url: "/dashboard/family-representation/normal" },
+  ];
+
+  const generalOrSpecificOptions = [
+    {
+      name: "General Representation",
+      url: "/dashboard/general-specific-representation/general",
+    },
   ];
 
   const loanOptions = [{ name: "Normal", url: "/dashboard/loan/normal" }];
@@ -61,18 +70,18 @@ const Sidebar = (props: Props) => {
   return (
     <section
       className={cn(
-        "sticky left-0 top-0 flex h-screen w-[17rem] shrink-0 grow-0 flex-col overflow-hidden bg-primary text-primary-foreground transition-all duration-200",
+        "sticky left-0 top-0 flex h-screen w-[18rem] shrink-0 grow-0 flex-col overflow-hidden bg-primary px-4 text-primary-foreground transition-all duration-200",
         { "w-[3.7rem]": !isSidebarOpended },
       )}
     >
       <div
-        className={cn("flex w-full gap-2 px-4 py-7", {
+        className={cn("flex w-full gap-2 border-b border-b-muted/25 py-5", {
           "justify-center": !isSidebarOpended,
         })}
       >
         <div className="relative isolate">
           <MenuIcon
-            className={cn("cursor-pointer animate-pulse")}
+            className={cn("animate-pulse cursor-pointer")}
             onClick={() => setIsSidebarOpended((prev) => !prev)}
           />
           {!isSidebarOpended && (
@@ -85,7 +94,7 @@ const Sidebar = (props: Props) => {
       </div>
       <div
         className={cn(
-          "no-scrollbar overflow-y-auto overflow-x-hidden px-4 transition-all duration-200",
+          "no-scrollbar overflow-y-auto overflow-x-hidden transition-all duration-200",
           {
             hidden: !isSidebarOpended,
           },
@@ -99,7 +108,58 @@ const Sidebar = (props: Props) => {
           trigger={"Family Representation"}
           contents={familyOptions}
         />
+        <MyAccordion
+          trigger={"Gen/Spec Representation"}
+          contents={generalOrSpecificOptions}
+        />
       </div>
+
+      <Stack mt="auto" py={16} className="border-t border-t-muted/25">
+        <Link href="/dashboard/setting">
+          <Group gap="sm" className="cursor-pointer">
+            <Tooltip
+              withArrow
+              color="violet"
+              position="right-start"
+              label="Setting"
+              opened={!isSidebarOpended ? undefined : false}
+            >
+              <SettingsIcon className="size-[1.1rem] shrink-0 grow-0" />
+            </Tooltip>
+            <span
+              className={cn("text-sm font-medium", {
+                hidden: !isSidebarOpended,
+              })}
+            >
+              Setting
+            </span>
+          </Group>
+        </Link>
+        <Group
+          gap="sm"
+          className="cursor-pointer"
+          onClick={() => {
+            alert("Logout");
+          }}
+        >
+          <Tooltip
+            withArrow
+            color="violet"
+            position="right-start"
+            label="Logout"
+            opened={!isSidebarOpended ? undefined : false}
+          >
+            <LogOut className="size-[1.1rem] shrink-0 grow-0" />
+          </Tooltip>
+          <span
+            className={cn("text-sm font-medium", {
+              hidden: !isSidebarOpended,
+            })}
+          >
+            Logout
+          </span>
+        </Group>
+      </Stack>
     </section>
   );
 };

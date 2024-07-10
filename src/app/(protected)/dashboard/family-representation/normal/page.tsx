@@ -13,10 +13,10 @@ import CustomerIdentityRegisteration from "@/components/custom/customer-identity
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
-import FamilyProperty from "@/components/custom/family-property-registration";
-import { VehicleContextProvider } from "@/components/custom/family-property-registration/contexts/vehicle/vehicle-context";
-import { ResidenceContextProvider } from "@/components/custom/family-property-registration/contexts/residence/residence-context";
-import { OrganizationContextProvider } from "@/components/custom/family-property-registration/contexts/organization/organization-context";
+import FamilyProperty from "@/components/custom/property-types-registration";
+import { VehicleContextProvider } from "@/components/custom/property-types-registration/contexts/vehicle/vehicle-context";
+import { ResidenceContextProvider } from "@/components/custom/property-types-registration/contexts/residence/residence-context";
+import { OrganizationContextProvider } from "@/components/custom/property-types-registration/contexts/organization/organization-context";
 
 const Page = () => {
   const { current, api, setAPI, goBack, goToNext } = useCarouselAPI({
