@@ -1,7 +1,7 @@
 "use client";
 
 import { MenuIcon } from "lucide-react";
-import MyAccordion from "./MyAccordion";
+import MyAccordion from "./sidebar-accordion";
 import { cn } from "@/lib/utils";
 import { useSidebarVisibilityDeterminer } from "@/hooks/use-sidebar-visibility-determiner";
 
@@ -61,7 +61,7 @@ const Sidebar = (props: Props) => {
   return (
     <section
       className={cn(
-        "sticky left-0 top-0 flex h-full w-[17rem] shrink-0 grow-0 flex-col overflow-auto bg-primary text-primary-foreground transition-all duration-200",
+        "sticky left-0 top-0 flex h-screen w-[17rem] shrink-0 grow-0 flex-col overflow-hidden bg-primary text-primary-foreground transition-all duration-200",
         { "w-[3.7rem]": !isSidebarOpended },
       )}
     >
@@ -72,7 +72,7 @@ const Sidebar = (props: Props) => {
       >
         <div className="relative isolate">
           <MenuIcon
-            className={cn("cursor-pointer")}
+            className={cn("cursor-pointer animate-pulse")}
             onClick={() => setIsSidebarOpended((prev) => !prev)}
           />
           {!isSidebarOpended && (
@@ -84,9 +84,12 @@ const Sidebar = (props: Props) => {
         </h1>
       </div>
       <div
-        className={cn("overflow-auto px-4 transition-all duration-200", {
-          hidden: !isSidebarOpended,
-        })}
+        className={cn(
+          "no-scrollbar overflow-y-auto overflow-x-hidden px-4 transition-all duration-200",
+          {
+            hidden: !isSidebarOpended,
+          },
+        )}
       >
         <MyAccordion trigger={"Sales"} contents={salesOptions} />
         <MyAccordion trigger={"Rental"} contents={rentalOptions} />

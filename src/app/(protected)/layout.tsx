@@ -1,4 +1,4 @@
-import MyAccordion from "@/components/custom/MyAccordion";
+import MyAccordion from "@/components/custom/sidebar-accordiaon";
 import Sidebar from "@/components/custom/side-bar";
 import { MenuIcon } from "lucide-react";
 import React from "react";

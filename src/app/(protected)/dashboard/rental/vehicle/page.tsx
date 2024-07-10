@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { RENTAL_VEHICLE_TABS_MAP } from "../_utils/constants";
 import CustomerIdentityRegisteration from "@/components/custom/customer-identity-registration";
 import VehicleRegistration from "@/components/custom/vehicle-registration";
@@ -28,74 +28,69 @@ const Page = () => {
 
   return (
     <main className="container">
-      {/* <Title order={1} className="my-5">
-        Vehicle Rental
-      </Title> */}
       <CustomerContextProvider>
         <VehicleContextProvider>
-          <section className="mt-5">
-            <section defaultValue={defaultTabValue}>
-              <Tabs
-                carouselApi={api}
-                current={current}
-                tabsMap={RENTAL_VEHICLE_TABS_MAP}
-              />
+          
+            <Tabs
+              carouselApi={api}
+              current={current}
+              tabsMap={RENTAL_VEHICLE_TABS_MAP}
+            />
 
-              <Carousel
-                setApi={setAPI}
-                opts={{
-                  watchDrag: false,
-                  align: "start",
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_VEHICLE_TABS_MAP.saler}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_VEHICLE_TABS_MAP.buyer}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <VehicleFormProvider>
-                      <VehicleOperationProvider
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <VehicleRegistration />
-                      </VehicleOperationProvider>
-                    </VehicleFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CustomerFormProvider>
-                      <CustomerOperationProvider
-                        type={RENTAL_VEHICLE_TABS_MAP.withness}
-                        carouselAction={{ goBack, goToNext }}
-                      >
-                        <CustomerIdentityRegisteration />
-                      </CustomerOperationProvider>
-                    </CustomerFormProvider>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <ServiceRequest />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </section>
-          </section>
+            <Carousel
+              setApi={setAPI}
+              opts={{
+                watchDrag: false,
+                align: "start",
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                <CarouselItem>
+                  <CustomerFormProvider>
+                    <CustomerOperationProvider
+                      type={RENTAL_VEHICLE_TABS_MAP.saler}
+                      carouselAction={{ goBack, goToNext }}
+                    >
+                      <CustomerIdentityRegisteration />
+                    </CustomerOperationProvider>
+                  </CustomerFormProvider>
+                </CarouselItem>
+                <CarouselItem>
+                  <CustomerFormProvider>
+                    <CustomerOperationProvider
+                      type={RENTAL_VEHICLE_TABS_MAP.buyer}
+                      carouselAction={{ goBack, goToNext }}
+                    >
+                      <CustomerIdentityRegisteration />
+                    </CustomerOperationProvider>
+                  </CustomerFormProvider>
+                </CarouselItem>
+                <CarouselItem>
+                  <VehicleFormProvider>
+                    <VehicleOperationProvider
+                      carouselAction={{ goBack, goToNext }}
+                    >
+                      <VehicleRegistration />
+                    </VehicleOperationProvider>
+                  </VehicleFormProvider>
+                </CarouselItem>
+                <CarouselItem>
+                  <CustomerFormProvider>
+                    <CustomerOperationProvider
+                      type={RENTAL_VEHICLE_TABS_MAP.withness}
+                      carouselAction={{ goBack, goToNext }}
+                    >
+                      <CustomerIdentityRegisteration />
+                    </CustomerOperationProvider>
+                  </CustomerFormProvider>
+                </CarouselItem>
+                <CarouselItem>
+                  <ServiceRequest />
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+          
         </VehicleContextProvider>
       </CustomerContextProvider>
     </main>

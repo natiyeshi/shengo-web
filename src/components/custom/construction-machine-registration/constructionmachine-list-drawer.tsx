@@ -10,7 +10,6 @@ import {
   Stack,
 } from "@mantine/core";
 import React, { ReactNode } from "react";
-import Person from "./constructionmachine";
 import { useConstructionmachineOperation } from "@/app/(protected)/dashboard/_contexts/constructionmachine/constructionmachine-operation-context";
 import Constructionmachine from "./constructionmachine";
 
@@ -32,7 +31,7 @@ const ConstructionmachineListDrawer = ({
   return (
     <>
       {children}
-      <DrawerRoot size="sm" opened={opened} onClose={close} position="right">
+      <DrawerRoot opened={opened} onClose={close} position="right">
         <DrawerOverlay className="bg-white/5 backdrop-blur-sm" />
         <DrawerContent>
           <DrawerHeader>
