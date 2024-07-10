@@ -26,66 +26,66 @@ const Page = () => {
   return (
     <main className="container">
       <CustomerContextProvider>
-        <Tabs
-          carouselApi={api}
-          current={current}
-          tabsMap={FAMILY_REPRESETATION_TABS_MAP}
-        />
+        <VehicleContextProvider>
+          <ResidenceContextProvider>
+            <OrganizationContextProvider>
+              <Tabs
+                carouselApi={api}
+                current={current}
+                tabsMap={FAMILY_REPRESETATION_TABS_MAP}
+              />
 
-        <Carousel
-          setApi={setAPI}
-          opts={{
-            watchDrag: false,
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            <CarouselItem>
-              <CustomerFormProvider>
-                <CustomerOperationProvider
-                  type={FAMILY_REPRESETATION_TABS_MAP.grantor}
-                  carouselAction={{ goBack, goToNext }}
-                >
-                  <CustomerIdentityRegisteration />
-                </CustomerOperationProvider>
-              </CustomerFormProvider>
-            </CarouselItem>
-            <CarouselItem>
-              <CustomerFormProvider>
-                <CustomerOperationProvider
-                  type={FAMILY_REPRESETATION_TABS_MAP.representative}
-                  carouselAction={{ goBack, goToNext }}
-                >
-                  <CustomerIdentityRegisteration />
-                </CustomerOperationProvider>
-              </CustomerFormProvider>
-            </CarouselItem>
-            {/* Family Propery content */}
-            <CarouselItem>
-              <VehicleContextProvider>
-                <ResidenceContextProvider>
-                  <OrganizationContextProvider>
+              <Carousel
+                setApi={setAPI}
+                opts={{
+                  watchDrag: false,
+                  align: "start",
+                }}
+                className="w-full"
+              >
+                <CarouselContent>
+                  <CarouselItem>
+                    <CustomerFormProvider>
+                      <CustomerOperationProvider
+                        type={FAMILY_REPRESETATION_TABS_MAP.grantor}
+                        carouselAction={{ goBack, goToNext }}
+                      >
+                        <CustomerIdentityRegisteration />
+                      </CustomerOperationProvider>
+                    </CustomerFormProvider>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <CustomerFormProvider>
+                      <CustomerOperationProvider
+                        type={FAMILY_REPRESETATION_TABS_MAP.representative}
+                        carouselAction={{ goBack, goToNext }}
+                      >
+                        <CustomerIdentityRegisteration />
+                      </CustomerOperationProvider>
+                    </CustomerFormProvider>
+                  </CarouselItem>
+                  {/* Family Propery content */}
+                  <CarouselItem>
                     <FamilyProperty carouselAction={{ goBack, goToNext }} />
-                  </OrganizationContextProvider>
-                </ResidenceContextProvider>
-              </VehicleContextProvider>
-            </CarouselItem>
-            <CarouselItem>
-              <CustomerFormProvider>
-                <CustomerOperationProvider
-                  type={FAMILY_REPRESETATION_TABS_MAP.withness}
-                  carouselAction={{ goBack, goToNext }}
-                >
-                  <CustomerIdentityRegisteration />
-                </CustomerOperationProvider>
-              </CustomerFormProvider>
-            </CarouselItem>
-            <CarouselItem>
-              <ServiceRequest />
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <CustomerFormProvider>
+                      <CustomerOperationProvider
+                        type={FAMILY_REPRESETATION_TABS_MAP.withness}
+                        carouselAction={{ goBack, goToNext }}
+                      >
+                        <CustomerIdentityRegisteration />
+                      </CustomerOperationProvider>
+                    </CustomerFormProvider>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <ServiceRequest />
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
+            </OrganizationContextProvider>
+          </ResidenceContextProvider>
+        </VehicleContextProvider>
       </CustomerContextProvider>
     </main>
   );
