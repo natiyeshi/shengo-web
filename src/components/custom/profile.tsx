@@ -18,11 +18,11 @@ const Profile = (props: Props) => {
           N
         </Avatar>
       </MenuTarget>
-      <MenuDropdown>
-        <MenuItem leftSection={<User size={15} className="opacity-70" />}>
+      <MenuDropdown className="shadow-md" >
+        <MenuItem className="w-[10rem]"  leftSection={<User size={15} className="opacity-70" />}>
           Profile
         </MenuItem>
-        <MenuItem leftSection={<LogOut size={15} className="opacity-70" />}>
+        <MenuItem className="w-[10rem]" leftSection={<LogOut size={15} className="opacity-70" />}>
           Logout
         </MenuItem>
       </MenuDropdown>
