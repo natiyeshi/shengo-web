@@ -1,18 +1,24 @@
 "use client";
 
-import { LogOut, MenuIcon, SettingsIcon } from "lucide-react";
+import { MenuIcon, SettingsIcon } from "lucide-react";
 import MyAccordion from "./sidebar-accordion";
 import { cn } from "@/lib/utils";
 import { useSidebarVisibilityDeterminer } from "@/hooks/use-sidebar-visibility-determiner";
-import { Group, isOptionsGroup, Stack, Tooltip } from "@mantine/core";
+import { Group, Stack, Tooltip } from "@mantine/core";
 import Link from "next/link";
-import { FamilyOptions, GeneralOrSpecificOptions, GiftsOptions, LoanOptions, RentalOptions, SalesOptions } from "@/app/(protected)/dashboard/_utils/constants";
+import {
+  FamilyOptions,
+  GeneralOrSpecificOptions,
+  GiftsOptions,
+  LoanOptions,
+  RentalOptions,
+  SalesOptions,
+} from "@/app/(protected)/dashboard/_utils/constants";
+import { PropsWithChildren } from "react";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
- 
-
   const { isSidebarOpended, setIsSidebarOpended } =
     useSidebarVisibilityDeterminer({
       minViewportSize: 650,
@@ -50,16 +56,28 @@ const Sidebar = (props: Props) => {
           },
         )}
       >
-        <MyAccordion trigger={"Sales"} contents={SalesOptions} />
-        <MyAccordion trigger={"Rental"} contents={RentalOptions} />
-        <MyAccordion trigger={"Gifts"} contents={GiftsOptions} />
-        <MyAccordion trigger={"Loan"} contents={LoanOptions} />
         <MyAccordion
-          trigger={"Family Representation"}
+          trigger={<AccordionTrigger>Sales</AccordionTrigger>}
+          contents={SalesOptions}
+        />
+        <MyAccordion
+          trigger={<AccordionTrigger>Rental</AccordionTrigger>}
+          contents={RentalOptions}
+        />
+        <MyAccordion
+          trigger={<AccordionTrigger>Gifts</AccordionTrigger>}
+          contents={GiftsOptions}
+        />
+        <MyAccordion
+          trigger={<AccordionTrigger>Loan</AccordionTrigger>}
+          contents={LoanOptions}
+        />
+        <MyAccordion
+          trigger={<AccordionTrigger>Family Representation</AccordionTrigger>}
           contents={FamilyOptions}
         />
         <MyAccordion
-          trigger={"Gen/Spec Representation"}
+          trigger={<AccordionTrigger>Gen/Spec Representation</AccordionTrigger>}
           contents={GeneralOrSpecificOptions}
         />
       </div>
@@ -88,6 +106,10 @@ const Sidebar = (props: Props) => {
       </Stack>
     </section>
   );
+};
+
+const AccordionTrigger = ({ children }: PropsWithChildren) => {
+  return <Group>{children}</Group>;
 };
 
 export default Sidebar;

@@ -13,6 +13,7 @@ import {
   Box,
 } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface FormValues {
   email: string;
@@ -26,11 +27,11 @@ const RegistrationPage: React.FC = () => {
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      phoneNumber: "",
-      fullName: "",
+      email: "test@gmail.com",
+      password: "12345678",
+      confirmPassword: "12345678",
+      phoneNumber: "091122334455",
+      fullName: "Doro Bet",
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid Email"),
@@ -40,25 +41,30 @@ const RegistrationPage: React.FC = () => {
         value === values.password ? null : "Passwords do not match",
       phoneNumber: (value) =>
         /^[0-9]+$/.test(value) ? null : "Invalid phone number",
-      fullName: (value) => (value.trim() !== "" ? null : "Full name is required"),
+      fullName: (value) =>
+        value.trim() !== "" ? null : "Full name is required",
     },
   });
 
+  const router = useRouter();
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const { hasErrors } = form.validate();
     if (hasErrors) return;
-    alert("Registration successful");
+    router.push("/auth/login");
   };
 
   return (
-    <div className="mt-0 bg-primary pt-0 overflow-auto" style={{ height: "100vh" }}>
+    <div
+      className="mt-0 overflow-auto bg-primary pt-0"
+      style={{ height: "100vh" }}
+    >
       <Container size={520} py={40} className="">
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <Title className="text-center" style={{ fontWeight: 900 }}>
             Welcome To <span className="text-primary">Shengo</span>
           </Title>
-          <Text color="dimmed" size="sm" className="text-center" mt={5}>
+          <Text c="dimmed" size="sm" className="text-center" mt={5}>
             Register here!
           </Text>
           <form onSubmit={handleSubmit}>
@@ -94,8 +100,8 @@ const RegistrationPage: React.FC = () => {
             <Box mt="md" display="flex">
               <Button type="submit">Register</Button>
             </Box>
-            <Text color="dimmed" size="sm" className="text-center" mt={5}>
-              Already have an account? {" "}
+            <Text c="dimmed" size="sm" className="text-center" mt={5}>
+              Already have an account?{" "}
               <Link href={"/auth/login"} className="text-primary">
                 Login
               </Link>

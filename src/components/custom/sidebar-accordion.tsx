@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import Link from "next/link";
 import {
   Accordion,
@@ -17,17 +17,16 @@ export interface ContentInfo {
 
 interface Props {
   contents: ContentInfo[];
-  trigger: string;
+  trigger: ReactNode;
 }
 
 const MyAccordion = ({ trigger, contents }: Props) => {
   const pathname = usePathname();
-  const mainPath = pathname.split("/")[2] == trigger.toLowerCase();
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1" className="overflow-hidden border-none">
         <AccordionTrigger className="text-sm">
-          <div className="font-medium text-nowrap">{trigger}</div>
+         {trigger}
         </AccordionTrigger>
         <AccordionContent className="dark flex flex-col gap-2 px-2">
           {contents.map((value, ind) => {

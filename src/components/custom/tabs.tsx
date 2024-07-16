@@ -41,20 +41,19 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
           className={cn(
             `inline-flex cursor-pointer items-center justify-center border-b-[3px] border-transparent px-3 py-2.5 text-sm transition-all`,
             {
-              "border-primary font-semibold text-primary":
-                current - 1 === ind,
+              "border-primary font-semibold text-primary": current - 1 === ind,
             },
             classNames?.tabItem,
           )}
           onClick={() => {
-            if (!visitedTabs.includes(ind + 1)) {
-              return toast({
-                title: "Warning",
-                description: "Please fill the current form first!",
-                variant: "destructive",
-                duration: 3000,
-              });
-            }
+            // if (!visitedTabs.includes(ind + 1)) {
+            //   return toast({
+            //     title: "Warning",
+            //     description: "Please fill the current form first!",
+            //     variant: "destructive",
+            //     duration: 3000,
+            //   });
+            // }
             carouselApi && carouselApi.scrollTo(ind);
           }}
           key={tabKey}
