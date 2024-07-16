@@ -13,6 +13,7 @@ import {
   Box,
 } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface FormValues {
   email: string;
@@ -23,8 +24,8 @@ const LoginPage: React.FC = () => {
   const form = useForm<FormValues>({
     mode: "controlled",
     initialValues: {
-      email: "",
-      password: "",
+      email: "test@gmail.com",
+      password: "12345678",
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid Email"),
@@ -33,13 +34,15 @@ const LoginPage: React.FC = () => {
     },
   });
 
+  const router = useRouter();
+
   const handleSubmit = (e: any) => {
     // Handle form submission
     // console.log("Form values:", values);
     e.preventDefault();
     const { hasErrors } = form.validate();
     if (hasErrors) return;
-    alert("nop");
+    router.push("/dashboard");
   };
 
   return (
@@ -49,7 +52,7 @@ const LoginPage: React.FC = () => {
           <Title className="text-center" style={{ fontWeight: 900 }}>
             Welcome To <span className="text-primary">Shengo</span>
           </Title>
-          <Text color="dimmed" size="sm" className="text-center" mt={5}>
+          <Text c="dimmed" size="sm" className="text-center" mt={5}>
             Sign in here!
           </Text>
           {/* <form onSubmit={form.onSubmit((values) => handleSubmit(values))}> */}
@@ -70,7 +73,7 @@ const LoginPage: React.FC = () => {
             </Box>
             <Link href={"/auth/forget"}>
               <Text
-                color="dimmed"
+                c="dimmed"
                 size="sm"
                 className="text-center hover:text-primary"
                 mt={10}
@@ -78,7 +81,7 @@ const LoginPage: React.FC = () => {
                 Forget your password.
               </Text>
             </Link>
-            <Text color="dimmed" size="sm" className="text-center" mt={5}>
+            <Text c="dimmed" size="sm" className="text-center" mt={5}>
               Do not have an account yet?{" "}
               <Link href={"/auth/register"} className="text-primary">
                 Register

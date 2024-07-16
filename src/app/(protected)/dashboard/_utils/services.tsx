@@ -7,7 +7,7 @@ export const Services: ServiceCard[] = [
       title: "Vehicle",
       description:
         "Buy, sell, or rent any type of vehicle, from cars to construction equipment.",
-      exploreLink: "#",
+      exploreLink: " #",
     },
     {
       icon: <HomeIcon className="h-6 w-6" />,
@@ -43,7 +43,7 @@ export const Services: ServiceCard[] = [
     },
     {
       icon: <ConeIcon className="h-6 w-6" />,
-      title: "Construction Machine",
+      title: "Consstruction Machine",
       description: "Buy, sell, or rent any type of construction equipment.",
       exploreLink: "#",
     },
