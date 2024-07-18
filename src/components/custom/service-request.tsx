@@ -64,7 +64,7 @@ const ServiceRequest = (props: Props) => {
       });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
-        orientation: "landscape",
+        orientation: "portrait",
         unit: "pt",
         format: [canvas.width, canvas.height],
       });
