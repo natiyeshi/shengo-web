@@ -23,14 +23,14 @@ type Props = {
 const ServiceMap = ({ position, popUpMessage }: Props) => {
   return (
     <MapContainer
-      className="aspect-[11/7] w-full rounded-lg md:aspect-[11/5]"
+      className="aspect-[11/8] w-full rounded-lg md:aspect-[11/6]"
       center={position}
       zoom={12}
       scrollWheelZoom={false}
       doubleClickZoom={true}
       fadeAnimation={true}
       zoomAnimation={true}
-      zoomControl={false}
+      zoomControl={true}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <MapController position={position} />
