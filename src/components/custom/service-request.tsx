@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Download } from "lucide-react";
-import { Select, Stack } from "@mantine/core";
+import { Group, Select, Stack } from "@mantine/core";
 
 import ButtonWithIcon from "./button-with-icon";
 import dynamic from "next/dynamic";
@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DocumentDdf from "./document-pdf";
+import { Button } from "../ui/button";
 
 const ServiceMap = dynamic(() => import("./map/service-map"), { ssr: false });
 
@@ -77,18 +78,25 @@ const ServiceRequest = (props: Props) => {
   };
   return (
     <Stack>
-      <Select
-        label="Select service provider"
-        data={ServiceProviders}
-        defaultValue={serviceProvier.value}
-        onChange={(value: string | null) =>
-          setServiceProvider(
-            ServiceProviders.find((provider) => provider.value === value)!,
-          )
-        }
-        searchable
-        allowDeselect={false}
-      />
+      <Group justify="space-between">
+        <Select
+          label="Select service provider"
+          data={ServiceProviders}
+          defaultValue={serviceProvier.value}
+          onChange={(value: string | null) =>
+            setServiceProvider(
+              ServiceProviders.find((provider) => provider.value === value)!,
+            )
+          }
+          searchable
+          allowDeselect={false}
+        />
+
+        <Button size="icon" onClick={() => setOpen(true)}>
+          <Download />
+          <span className="sr-only">Download Service </span>
+        </Button>
+      </Group>
 
       <ServiceMap
         position={serviceProvier.position}
@@ -101,12 +109,6 @@ const ServiceRequest = (props: Props) => {
         setOpen={setOpen}
         open={open}
       />
-      <div className="mt-4 flex items-center gap-5 self-end">
-        <ButtonWithIcon onClick={() => setOpen(true)}>
-          <Download />
-          <span>Download Service </span>
-        </ButtonWithIcon>
-      </div>
     </Stack>
   );
 };

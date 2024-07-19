@@ -46,14 +46,14 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
             classNames?.tabItem,
           )}
           onClick={() => {
-            // if (!visitedTabs.includes(ind + 1)) {
-            //   return toast({
-            //     title: "Warning",
-            //     description: "Please fill the current form first!",
-            //     variant: "destructive",
-            //     duration: 3000,
-            //   });
-            // }
+            if (!visitedTabs.includes(ind + 1)) {
+              // return toast({
+              //   title: "Warning",
+              //   description: "Please fill the current form first!",
+              //   variant: "destructive",
+              //   duration: 3000,
+              // });
+            }
             carouselApi && carouselApi.scrollTo(ind);
           }}
           key={tabKey}
