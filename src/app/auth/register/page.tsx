@@ -61,7 +61,7 @@ const RegistrationPage: React.FC = () => {
       className="grid grid-cols-1 overflow-auto lg:grid-cols-[7fr_6fr]"
       style={{ height: "100vh" }}
     >
-      <section className="relative flex h-[60dvh] flex-col items-center py-7 lg:h-auto">
+      <section className="relative flex h-[60dvh] flex-col items-center lg:h-auto">
         <div className="relative w-full flex-1">
           <Image
             src={FamilyImage}
@@ -74,7 +74,7 @@ const RegistrationPage: React.FC = () => {
         </div>
       </section>
       <section className="flex items-center">
-        <div className="w-full p-8">
+        <div className="w-full px-8 py-4">
           <Title
             className="my-8 flex items-center justify-center gap-3 text-3xl md:text-5xl"
             style={{ fontWeight: 700 }}
