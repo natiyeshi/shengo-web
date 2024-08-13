@@ -33,15 +33,18 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
 
   return (
     <div
-      className={cn("mb-4 mt-1 rounded-md bg-muted", classNames?.wrapper)}
+      className={cn(
+        "mb-4 mt-1 border-b bg-zinc-50",
+        classNames?.wrapper,
+      )}
       ref={tabRef}
     >
       {Object.keys(tabsMap).map((tabKey, ind) => (
         <div
           className={cn(
-            `inline-flex cursor-pointer items-center justify-center border-b-[3px] border-transparent px-3 py-2.5 text-sm transition-all`,
+            `inline-flex cursor-pointer items-center justify-center border-b-[2px] border-transparent px-3 py-2.5 text-sm font-medium text-zinc-500 transition-all`,
             {
-              "border-primary font-semibold text-primary": current - 1 === ind,
+              "border-primary text-primary": current - 1 === ind,
             },
             classNames?.tabItem,
           )}
