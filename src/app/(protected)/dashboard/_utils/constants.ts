@@ -53,7 +53,7 @@ export const GeneralOrSpecificOptions = [
 
 export const LoanOptions = [{ name: "Normal", url: "/dashboard/loan/normal" }];
 
-export const AllUrls = [
+export const AllLinks = [
   ...SalesOptions,
   ...RentalOptions,
   ...GiftsOptions,

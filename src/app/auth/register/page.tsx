@@ -14,7 +14,9 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import FamilyImage from "../../../../public/images/family-2.jpg";
+import Image from "next/image";
+import { FaGifts } from "react-icons/fa";
 interface FormValues {
   email: string;
   password: string;
@@ -55,61 +57,84 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div
-      className="mt-0 overflow-auto bg-primary pt-0"
+    <main
+      className="grid grid-cols-1 overflow-auto lg:grid-cols-[7fr_6fr]"
       style={{ height: "100vh" }}
     >
-      <Container size={520} py={40} className="">
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <Title className="text-center" style={{ fontWeight: 900 }}>
-            Welcome To <span className="text-primary">Shengo</span>
+      <section className="relative flex h-[60dvh] flex-col items-center py-7 lg:h-auto">
+        <div className="relative w-full flex-1">
+          <Image
+            src={FamilyImage}
+            alt="product image"
+            className="object-cover"
+            style={{ backgroundPositionX: "left" }}
+            fill
+            placeholder="blur"
+          />
+        </div>
+      </section>
+      <section className="flex items-center">
+        <div className="w-full p-8">
+          <Title
+            className="my-8 flex items-center justify-center gap-3 text-3xl md:text-5xl"
+            style={{ fontWeight: 700 }}
+          >
+            <FaGifts />
+            <p>
+              Welcome To <span className="text-primary">Shengo</span>
+            </p>
           </Title>
-          <Text c="dimmed" size="sm" className="text-center" mt={5}>
-            Register here!
-          </Text>
+
           <form onSubmit={handleSubmit}>
             <TextInput
+              size="md"
               label="Full Name"
               placeholder="John Doe"
               {...form.getInputProps("fullName")}
             />
             <TextInput
+              size="md"
               label="Email"
               placeholder="you@example.com"
               mt="md"
               {...form.getInputProps("email")}
             />
             <TextInput
+              size="md"
               label="Phone Number"
               placeholder="1234567890"
               mt="md"
               {...form.getInputProps("phoneNumber")}
             />
             <PasswordInput
+              size="md"
               label="Password"
               placeholder="Your password"
               mt="md"
               {...form.getInputProps("password")}
             />
             <PasswordInput
+              size="md"
               label="Confirm Password"
               placeholder="Confirm your password"
               mt="md"
               {...form.getInputProps("confirmPassword")}
             />
-            <Box mt="md" display="flex">
-              <Button type="submit">Register</Button>
+            <Box mt="md" display="flex" w={"full"}>
+              <Button type="submit" size="md" className="w-full">
+                Register
+              </Button>
             </Box>
-            <Text c="dimmed" size="sm" className="text-center" mt={5}>
+            <Text c="dimmed" size="sm" className="mt-4">
               Already have an account?{" "}
               <Link href={"/auth/login"} className="text-primary">
                 Login
               </Link>
             </Text>
           </form>
-        </Paper>
-      </Container>
-    </div>
+        </div>
+      </section>
+    </main>
   );
 };
 
