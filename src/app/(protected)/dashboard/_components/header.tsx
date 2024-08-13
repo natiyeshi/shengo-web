@@ -28,6 +28,7 @@ const Header = (props: Props) => {
       <Breadcrumbs separator=">">
         {links.map((link) => (
           <Link
+            key={link.title}
             className={cn(
               "text-sm capitalize text-zinc-600 transition hover:text-primary",
               {
