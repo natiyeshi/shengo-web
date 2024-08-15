@@ -10,7 +10,238 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String @id @default(uuid())
+  name     String
+  password String @db.VarChar(2000)
+
+  userOffice            ServiceDeliveryOffice?  @relation(fields: [userOfficeId], references: [id])
+  userOfficeId          String?
+  privileges            Privilege[]             @relation("UserPrivileges")
+  ServiceDeliveryOffice ServiceDeliveryOffice[] @relation("UserOffices")
+  Service               Service[]
+
+  @@map("users")
+}
+
+model ServiceDeliveryOffice {
+  id          String    @id @default(uuid())
+  name        String
+  phoneNumber String
+  description String
+  latitude    Float?
+  longitude   Float?
+  users       User[]    @relation("UserOffices")
+  User        User[]
+  Service     Service[]
+
+  @@map("service_delivery_offices")
+}
+
+model Privilege {
+  id    String @id @default(uuid())
+  role  String
+  users User[] @relation("UserPrivileges")
+
+  @@map("privileges")
+}
+
+enum CustomerType {
+  Individual
+  Organization
+}
+
+enum CustomerService {
+  Saler
+  Buyer
+  Witness
+  Lessor
+}
+
+model Customer {
+  id              String          @id @default(uuid())
+  service         CustomerService
+  customerType    CustomerType
+  customerTitle   String
+  name            String
+  fatherName      String
+  grandFatherName String
+  gender          String
+  nationality     String
+  origin          String
+  tin             Int
+  foreign         Boolean
+  region          String
+  city            String
+  subcity         String
+  houseNumber     Int
+  phoneNumber     String
+  otherAddress    String?
+
+  businessName String?
+  grantorName  String?
+  jobPosition  String?
+  Service      Service? @relation(fields: [serviceId], references: [id])
+  serviceId    String?
+
+  @@map("customers")
+}
+
+model Vehicle {
+  id                  String @id @default(uuid())
+  engineNumber        String
+  chassisNumber       String
+  libreNumber         String
+  region              String
+  code                String
+  plateNumber         String
+  vehicleType         String
+  determinationKernNo String
+  determinationPrice  String
+  salesValue          String
+  penaltyGov          String
+  penalty             String
+  bankName            String
+  prePayment          String
+  paymentType         String
+  chequeNumber        String
+}
+
+model Lease {
+  id                  String   @id @default(uuid())
+  formNumber          String
+  leaseService        String
+  totalLeasePrice     Int
+  paidLeasePrice      Int
+  remainingLeasePrice Int
+  region              String
+  city                String
+  subcity             String
+  kebele              String
+  houseNumber         String
+  leaseArea           Int
+  bookNumber          String
+  bankName            String
+  value               Int
+  prePayment          Int
+  penalty             Int
+  penaltyToGovernment Int
+  paymentType         String
+  bookGivenDate       DateTime
+}
+
+model Residence {
+  id          String @id @default(uuid())
+  city        String
+  subcity     String
+  houseNumber String
+
+  isCondominium Boolean
+
+  service    String
+  bookNumber String
+
+  bookGivenDate DateTime
+
+  buildingNumber      String
+  area                String
+  price               String
+  penality            String
+  paymentToGovernment String
+  prePayment          String
+  paymentType         String
+  chequeNumber        String
+  bankNumber          String
+
+  residenceNumber    String
+  totalLeasePrice    String
+  paidResidencePrice String
+  remainingPrice     String
+  remainingPriceDate DateTime
+  recieptNumber      String
+}
+
+model Property {
+  id String @id @default(uuid())
+
+  propertyName String
+
+  value         Int
+  penality      Int?
+  penaltyGov    Int?
+  prePayment    Int
+  paymentType   String
+  bankName      String?
+  chequeOrCpoNo String?
+}
+
+model Motorcycle {
+  id                  String @id @default(uuid())
+  engineNumber        String
+  chassisNumber       String
+  libreNumber         String
+  region              String
+  code                String
+  plateNumber         String
+  motorcycleType      String
+  determinationKernNo String
+  determinationPrice  String
+  salesValue          String
+  penaltyGov          String
+  penalty             String
+  bankName            String
+  prePayment          String
+  paymentType         String
+  chequeNumber        String
+}
+
+model Loan {
+  id                  String   @id @default(uuid())
+  loanType            String
+  loanAmount          Int
+  paymentType         String
+  penaltyForOther     Int
+  penaltyToGovernment Int
+  loanEndingDate      DateTime
+  checkNumber         String
+}
+
+enum ServiceType {
+  Sale
+  Loan
+  Lease
+  Rental
+}
+
+enum ServiceSubType {
+  Vehicle
+  Residence
+  Business
+  OtherPropery
+  VehicleSparePart
+  Motorcycle
+  ConstructionMachine
+  Lease
+}
+
+model Service {
+  id                      String                @id @default(uuid())
+  confirmStatus           String // Todo: It shoud be enum 
+  printStatus             Boolean
+  fileLocation            String
+  numberOfPages           Int
+  filePath                String
+  caseNumber              Int
+  serviceType             ServiceType
+  serviceSubType          ServiceSubType
+  serviceRequestDate      DateTime
+  serviceDeliveryDate     DateTime
+  fileNumber              String
+  amount                  Float
+  serviceDeliveryOffice   ServiceDeliveryOffice @relation(fields: [serviceDeliveryOfficeId], references: [id])
+  serviceDeliveryOfficeId String
+  serviceProviderUser     User                  @relation(fields: [serviceProviderUserId], references: [id])
+  serviceProviderUserId   String
+  Customer                Customer[]
+
+  @@map("services")
 }

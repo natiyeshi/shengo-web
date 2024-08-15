@@ -74,7 +74,7 @@ const RegistrationPage: React.FC = () => {
         </div>
       </section>
       <section className="flex items-center">
-        <div className="w-full px-8 py-4">
+        <div className="w-full px-8 py-2">
           <Title
             className="my-8 flex items-center justify-center gap-3 text-3xl md:text-5xl"
             style={{ fontWeight: 700 }}

@@ -26,7 +26,7 @@ const Page = () => {
       tabsMap: GIFTS_RESIDENCE_TABS_MAP,
     });
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <ResidenceContextProvider>
           <Tabs

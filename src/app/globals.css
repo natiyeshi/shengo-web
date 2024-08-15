@@ -51,7 +51,7 @@
 
 /* Seeting scroll properties for every element */
 * {
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scroll-behavior: smooth;
 }
 
