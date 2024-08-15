@@ -5,7 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Title } from "@mantine/core";
+
 import { SALES_BUSINESS_TABS_MAP } from "../_utils/constants";
 import { CustomerContextProvider } from "../../_contexts/customer/customer-context";
 import { BusinessContextProvider } from "../../_contexts/business/business-context";
@@ -26,7 +26,7 @@ const Page = () => {
       tabsMap: SALES_BUSINESS_TABS_MAP,
     });
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <BusinessContextProvider>
           <Tabs

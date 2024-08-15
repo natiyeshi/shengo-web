@@ -26,6 +26,7 @@ import { useCustomerOperation } from "../../../app/(protected)/dashboard/_contex
 import { useCustomerFormContext } from "@/app/(protected)/dashboard/_contexts/customer/customer-form-context";
 import FormFooterButtons from "../form-footer-buttons";
 import { CUSTOMER_TITLES, CUSTOMER_TYPES, GENDERS } from "@/_utils/constants";
+import FormBatch from "@/app/(protected)/dashboard/_components/form-batch";
 
 const CustomerIdentityRegisteration = () => {
   const {
@@ -43,7 +44,7 @@ const CustomerIdentityRegisteration = () => {
   const form = useCustomerFormContext();
   const [opened, { open, close }] = useDisclosure(false);
   return (
-    <div>
+    <div >
       <CustomerListDrawer
         title={`${type}'s list`}
         opened={opened}
@@ -73,9 +74,7 @@ const CustomerIdentityRegisteration = () => {
         />
         <Input hidden {...form.getInputProps("_id")} key={form.key("_id")} />
         <Rows className="mt-5">
-          <Title order={2} className="">
-            {type}
-          </Title>
+          <FormBatch>{type}</FormBatch>
           {!isOrganization && (
             <>
               <Select
@@ -192,9 +191,7 @@ const CustomerIdentityRegisteration = () => {
           )}
         </Rows>
         <Rows className="mt-5">
-          <Title order={2} className="">
-            Address
-          </Title>
+          <FormBatch>Address</FormBatch>
 
           <Group>
             <Checkbox

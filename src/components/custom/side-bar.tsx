@@ -163,9 +163,9 @@ const Sidebar = (props: Props) => {
               key={option.url}
               href={option.url}
               className={cn(
-                "rounded-md  p-2 text-sm shadow-[0_0_2px_#7772] transition-all duration-200 hover:bg-primary/10",
+                "rounded-md p-2 text-sm shadow-[0_0_2px_#7771] transition-all duration-200 hover:bg-primary/10",
                 {
-                  "hover:bg-primary10 bg-primary/10": option.url === pathname,
+                  "bg-primary/5": option.url === pathname,
                 },
               )}
             >

@@ -25,7 +25,7 @@ const Page = () => {
       tabsMap: RENTAL_VEHICLESPARE_TABS_MAP,
     });
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <VehiclespareContextProvider>
           <Tabs

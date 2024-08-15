@@ -34,7 +34,7 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
   return (
     <div
       className={cn(
-        "mb-4 mt-1 border-b bg-zinc-50",
+        "sticky left-0 top-0 mb-4 mt-1 border-b z-[99] bg-zinc-50",
         classNames?.wrapper,
       )}
       ref={tabRef}
@@ -42,7 +42,7 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
       {Object.keys(tabsMap).map((tabKey, ind) => (
         <div
           className={cn(
-            `inline-flex cursor-pointer items-center justify-center border-b-[2px] border-transparent px-3 py-2.5 text-sm font-medium text-zinc-500 transition-all`,
+            `inline-flex cursor-pointer items-center justify-center border-b-[2px] border-transparent px-3 py-2.5 text-sm font-medium text-zinc-500/80 transition-all`,
             {
               "border-primary text-primary": current - 1 === ind,
             },

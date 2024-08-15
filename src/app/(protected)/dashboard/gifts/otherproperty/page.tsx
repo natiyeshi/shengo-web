@@ -26,7 +26,7 @@ const Page = () => {
     });
 
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <PropertyContextProvider>
           <Tabs

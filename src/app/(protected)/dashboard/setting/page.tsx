@@ -5,7 +5,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <Title order={3}>Setting Page</Title>
     </main>
   );

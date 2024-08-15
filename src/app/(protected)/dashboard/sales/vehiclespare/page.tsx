@@ -24,7 +24,7 @@ const Page = () => {
       tabsMap: SALES_VEHICLESPARE_TABS_MAP,
     });
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <VehiclespareContextProvider>
           <Tabs

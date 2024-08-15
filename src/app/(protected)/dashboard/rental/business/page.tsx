@@ -25,7 +25,7 @@ const Page = () => {
       tabsMap: RENTAL_BUSINESS_TABS_MAP,
     });
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <CustomerContextProvider>
         <BusinessContextProvider>
          

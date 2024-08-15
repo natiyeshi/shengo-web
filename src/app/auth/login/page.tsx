@@ -4,10 +4,7 @@ import { useForm } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
-  Paper,
-  Group,
   Button,
-  Container,
   Title,
   Text,
   Box,
@@ -15,7 +12,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaGifts } from "react-icons/fa";
-import FamilyImage from "../../../../public/images/family-2.jpg";
+import FamilyImage from "../../../../public/images/family-3.jpg";
 import Image from "next/image";
 
 interface FormValues {
@@ -53,12 +50,12 @@ const LoginPage: React.FC = () => {
       className="grid grid-cols-1 overflow-auto lg:grid-cols-[7fr_6fr]"
       style={{ height: "100vh" }}
     >
-      <section className="relative flex h-[60dvh] flex-col items-center lg:h-auto">
-        <div className="relative w-full flex-1">
+      <section className="relative flex h-[60dvh] items-center justify-center lg:h-auto">
+        <div className="relative h-full w-full">
           <Image
             src={FamilyImage}
             alt="product image"
-            className="object-cover"
+            className="object-contain"
             style={{ backgroundPositionX: "left" }}
             fill
             placeholder="blur"
@@ -68,7 +65,7 @@ const LoginPage: React.FC = () => {
       <section className="flex items-center">
         <div className="w-full p-8">
           <Title
-            className="my-8 flex items-center justify-center gap-3 text-3xl md:text-5xl"
+            className="my-8 flex items-center justify-center gap-3 text-2xl md:text-4xl"
             style={{ fontWeight: 700 }}
           >
             <FaGifts />
@@ -79,13 +76,11 @@ const LoginPage: React.FC = () => {
           {/* <form onSubmit={form.onSubmit((values) => handleSubmit(values))}> */}
           <form onSubmit={handleSubmit} className="flex flex-col">
             <TextInput
-              size="md"
               label="Email"
               placeholder="you@example.com"
               {...form.getInputProps("email")}
             />
             <PasswordInput
-              size="md"
               label="Password"
               placeholder="Your password"
               mt="md"
@@ -93,21 +88,21 @@ const LoginPage: React.FC = () => {
             />
 
             <Box mt="md">
-              <Button type="submit" className="w-full" size="md">
+              <Button type="submit" className="w-full">
                 Login
               </Button>
             </Box>
-            <section className="mt-7 flex flex-col text-sm text-zinc-600">
-              <Text>
+            <section className="mt-4 flex flex-col text-sm text-zinc-600">
+              <p>
                 Do not have an account yet,{" "}
                 <Link href={"/auth/register"} className="text-primary">
                   Register ?
                 </Link>
-              </Text>
+              </p>
               <Link href={"/auth/forget"}>
-                <Text className="hover:text-primary">
+                <p className="hover:text-primary">
                   Forget your <span className="text-primary">password?</span>
-                </Text>
+                </p>
               </Link>
             </section>
           </form>

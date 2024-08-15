@@ -7,7 +7,7 @@ import { Flex, Group, Stack } from "@mantine/core";
 
 const Page = () => {
   return (
-    <main className="container">
+    <main className="container no-scrollbar">
       <section className="mt-8 text-center">
         <h2 className="text-3xl font-bold tracking-tight text-primary">
           Secure Your Future Deals
