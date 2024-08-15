@@ -4,17 +4,14 @@ import { useForm } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
-  Paper,
-  Group,
   Button,
-  Container,
   Title,
   Text,
   Box,
 } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import FamilyImage from "../../../../public/images/family-2.jpg";
+import FamilyImage from "../../../../public/images/family-3.jpg";
 import Image from "next/image";
 import { FaGifts } from "react-icons/fa";
 interface FormValues {
@@ -66,7 +63,7 @@ const RegistrationPage: React.FC = () => {
           <Image
             src={FamilyImage}
             alt="product image"
-            className="object-cover"
+            className="object-contain"
             style={{ backgroundPositionX: "left" }}
             fill
             placeholder="blur"
@@ -76,7 +73,7 @@ const RegistrationPage: React.FC = () => {
       <section className="flex items-center">
         <div className="w-full px-8 py-2">
           <Title
-            className="my-8 flex items-center justify-center gap-3 text-3xl md:text-5xl"
+            className="my-8 flex items-center justify-center gap-3 text-2xl md:text-4xl"
             style={{ fontWeight: 700 }}
           >
             <FaGifts />
@@ -87,50 +84,45 @@ const RegistrationPage: React.FC = () => {
 
           <form onSubmit={handleSubmit}>
             <TextInput
-              size="md"
               label="Full Name"
               placeholder="John Doe"
               {...form.getInputProps("fullName")}
             />
             <TextInput
-              size="md"
               label="Email"
               placeholder="you@example.com"
               mt="md"
               {...form.getInputProps("email")}
             />
             <TextInput
-              size="md"
               label="Phone Number"
               placeholder="1234567890"
               mt="md"
               {...form.getInputProps("phoneNumber")}
             />
             <PasswordInput
-              size="md"
               label="Password"
               placeholder="Your password"
               mt="md"
               {...form.getInputProps("password")}
             />
             <PasswordInput
-              size="md"
               label="Confirm Password"
               placeholder="Confirm your password"
               mt="md"
               {...form.getInputProps("confirmPassword")}
             />
             <Box mt="md" display="flex" w={"full"}>
-              <Button type="submit" size="md" className="w-full">
+              <Button type="submit" className="w-full">
                 Register
               </Button>
             </Box>
-            <Text c="dimmed" size="sm" className="mt-4">
+            <p className="mt-4 text-sm text-zinc-600">
               Already have an account?{" "}
               <Link href={"/auth/login"} className="text-primary">
                 Login
               </Link>
-            </Text>
+            </p>
           </form>
         </div>
       </section>
