@@ -26,7 +26,7 @@ import {
 } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 
-const IconCommonStyle = "size-[2.5rem] p-2.5";
+const IconCommonStyle = "size-[2.1rem] p-2";
 
 const MENU_OPTIONS = [
   {
@@ -93,10 +93,6 @@ const Sidebar = (props: Props) => {
     router.push(menu.options[0].url);
   };
 
-  // useEffect(() => {
-
-  // }, [menus]);
-
   return (
     <div className="sticky left-0 top-0 flex">
       <section
@@ -106,9 +102,7 @@ const Sidebar = (props: Props) => {
       >
         <div className="relative">
           <Burger
-            classNames={{
-              burger: "bg-primary",
-            }}
+            className="opacity-80"
             opened={isSidebarOpended && !!activeMenu}
             onClick={() => setIsSidebarOpended((prev) => !prev)}
           />
@@ -165,7 +159,7 @@ const Sidebar = (props: Props) => {
               className={cn(
                 "rounded-md p-2 text-sm shadow-[0_0_2px_#7771] transition-all duration-200 hover:bg-primary/10",
                 {
-                  "bg-primary/5": option.url === pathname,
+                  "bg-primary/10": option.url === pathname,
                 },
               )}
             >

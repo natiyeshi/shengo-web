@@ -15,18 +15,18 @@ export const metadata: Metadata = {
 
 const theme = createTheme({
   primaryColor: "primary",
-  colors: { 
+  colors: {
     primary: [
-      "#f1eeff",
-      "#dfd9fa",
-      "#bcb0ec",
-      "#9885e0",
-      "#7860d5",
-      "#6449ce",
-      "#5a3dcc",
-      "#4a2fb5",
-      "#4229a3",
-      "#362191",
+      "#e6f2ff",
+      "#d1e0ff",
+      "#a2befa",
+      "#709af3",
+      "#467bee",
+      "#2b68ec",
+      "#1a5eeb",
+      "#084ed2",
+      "#0045bd",
+      "#003ba8",
     ],
   },
   activeClassName: "",
@@ -42,7 +42,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={`${lexend.className}`}>
-        <NextTopLoader color="#7860d5" height={3} showSpinner={false}  />
+        <NextTopLoader color="#467bee" height={3} showSpinner={false} />
         <MantineProvider forceColorScheme="light" theme={theme}>
           {children}
         </MantineProvider>
