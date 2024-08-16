@@ -5,7 +5,10 @@ type ConstructionmachineContextType = {
   constructionmachines: Constructionmachine[];
   getConstructionmachineById: (_id: string) => Constructionmachine | undefined;
   addConstructionmachine: (constructionmachine: Constructionmachine) => void;
-  updateConstructionmachineById: (_id: string, updatedconstructionmachine: Partial<Constructionmachine>) => void;
+  updateConstructionmachineById: (
+    _id: string,
+    updatedconstructionmachine: Partial<Constructionmachine>,
+  ) => void;
   removeConstructionmachineById: (id: string) => void;
   clearConstructionmachines: () => void;
 };
@@ -14,12 +17,18 @@ const constructionmachineContextInitial: ConstructionmachineContextType = {
   constructionmachines: [],
   getConstructionmachineById: (id: string) => undefined,
   addConstructionmachine: (constructionmachine: Constructionmachine) => {},
-  updateConstructionmachineById: (id: string, updatedConstructionmachine: Partial<Constructionmachine>) => {},
+  updateConstructionmachineById: (
+    id: string,
+    updatedConstructionmachine: Partial<Constructionmachine>,
+  ) => {},
   removeConstructionmachineById: (id: string) => {},
   clearConstructionmachines: () => {},
 };
 
-const constructionmachineContext = createContext<ConstructionmachineContextType>(constructionmachineContextInitial);
+const constructionmachineContext =
+  createContext<ConstructionmachineContextType>(
+    constructionmachineContextInitial,
+  );
 
 type constructionmachineContextProviderProps = {
   children: ReactNode;
@@ -27,7 +36,9 @@ type constructionmachineContextProviderProps = {
 export const ConstructionmachineContextProvider = ({
   children,
 }: constructionmachineContextProviderProps) => {
-  const [constructionmachines, setConstructionmachines] = useState<Constructionmachine[]>([]);
+  const [constructionmachines, setConstructionmachines] = useState<
+    Constructionmachine[]
+  >([]);
 
   const addConstructionmachine = (constructionmachine: Constructionmachine) => {
     setConstructionmachines((prev) => [
@@ -37,19 +48,28 @@ export const ConstructionmachineContextProvider = ({
   };
 
   const getConstructionmachineById = (id: string) => {
-    return constructionmachines.find((constructionmachine) => constructionmachine._id === id);
+    return constructionmachines.find(
+      (constructionmachine) => constructionmachine._id === id,
+    );
   };
 
-  const updateConstructionmachineById = (id: string, updatedConstructionmachine: Partial<Constructionmachine>) => {
+  const updateConstructionmachineById = (
+    id: string,
+    updatedConstructionmachine: Partial<Constructionmachine>,
+  ) => {
     setConstructionmachines((prev) =>
       prev.map((constructionmachine) =>
-        constructionmachine._id === id ? { ...constructionmachine, ...updatedConstructionmachine } : constructionmachine,
+        constructionmachine._id === id
+          ? { ...constructionmachine, ...updatedConstructionmachine }
+          : constructionmachine,
       ),
     );
   };
 
   const removeConstructionmachineById = (id: string) => {
-    setConstructionmachines((prev) => prev.filter((constructionmachine) => constructionmachine._id !== id));
+    setConstructionmachines((prev) =>
+      prev.filter((constructionmachine) => constructionmachine._id !== id),
+    );
   };
 
   const clearConstructionmachines = () => {
@@ -71,12 +91,8 @@ export const ConstructionmachineContextProvider = ({
   );
 };
 
-export const useConstructionmachineContext = () => {
+export const useConstructionMachineContext = () => {
   const context = useContext(constructionmachineContext);
-  if (!context) {
-    throw new Error(
-      "useConstructionmachineContextProvider must be used within a ConstructionmachineContextProvider",
-    );
-  }
+
   return context;
 };

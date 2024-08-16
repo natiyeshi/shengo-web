@@ -3,7 +3,7 @@
 import { createContext, useContext, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertInfo } from "../../../../../components/custom/AreYouSure";
-import { useConstructionmachineContext } from "./constructionmachine-context";
+import {          useConstructionMachineContext } from "./constructionmachine-context";
 import { useConstructionmachineFormContext } from "./constructionmachine-form-context";
 
 export type CarouselAction = {
@@ -26,7 +26,7 @@ const useConstructionmachineOperationUtilities = ({
     updateConstructionmachineById,
     removeConstructionmachineById,
     clearConstructionmachines,
-  } = useConstructionmachineContext();
+  } =          useConstructionMachineContext();
 
   const { toast } = useToast();
 
@@ -145,10 +145,6 @@ export const ConstructionmachineOperationProvider = ({
 
 export const useConstructionmachineOperation = () => {
   const context = useContext(ConstructionmachineOperationContext);
-  if (!context) {
-    throw new Error(
-      "useConstructionmachineOperation must be used within a ConstructionmachineOperationProvider",
-    );
-  }
+
   return context;
 };

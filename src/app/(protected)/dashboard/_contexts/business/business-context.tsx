@@ -5,10 +5,7 @@ type BusinessContextType = {
   business: Business[];
   getBusinessById: (_id: string) => Business | undefined;
   addBusiness: (business: Business) => void;
-  updateBusinessById: (
-    _id: string,
-    updatedbusiness: Partial<Business>,
-  ) => void;
+  updateBusinessById: (_id: string, updatedbusiness: Partial<Business>) => void;
   removeBusinessById: (id: string) => void;
   clearBusiness: () => void;
 };
@@ -52,9 +49,7 @@ export const BusinessContextProvider = ({
   ) => {
     setBusiness((prev) =>
       prev.map((business) =>
-        business._id === id
-          ? { ...business, ...updatedBusiness }
-          : business,
+        business._id === id ? { ...business, ...updatedBusiness } : business,
       ),
     );
   };
@@ -84,10 +79,5 @@ export const BusinessContextProvider = ({
 
 export const useBusinessContext = () => {
   const context = useContext(BusinessContext);
-  if (!context) {
-    throw new Error(
-      "useBusinessContextProvider must be used within a BusinessContextProvider",
-    );
-  }
   return context;
 };

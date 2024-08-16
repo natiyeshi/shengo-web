@@ -1,18 +1,28 @@
+"use client";
 import React, { useRef, useState } from "react";
 import { Download } from "lucide-react";
 import { Group, Select, Stack } from "@mantine/core";
-
-import ButtonWithIcon from "./button-with-icon";
 import dynamic from "next/dynamic";
 
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DocumentDdf from "./document-pdf";
 import { Button } from "../ui/button";
+import { ServiceType } from "@/app/(protected)/dashboard/_utils/constants";
+import { useServiceData } from "@/app/(protected)/dashboard/_hooks/use-serviceData";
 
 const ServiceMap = dynamic(() => import("./map/service-map"), { ssr: false });
 
 const ServiceProviders = [
+  {
+    label: "Megenagna",
+    value: "megenagna",
+    position: {
+      lat: 9.0205,
+      lng: 38.8024,
+    },
+    popUpMessage: "Megenagna",
+  },
   {
     label: "Bethel",
     value: "bethel",
@@ -31,23 +41,21 @@ const ServiceProviders = [
     },
     popUpMessage: "Kilinto",
   },
-  {
-    label: "Megenagna",
-    value: "megenagna",
-    position: {
-      lat: 9.0205,
-      lng: 38.8024,
-    },
-    popUpMessage: "Megenagna",
-  },
 ];
 
-type Props = {};
+type Props = {
+  serviceType: ServiceType;
+};
 
-const ServiceRequest = (props: Props) => {
+const ServiceRequest = ({ serviceType }: Props) => {
   const [serviceProvier, setServiceProvider] = useState(ServiceProviders[0]);
   const [open, setOpen] = useState(false);
   const reportTemplateRef = useRef<HTMLDivElement>(null);
+  const data = useServiceData(serviceType);
+
+  const handleSubmit = () => {
+    console.log("ServiceRequest: ", { serviceType, data });
+  };
 
   const handleGeneratePdf = async () => {
     const input = reportTemplateRef.current;
@@ -92,10 +100,14 @@ const ServiceRequest = (props: Props) => {
           allowDeselect={false}
         />
 
-        <Button size="icon" onClick={() => setOpen(true)}>
-          <Download />
-          <span className="sr-only">Download Service </span>
-        </Button>
+        <Group>
+          <Button size="icon" variant="secondary" onClick={() => setOpen(true)}>
+            <Download />
+            <span className="sr-only">Download Service </span>
+          </Button>
+
+          <Button onClick={handleSubmit}>Submit</Button>
+        </Group>
       </Group>
 
       <ServiceMap

@@ -149,10 +149,6 @@ export const MotorcycleOperationProvider = ({
 
 export const useMotorcycleOperation = () => {
   const context = useContext(MotorcycleOperationContext);
-  if (!context) {
-    throw new Error(
-      "useMotorcycleOperation must be used within a MotorcycleOperationProvider",
-    );
-  }
+
   return context;
 };

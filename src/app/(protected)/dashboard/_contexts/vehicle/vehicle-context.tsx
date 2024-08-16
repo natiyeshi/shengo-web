@@ -73,10 +73,6 @@ export const VehicleContextProvider = ({
 
 export const useVehicleContext = () => {
   const context = useContext(vehicleContext);
-  if (!context) {
-    throw new Error(
-      "useVehicleContextProvider must be used within a VehicleContextProvider",
-    );
-  }
+
   return context;
 };

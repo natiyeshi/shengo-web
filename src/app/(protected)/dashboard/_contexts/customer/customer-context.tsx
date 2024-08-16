@@ -103,10 +103,6 @@ export const CustomerContextProvider = ({
 
 export const useCustomerContext = () => {
   const context = useContext(CustomerContext);
-  if (!context) {
-    throw new Error(
-      "useCustomerContextProvider must be used within a CustomerContextProvider",
-    );
-  }
+
   return context;
 };

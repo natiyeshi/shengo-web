@@ -73,10 +73,6 @@ export const LeaseContextProvider = ({
 
 export const useLeaseContext = () => {
   const context = useContext(leaseContext);
-  if (!context) {
-    throw new Error(
-      "useLeaseContextProvider must be used within a LeaseContextProvider",
-    );
-  }
+
   return context;
 };

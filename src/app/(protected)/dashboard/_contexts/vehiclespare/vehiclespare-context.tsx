@@ -5,7 +5,10 @@ type VehiclespareContextType = {
   vehiclespares: Vehiclespare[];
   getVehiclespareById: (_id: string) => Vehiclespare | undefined;
   addVehiclespare: (vehiclespare: Vehiclespare) => void;
-  updateVehiclespareById: (_id: string, updatedvehiclespare: Partial<Vehiclespare>) => void;
+  updateVehiclespareById: (
+    _id: string,
+    updatedvehiclespare: Partial<Vehiclespare>,
+  ) => void;
   removeVehiclespareById: (id: string) => void;
   clearVehiclespares: () => void;
 };
@@ -14,17 +17,21 @@ const vehiclespareContextInitial: VehiclespareContextType = {
   vehiclespares: [],
   getVehiclespareById: (id: string) => undefined,
   addVehiclespare: (vehiclespare: Vehiclespare) => {},
-  updateVehiclespareById: (id: string, updatedVehiclespare: Partial<Vehiclespare>) => {},
+  updateVehiclespareById: (
+    id: string,
+    updatedVehiclespare: Partial<Vehiclespare>,
+  ) => {},
   removeVehiclespareById: (id: string) => {},
   clearVehiclespares: () => {},
 };
 
-const VehiclespareContext = createContext<VehiclespareContextType>(vehiclespareContextInitial);
+const VehiclespareContext = createContext<VehiclespareContextType>(
+  vehiclespareContextInitial,
+);
 
 type vehiclespareContextProviderProps = {
   children: ReactNode;
 };
-
 
 export const VehiclespareContextProvider = ({
   children,
@@ -42,16 +49,23 @@ export const VehiclespareContextProvider = ({
     return vehiclespares.find((vehiclespare) => vehiclespare._id === id);
   };
 
-  const updateVehiclespareById = (id: string, updatedVehiclespare: Partial<Vehiclespare>) => {
+  const updateVehiclespareById = (
+    id: string,
+    updatedVehiclespare: Partial<Vehiclespare>,
+  ) => {
     setVehiclespares((prev) =>
       prev.map((vehiclespare) =>
-        vehiclespare._id === id ? { ...vehiclespare, ...updatedVehiclespare } : vehiclespare,
+        vehiclespare._id === id
+          ? { ...vehiclespare, ...updatedVehiclespare }
+          : vehiclespare,
       ),
     );
   };
 
   const removeVehiclespareById = (id: string) => {
-    setVehiclespares((prev) => prev.filter((vehiclespare) => vehiclespare._id !== id));
+    setVehiclespares((prev) =>
+      prev.filter((vehiclespare) => vehiclespare._id !== id),
+    );
   };
 
   const clearVehiclespares = () => {
@@ -75,10 +89,6 @@ export const VehiclespareContextProvider = ({
 
 export const useVehiclespareContext = () => {
   const context = useContext(VehiclespareContext);
-  if (!context) {
-    throw new Error(
-      "useVehiclespareContextProvider must be used within a VehiclespareContextProvider",
-    );
-  }
+
   return context;
 };

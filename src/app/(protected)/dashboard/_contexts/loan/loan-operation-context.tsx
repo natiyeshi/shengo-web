@@ -149,10 +149,6 @@ export const LoanOperationProvider = ({
 
 export const useLoanOperation = () => {
   const context = useContext(LoanOperationContext);
-  if (!context) {
-    throw new Error(
-      "useLoanOperation must be used within a LoanOperationProvider",
-    );
-  }
+
   return context;
 };

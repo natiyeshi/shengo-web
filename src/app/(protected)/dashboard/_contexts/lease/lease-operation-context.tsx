@@ -149,10 +149,6 @@ export const LeaseOperationProvider = ({
 
 export const useLeaseOperation = () => {
   const context = useContext(LeaseOperationContext);
-  if (!context) {
-    throw new Error(
-      "useLeaseOperation must be used within a LeaseOperationProvider",
-    );
-  }
+
   return context;
 };

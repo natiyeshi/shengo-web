@@ -18,6 +18,7 @@ import { ResidenceContextProvider } from "@/components/custom/property-types-reg
 import { OrganizationContextProvider } from "@/components/custom/property-types-registration/contexts/organization/organization-context";
 import { GENERAL_REPRESETATION_TABS_MAP } from "../_utils/constants";
 import PropertyType from "@/components/custom/property-types-registration";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { current, api, setAPI, goBack, goToNext } = useCarouselAPI({
@@ -25,7 +26,7 @@ const Page = () => {
   });
 
   return (
-    <main className="container no-scrollbar">
+    <main className="no-scrollbar container">
       <CustomerContextProvider>
         <VehicleContextProvider>
           <ResidenceContextProvider>
@@ -65,7 +66,7 @@ const Page = () => {
                       </CustomerOperationProvider>
                     </CustomerFormProvider>
                   </CarouselItem>
-                  {/* Family Propery content */}
+
                   <CarouselItem>
                     <PropertyType carouselAction={{ goBack, goToNext }} />
                   </CarouselItem>
@@ -80,7 +81,11 @@ const Page = () => {
                     </CustomerFormProvider>
                   </CarouselItem>
                   <CarouselItem>
-                    <ServiceRequest />
+                    <ServiceRequest
+                      serviceType={
+                        ServiceType.GENERAL_SPECIFIC_REPRESENTATION_GENERAL
+                      }
+                    />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

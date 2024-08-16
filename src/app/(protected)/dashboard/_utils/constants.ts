@@ -1,5 +1,3 @@
-import { ServiceCard } from "../_types";
-
 export const SalesOptions = [
   { name: "Vehicle", url: "/dashboard/sales/vehicle" },
   { name: "Residence", url: "/dashboard/sales/residence" },
@@ -61,3 +59,38 @@ export const AllLinks = [
   ...GeneralOrSpecificOptions,
   ...LoanOptions,
 ];
+
+export enum ServiceType {
+  SALES_VEHICLE,
+  SALES_RESIDENCE,
+  SALES_BUSINESS,
+  SALES_PROPERTY,
+  SALES_VEHICLESPARE,
+  SALES_MOTORCYCLE,
+  SALES_LEASE,
+  SALES_CONSTRUCTION_MACHINE,
+
+  RENTAL_VEHICLE,
+  RENTAL_RESIDENCE,
+  RENTAL_BUSINESS,
+  RENTAL_PROPERTY,
+  RENTAL_VEHICLESPARE,
+  RENTAL_MOTORCYCLE,
+  RENTAL_LEASE,
+  RENTAL_CONSTRUCTION_MACHINE,
+
+  GIFTS_VEHICLE,
+  GIFTS_RESIDENCE,
+  GIFTS_BUSINESS,
+  GIFTS_PROPERTY,
+  GIFTS_VEHICLESPARE,
+  GIFTS_MOTORCYCLE,
+  GIFTS_LEASE,
+  GIFTS_CONSTRUCTION_MACHINE,
+
+  FAMILY_REPRESENTATION_NORMAL,
+
+  GENERAL_SPECIFIC_REPRESENTATION_GENERAL,
+  
+  LOAN_NORMAL,
+}

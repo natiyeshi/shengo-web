@@ -145,10 +145,6 @@ export const BusinessOperationProvider = ({
 
 export const useBusinessOperation = () => {
   const context = useContext(BusinessOperationContext);
-  if (!context) {
-    throw new Error(
-      "useBusinessOperation must be used within a BusinessOperationProvider",
-    );
-  }
+ 
   return context;
 };

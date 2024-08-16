@@ -1,5 +1,3 @@
-// Neon postgres,
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,40 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Privilege {
+  ADMIN
+  USER
+  PROVIDER
+}
+
 model User {
   id       String @id @default(uuid())
   name     String
-  password String @db.VarChar(2000)
+  password String
 
-  userOffice            ServiceDeliveryOffice?  @relation(fields: [userOfficeId], references: [id])
-  userOfficeId          String?
-  privileges            Privilege[]             @relation("UserPrivileges")
-  ServiceDeliveryOffice ServiceDeliveryOffice[] @relation("UserOffices")
-  Service               Service[]
+  privilege Privilege @default(USER)
+
+  services  Service[] @relation("account")
+  providers Service?  @relation("provider")
 
   @@map("users")
 }
 
 model ServiceDeliveryOffice {
-  id          String    @id @default(uuid())
+  id          String @id @default(uuid())
   name        String
   phoneNumber String
   description String
   latitude    Float?
   longitude   Float?
-  users       User[]    @relation("UserOffices")
-  User        User[]
-  Service     Service[]
+
+  services Service[]
 
   @@map("service_delivery_offices")
-}
-
-model Privilege {
-  id    String @id @default(uuid())
-  role  String
-  users User[] @relation("UserPrivileges")
-
-  @@map("privileges")
 }
 
 enum CustomerType {
@@ -50,16 +44,26 @@ enum CustomerType {
   Organization
 }
 
-enum CustomerService {
+enum CustomerServiceType {
   Saler
   Buyer
   Witness
   Lessor
+  Renter
+  Giver
+  Receiver
+  Grantor
+  Representative
+}
+
+enum Gender {
+  Male
+  Female
 }
 
 model Customer {
-  id              String          @id @default(uuid())
-  service         CustomerService
+  id              String              @id @default(uuid())
+  serviceType     CustomerServiceType
   customerType    CustomerType
   customerTitle   String
   name            String
@@ -80,8 +84,8 @@ model Customer {
   businessName String?
   grantorName  String?
   jobPosition  String?
-  Service      Service? @relation(fields: [serviceId], references: [id])
-  serviceId    String?
+  service      Service @relation(fields: [serviceId], references: [id])
+  serviceId    String
 
   @@map("customers")
 }
@@ -104,6 +108,11 @@ model Vehicle {
   prePayment          String
   paymentType         String
   chequeNumber        String
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("vehicles")
 }
 
 model Lease {
@@ -127,6 +136,11 @@ model Lease {
   penaltyToGovernment Int
   paymentType         String
   bookGivenDate       DateTime
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("leases")
 }
 
 model Residence {
@@ -136,9 +150,7 @@ model Residence {
   houseNumber String
 
   isCondominium Boolean
-
-  service    String
-  bookNumber String
+  bookNumber    String
 
   bookGivenDate DateTime
 
@@ -158,6 +170,11 @@ model Residence {
   remainingPrice     String
   remainingPriceDate DateTime
   recieptNumber      String
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("residences")
 }
 
 model Property {
@@ -172,6 +189,11 @@ model Property {
   paymentType   String
   bankName      String?
   chequeOrCpoNo String?
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("properties")
 }
 
 model Motorcycle {
@@ -192,6 +214,11 @@ model Motorcycle {
   prePayment          String
   paymentType         String
   chequeNumber        String
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("motor_cycles")
 }
 
 model Loan {
@@ -203,6 +230,11 @@ model Loan {
   penaltyToGovernment Int
   loanEndingDate      DateTime
   checkNumber         String
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("loans")
 }
 
 enum ServiceType {
@@ -223,25 +255,42 @@ enum ServiceSubType {
   Lease
 }
 
+enum ConfirmStatus {
+  Approved
+  Rejected
+  Pending
+}
+
 model Service {
   id                      String                @id @default(uuid())
-  confirmStatus           String // Todo: It shoud be enum 
+  confirmStatus           ConfirmStatus         @default(Pending)
   printStatus             Boolean
   fileLocation            String
   numberOfPages           Int
   filePath                String
-  caseNumber              Int
+  caseNumber              Int                   @default(autoincrement())
   serviceType             ServiceType
   serviceSubType          ServiceSubType
   serviceRequestDate      DateTime
   serviceDeliveryDate     DateTime
-  fileNumber              String
+  fileNumber              Int
   amount                  Float
   serviceDeliveryOffice   ServiceDeliveryOffice @relation(fields: [serviceDeliveryOfficeId], references: [id])
   serviceDeliveryOfficeId String
-  serviceProviderUser     User                  @relation(fields: [serviceProviderUserId], references: [id])
-  serviceProviderUserId   String
-  Customer                Customer[]
+
+  accountUser   User   @relation("account", fields: [accountUserId], references: [id])
+  accountUserId String
+
+  providingUser   User?   @relation("provider", fields: [providingUserId], references: [id])
+  providingUserId String? @unique
+
+  customers   Customer[]
+  vehicles    Vehicle[]
+  residences  Residence[]
+  properties  Property[]
+  motorcycles Motorcycle[]
+  loans       Loan[]
+  leases      Lease[]
 
   @@map("services")
 }

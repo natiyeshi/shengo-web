@@ -70,10 +70,6 @@ export const LoanContextProvider = ({
 
 export const useLoanContext = () => {
   const context = useContext(loanContext);
-  if (!context) {
-    throw new Error(
-      "useLoanContextProvider must be used within a LoanContextProvider",
-    );
-  }
+
   return context;
 };
