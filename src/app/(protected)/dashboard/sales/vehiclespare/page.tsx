@@ -17,6 +17,7 @@ import VehiclespareRegistration from "@/components/custom/vehiclespare-registrat
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -24,7 +25,7 @@ const Page = () => {
       tabsMap: SALES_VEHICLESPARE_TABS_MAP,
     });
   return (
-    <main className="container no-scrollbar">
+    <main className="no-scrollbar container">
       <CustomerContextProvider>
         <VehiclespareContextProvider>
           <Tabs
@@ -83,7 +84,7 @@ const Page = () => {
                 </CustomerFormProvider>
               </CarouselItem>
               <CarouselItem>
-                <ServiceRequest />
+                <ServiceRequest serviceType={ServiceType.SALES_VEHICLESPARE} />
               </CarouselItem>
             </CarouselContent>
           </Carousel>

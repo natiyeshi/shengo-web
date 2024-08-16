@@ -18,6 +18,7 @@ import LeaseRegistration from "@/components/custom/lease-registration";
 import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -26,7 +27,7 @@ const Page = () => {
     });
 
   return (
-    <main className="container no-scrollbar">
+    <main className="no-scrollbar container">
       <CustomerContextProvider>
         <LeaseContextProvider>
           <Tabs
@@ -82,7 +83,7 @@ const Page = () => {
                 </CustomerFormProvider>
               </CarouselItem>
               <CarouselItem>
-                <ServiceRequest />
+                <ServiceRequest serviceType={ServiceType.GIFTS_LEASE} />
               </CarouselItem>
             </CarouselContent>
           </Carousel>

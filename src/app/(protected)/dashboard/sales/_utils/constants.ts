@@ -6,6 +6,7 @@ export const SALES_VEHICLE_TABS_MAP = {
   service: "Service",
 };
 
+
 export const SALES_RESIDENCE_TABS_MAP = {
   saler: "Saler",
   buyer: "Buyer",
@@ -13,7 +14,6 @@ export const SALES_RESIDENCE_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
-
 
 export const SALES_BUSINESS_TABS_MAP = {
   saler: "Saler",
@@ -23,7 +23,6 @@ export const SALES_BUSINESS_TABS_MAP = {
   service: "Service",
 };
 
-
 export const SALES_PROPERTY_TABS_MAP = {
   saler: "Saler",
   buyer: "Buyer",
@@ -31,7 +30,6 @@ export const SALES_PROPERTY_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
-
 
 export const SALES_VEHICLESPARE_TABS_MAP = {
   saler: "Saler",
@@ -41,7 +39,6 @@ export const SALES_VEHICLESPARE_TABS_MAP = {
   service: "Service",
 };
 
-
 export const SALES_MOTORCYCLE_TABS_MAP = {
   saler: "Saler",
   buyer: "Buyer",
@@ -49,7 +46,6 @@ export const SALES_MOTORCYCLE_TABS_MAP = {
   withness: "Withness",
   service: "Service",
 };
-
 
 export const SALES_CONSTRUCTIONMACHINE_TABS_MAP = {
   saler: "Saler",
@@ -65,4 +61,4 @@ export const SALES_LEASE_TABS_MAP = {
   business: "Lease",
   withness: "Withness",
   service: "Service",
-}
+};

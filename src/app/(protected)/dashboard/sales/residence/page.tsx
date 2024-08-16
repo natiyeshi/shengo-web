@@ -18,6 +18,7 @@ import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 import { useEffect } from "react";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -25,71 +26,69 @@ const Page = () => {
       tabsMap: SALES_RESIDENCE_TABS_MAP,
     });
   return (
-    <main className="container no-scrollbar">
+    <main className="no-scrollbar container">
       <CustomerContextProvider>
         <ResidenceContextProvider>
-         
-            <Tabs
-              carouselApi={api}
-              current={current}
-              tabsMap={SALES_RESIDENCE_TABS_MAP}
-            />
+          <Tabs
+            carouselApi={api}
+            current={current}
+            tabsMap={SALES_RESIDENCE_TABS_MAP}
+          />
 
-            <Carousel
-              setApi={setAPI}
-              opts={{
-                watchDrag: false,
-                align: "start",
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                <CarouselItem>
-                  <CustomerFormProvider>
-                    <CustomerOperationProvider
-                      type={SALES_RESIDENCE_TABS_MAP.saler}
-                      carouselAction={{ goBack, goToNext }}
-                    >
-                      <CustomerIdentityRegisteration />
-                    </CustomerOperationProvider>
-                  </CustomerFormProvider>
-                </CarouselItem>
+          <Carousel
+            setApi={setAPI}
+            opts={{
+              watchDrag: false,
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_RESIDENCE_TABS_MAP.saler}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
 
-                <CarouselItem>
-                  <CustomerFormProvider>
-                    <CustomerOperationProvider
-                      type={SALES_RESIDENCE_TABS_MAP.buyer}
-                      carouselAction={{ goBack, goToNext }}
-                    >
-                      <CustomerIdentityRegisteration />
-                    </CustomerOperationProvider>
-                  </CustomerFormProvider>
-                </CarouselItem>
-                <CarouselItem>
-                  <ResidenceFormProvider>
-                    <ResidenceOperationProvider
-                      carouselAction={{ goBack, goToNext }}
-                    >
-                      <ResidenceRegistration />
-                    </ResidenceOperationProvider>
-                  </ResidenceFormProvider>
-                </CarouselItem>
-                <CarouselItem>
-                  <CustomerFormProvider>
-                    <CustomerOperationProvider
-                      type={SALES_RESIDENCE_TABS_MAP.withness}
-                      carouselAction={{ goBack, goToNext }}
-                    >
-                      <CustomerIdentityRegisteration />
-                    </CustomerOperationProvider>
-                  </CustomerFormProvider>
-                </CarouselItem>
-                <CarouselItem>
-                  <ServiceRequest />
-                </CarouselItem>
-              </CarouselContent>
-            </Carousel>
-          
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_RESIDENCE_TABS_MAP.buyer}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ResidenceFormProvider>
+                  <ResidenceOperationProvider
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <ResidenceRegistration />
+                  </ResidenceOperationProvider>
+                </ResidenceFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <CustomerFormProvider>
+                  <CustomerOperationProvider
+                    type={SALES_RESIDENCE_TABS_MAP.withness}
+                    carouselAction={{ goBack, goToNext }}
+                  >
+                    <CustomerIdentityRegisteration />
+                  </CustomerOperationProvider>
+                </CustomerFormProvider>
+              </CarouselItem>
+              <CarouselItem>
+                <ServiceRequest serviceType={ServiceType.SALES_RESIDENCE} />
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </ResidenceContextProvider>
       </CustomerContextProvider>
     </main>

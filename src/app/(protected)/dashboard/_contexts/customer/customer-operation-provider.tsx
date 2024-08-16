@@ -170,10 +170,5 @@ export const CustomerOperationProvider = ({
 
 export const useCustomerOperation = () => {
   const context = useContext(CustomerOperationContext);
-  if (!context) {
-    throw new Error(
-      "useCustomerOperation must be used within a CustomerOperationProvider",
-    );
-  }
   return context;
 };

@@ -73,10 +73,6 @@ export const MotorcycleContextProvider = ({
 
 export const useMotorcycleContext = () => {
   const context = useContext(motorcycleContext);
-  if (!context) {
-    throw new Error(
-      "useMotorcycleContextProvider must be used within a MotorcycleContextProvider",
-    );
-  }
+
   return context;
 };

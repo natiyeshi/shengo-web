@@ -73,10 +73,6 @@ export const PropertyContextProvider = ({
 
 export const usePropertyContext = () => {
   const context = useContext(propertyContext);
-  if (!context) {
-    throw new Error(
-      "usePropertyContextProvider must be used within a PropertyContextProvider",
-    );
-  }
+
   return context;
 };

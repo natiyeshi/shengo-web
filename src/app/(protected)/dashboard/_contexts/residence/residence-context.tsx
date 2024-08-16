@@ -5,7 +5,10 @@ type ResidenceContextType = {
   residences: Residence[];
   getResidenceById: (_id: string) => Residence | undefined;
   addResidence: (residence: Residence) => void;
-  updateResidenceById: (_id: string, updatedresidence: Partial<Residence>) => void;
+  updateResidenceById: (
+    _id: string,
+    updatedresidence: Partial<Residence>,
+  ) => void;
   removeResidenceById: (id: string) => void;
   clearResidences: () => void;
 };
@@ -19,12 +22,13 @@ const residenceContextInitial: ResidenceContextType = {
   clearResidences: () => {},
 };
 
-const ResidenceContext = createContext<ResidenceContextType>(residenceContextInitial);
+const ResidenceContext = createContext<ResidenceContextType>(
+  residenceContextInitial,
+);
 
 type residenceContextProviderProps = {
   children: ReactNode;
 };
-
 
 export const ResidenceContextProvider = ({
   children,
@@ -42,10 +46,15 @@ export const ResidenceContextProvider = ({
     return residences.find((residence) => residence._id === id);
   };
 
-  const updateResidenceById = (id: string, updatedResidence: Partial<Residence>) => {
+  const updateResidenceById = (
+    id: string,
+    updatedResidence: Partial<Residence>,
+  ) => {
     setResidences((prev) =>
       prev.map((residence) =>
-        residence._id === id ? { ...residence, ...updatedResidence } : residence,
+        residence._id === id
+          ? { ...residence, ...updatedResidence }
+          : residence,
       ),
     );
   };
@@ -75,10 +84,6 @@ export const ResidenceContextProvider = ({
 
 export const useResidenceContext = () => {
   const context = useContext(ResidenceContext);
-  if (!context) {
-    throw new Error(
-      "useResidenceContextProvider must be used within a ResidenceContextProvider",
-    );
-  }
+
   return context;
 };

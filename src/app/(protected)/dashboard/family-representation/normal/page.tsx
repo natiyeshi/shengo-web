@@ -17,6 +17,7 @@ import FamilyProperty from "@/components/custom/property-types-registration";
 import { VehicleContextProvider } from "@/components/custom/property-types-registration/contexts/vehicle/vehicle-context";
 import { ResidenceContextProvider } from "@/components/custom/property-types-registration/contexts/residence/residence-context";
 import { OrganizationContextProvider } from "@/components/custom/property-types-registration/contexts/organization/organization-context";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { current, api, setAPI, goBack, goToNext } = useCarouselAPI({
@@ -24,7 +25,7 @@ const Page = () => {
   });
 
   return (
-    <main className="container no-scrollbar">
+    <main className="no-scrollbar container">
       <CustomerContextProvider>
         <VehicleContextProvider>
           <ResidenceContextProvider>
@@ -64,7 +65,7 @@ const Page = () => {
                       </CustomerOperationProvider>
                     </CustomerFormProvider>
                   </CarouselItem>
-                  {/* Family Propery content */}
+
                   <CarouselItem>
                     <FamilyProperty carouselAction={{ goBack, goToNext }} />
                   </CarouselItem>
@@ -79,7 +80,9 @@ const Page = () => {
                     </CustomerFormProvider>
                   </CarouselItem>
                   <CarouselItem>
-                    <ServiceRequest />
+                    <ServiceRequest
+                      serviceType={ServiceType.FAMILY_REPRESENTATION_NORMAL}
+                    />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

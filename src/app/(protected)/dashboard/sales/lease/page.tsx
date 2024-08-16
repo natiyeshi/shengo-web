@@ -19,6 +19,7 @@ import ServiceRequest from "@/components/custom/service-request";
 import Tabs from "@/components/custom/tabs";
 import { useCarouselAPI } from "@/hooks/use-carouselAPI";
 import { useEffect } from "react";
+import { ServiceType } from "../../_utils/constants";
 
 const Page = () => {
   const { defaultTabValue, current, api, setAPI, goBack, goToNext } =
@@ -83,7 +84,7 @@ const Page = () => {
                 </CustomerFormProvider>
               </CarouselItem>
               <CarouselItem>
-                <ServiceRequest />
+              <ServiceRequest serviceType={ServiceType.SALES_LEASE} />
               </CarouselItem>
             </CarouselContent>
           </Carousel>
