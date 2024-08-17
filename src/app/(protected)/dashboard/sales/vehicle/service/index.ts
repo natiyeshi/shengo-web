@@ -1,20 +1,19 @@
 "use server";
 
+import { toCustomerDb, toVehicleDb } from "@/_utils/dto";
 import prisma from "@/lib/prisma-client";
-import { Customer, ServiceDeliveryOffice, User, Vehicle } from "@prisma/client";
+import { ServiceDeliveryOffice, User } from "@prisma/client";
 
 type ServiceResponse = { status: "success" | "error"; message: string };
 
 export const saleVehicle = async (data: {
-  saler: Customer[];
-  buyer: Customer[];
-  vehicle: Vehicle[];
-  witness: Customer[];
-  serviceDeliveringOffice: ServiceDeliveryOffice;
-  user: User;
+  customers: ReturnType<typeof toCustomerDb>[];
+  vehicle: ReturnType<typeof toVehicleDb>[];
+  serviceDeliveringOffice: Omit<ServiceDeliveryOffice, "id"> & { id?: string };
+  user: Omit<User, "id"> & { id?: string };
 }): Promise<ServiceResponse> => {
-  const { saler, buyer, vehicle, witness, serviceDeliveringOffice, user } =
-    data;
+  const { customers, vehicle, serviceDeliveringOffice, user } = data;
+  console.log("I am called");
 
   try {
     await prisma.service.create({
@@ -31,18 +30,18 @@ export const saleVehicle = async (data: {
         serviceType: "Sale",
         accountUser: {
           connectOrCreate: {
-            where: { id: user.id },
+            where: { id: user.id || "" },
             create: user,
           },
         },
 
         customers: {
-          create: [...saler, ...buyer, ...witness],
+          create: customers,
         },
         vehicles: { create: vehicle },
         serviceDeliveryOffice: {
           connectOrCreate: {
-            where: { id: serviceDeliveringOffice.id },
+            where: { id: serviceDeliveringOffice.id || "" },
             create: serviceDeliveringOffice,
           },
         },

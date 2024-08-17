@@ -91,6 +91,36 @@ export enum ServiceType {
   FAMILY_REPRESENTATION_NORMAL,
 
   GENERAL_SPECIFIC_REPRESENTATION_GENERAL,
-  
+
   LOAN_NORMAL,
 }
+
+export const ServiceProviders = [
+  {
+    label: "Megenagna",
+    value: "megenagna",
+    position: {
+      lat: 9.0205,
+      lng: 38.8024,
+    },
+    popUpMessage: "Megenagna",
+  },
+  {
+    label: "Bethel",
+    value: "bethel",
+    position: {
+      lat: 8.9189,
+      lng: 38.4792,
+    },
+    popUpMessage: "Bethel",
+  },
+  {
+    label: "Kilinto",
+    value: "kilinto",
+    position: {
+      lat: 8.9038,
+      lng: 38.816,
+    },
+    popUpMessage: "Kilinto",
+  },
+];

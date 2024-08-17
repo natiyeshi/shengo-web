@@ -8,43 +8,44 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DocumentDdf from "./document-pdf";
 import { Button } from "../ui/button";
-import { ServiceType } from "@/app/(protected)/dashboard/_utils/constants";
+import {
+  ServiceProviders,
+  ServiceType,
+} from "@/app/(protected)/dashboard/_utils/constants";
 import { useServiceData } from "@/app/(protected)/dashboard/_hooks/use-serviceData";
+import { saleVehicle } from "@/app/(protected)/dashboard/sales/vehicle/service";
+import { toCustomerDb, toVehicleDb } from "@/_utils/dto";
+import {  Privilege } from "@prisma/client";
+import { toast } from "../ui/use-toast";
+
+import { useAsyncWrapper } from "@/app/(protected)/dashboard/_hooks/use-async-wrapper";
 
 const ServiceMap = dynamic(() => import("./map/service-map"), { ssr: false });
 
-const ServiceProviders = [
-  {
-    label: "Megenagna",
-    value: "megenagna",
-    position: {
-      lat: 9.0205,
-      lng: 38.8024,
-    },
-    popUpMessage: "Megenagna",
-  },
-  {
-    label: "Bethel",
-    value: "bethel",
-    position: {
-      lat: 8.9189,
-      lng: 38.4792,
-    },
-    popUpMessage: "Bethel",
-  },
-  {
-    label: "Kilinto",
-    value: "kilinto",
-    position: {
-      lat: 8.9038,
-      lng: 38.816,
-    },
-    popUpMessage: "Kilinto",
-  },
-];
-
 type Props = {
   serviceType: ServiceType;
+};
+
+const defaultServiceDeliveringOffice = {
+  name: "Doro Bet",
+  phoneNumber: "09777777",
+  description: "Service delivering office description",
+  latitude: 12,
+  longitude: 12,
+};
+
+const defaultUser = {
+  name: "John Doe",
+  password: "password",
+  privilege: "USER" as Privilege,
+};
+
+const showNotification = (message: string, title = "Failed") => {
+  return toast({
+    title,
+    description: message || "Operation completed successfully",
+    duration: 3000,
+  });
 };
 
 const ServiceRequest = ({ serviceType }: Props) => {
@@ -52,9 +53,28 @@ const ServiceRequest = ({ serviceType }: Props) => {
   const [open, setOpen] = useState(false);
   const reportTemplateRef = useRef<HTMLDivElement>(null);
   const data = useServiceData(serviceType);
+  const { status, asyncWrapper } = useAsyncWrapper();
 
-  const handleSubmit = () => {
-    console.log("ServiceRequest: ", { serviceType, data });
+  const handleSubmit = async () => {
+    switch (serviceType) {
+      case ServiceType.SALES_VEHICLE:
+        if (!data?.customers)
+          return showNotification("Please fill customers information!");
+        if (!data?.vehicles)
+          return showNotification("Please fill vehicle information!");
+
+        return await saleVehicle({
+          customers: data.customers.map((customer) =>
+            toCustomerDb(customer, "Saler"),
+          ),
+          vehicle: data.vehicles.map((vehicle) => toVehicleDb(vehicle)),
+          serviceDeliveringOffice: defaultServiceDeliveringOffice,
+          user: defaultUser,
+        });
+
+      default:
+        console.log({ serviceType, data });
+    }
   };
 
   const handleGeneratePdf = async () => {
@@ -106,7 +126,9 @@ const ServiceRequest = ({ serviceType }: Props) => {
             <span className="sr-only">Download Service </span>
           </Button>
 
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} disabled={status === "LOADING"}>
+            Submit
+          </Button>
         </Group>
       </Group>
 

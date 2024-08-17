@@ -21,7 +21,7 @@ model User {
   privilege Privilege @default(USER)
 
   services  Service[] @relation("account")
-  providers Service?  @relation("provider")
+  providers Service[] @relation("provider")
 
   @@map("users")
 }
@@ -62,9 +62,9 @@ enum Gender {
 }
 
 model Customer {
-  id              String              @id @default(uuid())
-  serviceType     CustomerServiceType
-  customerType    CustomerType
+  id              String  @id @default(uuid())
+  serviceType     String
+  customerType    String
   customerTitle   String
   name            String
   fatherName      String
@@ -84,8 +84,8 @@ model Customer {
   businessName String?
   grantorName  String?
   jobPosition  String?
-  service      Service @relation(fields: [serviceId], references: [id])
-  serviceId    String
+  service      Service? @relation(fields: [serviceId], references: [id])
+  serviceId    String?
 
   @@map("customers")
 }
@@ -237,6 +237,73 @@ model Loan {
   @@map("loans")
 }
 
+model ConstructionMachine {
+  id                      String @id @default(uuid())
+  engineNumber            String
+  chassisNumber           String
+  libreNumber             String
+  region                  String
+  code                    String
+  plateNumber             String
+  constructionmachineType String
+  determinationKernNo     String
+  determinationPrice      String
+  salesValue              String
+  penaltyGov              String
+  penalty                 String
+  bankName                String
+  prePayment              String
+  paymentType             String
+  chequeNumber            String
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("construction_machines")
+}
+
+model Business {
+  id                  String   @id @default(uuid())
+  registrationNumber  String
+  licenseNumber       String
+  businessName        String
+  tin                 String
+  businessType        String
+  region              String
+  city                String
+  subcity             String
+  kebele              String
+  houseNumber         String
+  value               String
+  prePayment          String
+  penalty             String
+  penaltyToGovernment String
+  paymentType         String
+  bankName            String?
+  chequeNumber        String?
+  service             Service? @relation(fields: [serviceId], references: [id])
+  serviceId           String?
+
+  @@map("businesses")
+}
+
+model Vehiclespare {
+  id                  String  @id @default(uuid())
+  propertyName        String
+  penalty             Int?    @map("penality")
+  penaltyToGovernment Int?    @map("penalityToGovernment")
+  paymentType         String
+  bankName            String?
+  prePayment          Int
+  value               Int
+  chequeNumber        String?
+
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
+  @@map("vehiclespares")
+}
+
 enum ServiceType {
   Sale
   Loan
@@ -282,15 +349,18 @@ model Service {
   accountUserId String
 
   providingUser   User?   @relation("provider", fields: [providingUserId], references: [id])
-  providingUserId String? @unique
+  providingUserId String?
 
-  customers   Customer[]
-  vehicles    Vehicle[]
-  residences  Residence[]
-  properties  Property[]
-  motorcycles Motorcycle[]
-  loans       Loan[]
-  leases      Lease[]
+  customers            Customer[]
+  vehicles             Vehicle[]
+  residences           Residence[]
+  properties           Property[]
+  motorcycles          Motorcycle[]
+  loans                Loan[]
+  leases               Lease[]
+  businesses           Business[]
+  vehiclespares        Vehiclespare[]
+  constructionMachines ConstructionMachine[]
 
   @@map("services")
 }
