@@ -1,4 +1,4 @@
-import { Vehicle as VehicleDB } from "@prisma/client";
+import { CustomerServiceType, Vehicle as VehicleDB } from "@prisma/client";
 import { Vehicle as VehicleClient } from "@/app/(protected)/dashboard/_contexts/vehicle/vehicle-form-context";
 import { Lease as LeaseDB } from "@prisma/client";
 import { Lease as LeaseClient } from "@/app/(protected)/dashboard/_contexts/lease/lease-form-context";
@@ -14,7 +14,7 @@ import { Customer as CustomerDB } from "@prisma/client";
 import { CustomerInfo as CustomerClient } from "@/app/(protected)/dashboard/_contexts/customer/customer-form-context";
 
 /* Vehicle */
-const toVehicleDb = (vehicle : VehicleClient) : VehicleDB => {
+export const toVehicleDb = (vehicle : VehicleClient) : VehicleDB => {
     const {_id, ...v} = vehicle
     return {
         ...v,
@@ -23,7 +23,7 @@ const toVehicleDb = (vehicle : VehicleClient) : VehicleDB => {
     }
 }
 
-const toVehicleClient = (vehicle : VehicleDB) : VehicleClient => {
+export const toVehicleClient = (vehicle : VehicleDB) : VehicleClient => {
     return {
         ...vehicle,
         _id : "",
@@ -32,7 +32,7 @@ const toVehicleClient = (vehicle : VehicleDB) : VehicleClient => {
 
 
 /* Lease */
-const toLeaseDb = (Lease : LeaseClient) : LeaseDB => {
+export const toLeaseDb = (Lease : LeaseClient) : LeaseDB => {
     const {_id, ...v} = Lease
     return {
         ...v,
@@ -42,7 +42,7 @@ const toLeaseDb = (Lease : LeaseClient) : LeaseDB => {
     }
 }
 
-const toLeaseClient = (Lease : LeaseDB) : LeaseClient => {
+export const toLeaseClient = (Lease : LeaseDB) : LeaseClient => {
     return {
         ...Lease,
         _id : "",
@@ -51,7 +51,7 @@ const toLeaseClient = (Lease : LeaseDB) : LeaseClient => {
 }
 
 /* Residence */
-const toResidenceDb = (Residence : ResidenceClient) : ResidenceDB => {
+export const toResidenceDb = (Residence : ResidenceClient) : ResidenceDB => {
     const {_id, ...v} = Residence
     const a : ResidenceDB = {
         ...v,
@@ -63,7 +63,7 @@ const toResidenceDb = (Residence : ResidenceClient) : ResidenceDB => {
     return a
 }
 
-const toResidenceClient = (Residence : ResidenceDB) : ResidenceClient => {
+export const toResidenceClient = (Residence : ResidenceDB) : ResidenceClient => {
     return {
         ...Residence,
         _id : "",
@@ -74,25 +74,32 @@ const toResidenceClient = (Residence : ResidenceDB) : ResidenceClient => {
 }
 
 /* Property */
-// const toPropertyDb = (Property : PropertyClient) : PropertyDB => {
-//     const {_id, ...v} = Property
-//     const a : PropertyDB = {
-//         ...v,
-//         id: "",
-//         serviceId: "null",
-//     }
-//     return a
-// }
+export const toPropertyDb = (Property : PropertyClient) : PropertyDB => {
+    const {_id, ...v} = Property
+    return {
+        ...v,
+        id: "",
+        serviceId: "null",
+        penality: Property.penality ?? null,  
+        penaltyGov: Property.penaltyGov ?? null,  
+        bankName : Property.bankName ?? null,
+        chequeOrCpoNo : Property.chequeOrCpoNo ?? null,
+    }
+}
 
-// const toPropertyClient = (Property : PropertyDB) : PropertyClient => {
-//     return {
-//         ...Property,
-//         _id : "",
-//     }
-// }
+export const toPropertyClient = (Property : PropertyDB) : PropertyClient => {
+    return {
+        ...Property,
+        _id : "",
+        penality: Property.penality ?? undefined,  
+        penaltyGov: Property.penaltyGov ?? undefined,  
+        bankName : Property.bankName ?? undefined,
+        chequeOrCpoNo : Property.chequeOrCpoNo ?? undefined,
+    }
+}
 
 /* Motorcycle */
-const toPropertyDb = (Motorcycle : MotorcycleClient) : MotorcycleDB => {
+export const toMotorcycleDb = (Motorcycle : MotorcycleClient) : MotorcycleDB => {
     const {_id, ...v} = Motorcycle
     return {
         ...v,
@@ -101,7 +108,7 @@ const toPropertyDb = (Motorcycle : MotorcycleClient) : MotorcycleDB => {
     }
 }
 
-const toMotorcycleClient = (Motorcycle : MotorcycleDB) : MotorcycleClient => {
+export const toMotorcycleClient = (Motorcycle : MotorcycleDB) : MotorcycleClient => {
     return {
         ...Motorcycle,
         _id : "",
@@ -109,7 +116,7 @@ const toMotorcycleClient = (Motorcycle : MotorcycleDB) : MotorcycleClient => {
 }
 
 /* Loan */
-const toLoanDb = (Loan : LoanClient) : LoanDB => {
+export const toLoanDb = (Loan : LoanClient) : LoanDB => {
     const {_id, ...v} = Loan
     return {
         ...v,
@@ -119,7 +126,7 @@ const toLoanDb = (Loan : LoanClient) : LoanDB => {
     }
 }
 
-const toLoanClient = (Loan : LoanDB) : LoanClient => {
+export const toLoanClient = (Loan : LoanDB) : LoanClient => {
     return {
         ...Loan,
         _id : "",
@@ -128,22 +135,25 @@ const toLoanClient = (Loan : LoanDB) : LoanClient => {
 }
 
 /* Customer */
-const toCustomerDb = (Customer : CustomerClient) : CustomerDB => {
+export const toCustomerDb = (Customer : CustomerClient, serviceType : CustomerServiceType) : CustomerDB => {
     const {_id, ...v} = Customer
     return {
         ...v,
         id: "",
         serviceId: "null",
         customerType : Customer.customerType as any,
-        serviceType : "Buyer",
-        // to be adjusted later
+        serviceType,
     }
 }
 
-// const toCustomerClient = (Customer : CustomerDB) : CustomerClient => {
-//     return {
-//         ...Customer,
-//         _id : "",
-//         customerType : Customer.customerType,
-//     }
-// }
+export const toCustomerClient = (Customer : CustomerDB) : CustomerClient => {
+    return {
+        ...Customer,
+        _id : "",
+        customerType : Customer.customerType,
+        otherAddress: Customer.otherAddress ?? "",
+        businessName: Customer.businessName ?? "",
+        grantorName: Customer.grantorName ?? "",
+        jobPosition: Customer.jobPosition ?? "",
+    }
+}
