@@ -1,3 +1,4 @@
+
 export {
   getNationalities,
   getNationIndex,
@@ -9,3 +10,4 @@ export const strToObjOfLabelAndValue = (data: string[]) =>
     label: data,
     value: data.toLowerCase(),
   }));
+

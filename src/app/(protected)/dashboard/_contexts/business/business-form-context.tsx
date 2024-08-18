@@ -22,6 +22,8 @@ export type Business = {
   bankName?: string; 
   chequeNumber?: string; 
 };
+
+
 export const businessInitialValues: Business = {
   _id: "1323",
   licenseNumber: "L789012", 
