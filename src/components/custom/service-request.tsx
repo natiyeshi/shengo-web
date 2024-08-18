@@ -15,7 +15,7 @@ import {
 import { useServiceData } from "@/app/(protected)/dashboard/_hooks/use-serviceData";
 import { saleVehicle } from "@/app/(protected)/dashboard/sales/vehicle/service";
 import { toCustomerDb, toVehicleDb } from "@/_utils/dto";
-import {  Privilege } from "@prisma/client";
+
 import { toast } from "../ui/use-toast";
 
 import { useAsyncWrapper } from "@/app/(protected)/dashboard/_hooks/use-async-wrapper";
@@ -37,7 +37,7 @@ const defaultServiceDeliveringOffice = {
 const defaultUser = {
   name: "John Doe",
   password: "password",
-  privilege: "USER" as Privilege,
+  privilege: "USER",
 };
 
 const showNotification = (message: string, title = "Failed") => {
@@ -53,7 +53,8 @@ const ServiceRequest = ({ serviceType }: Props) => {
   const [open, setOpen] = useState(false);
   const reportTemplateRef = useRef<HTMLDivElement>(null);
   const data = useServiceData(serviceType);
-  const { status, asyncWrapper } = useAsyncWrapper();
+  // const { status, asyncWrapper } = useAsyncWrapper();
+  const [status, setStatus] = useState<"IDEL" | "PENDING" | "ERROR">("IDEL");
 
   const handleSubmit = async () => {
     switch (serviceType) {
@@ -62,16 +63,34 @@ const ServiceRequest = ({ serviceType }: Props) => {
           return showNotification("Please fill customers information!");
         if (!data?.vehicles)
           return showNotification("Please fill vehicle information!");
+        try {
+          setStatus("PENDING");
+          await saleVehicle({
+            customers: data.customers.map((customer) =>
+              toCustomerDb(customer, "Saler"),
+            ),
+            vehicle: data.vehicles.map((vehicle) => toVehicleDb(vehicle)),
+            serviceDeliveringOffice: defaultServiceDeliveringOffice,
+            user: defaultUser,
+          });
 
-        return await saleVehicle({
-          customers: data.customers.map((customer) =>
-            toCustomerDb(customer, "Saler"),
-          ),
-          vehicle: data.vehicles.map((vehicle) => toVehicleDb(vehicle)),
-          serviceDeliveringOffice: defaultServiceDeliveringOffice,
-          user: defaultUser,
-        });
+          toast({
+            title: "Success",
+            description: "Vehicle sale service created successfully",
+            duration: 3000,
+          });
+        } catch (error) {
+          toast({
+            title: "Failed",
+            description: "Failed to create vehicle sale service",
+            variant: "destructive",
+            duration: 3000,
+          });
+        } finally {
+          setStatus("IDEL");
+        }
 
+        break;
       default:
         console.log({ serviceType, data });
     }
@@ -126,7 +145,7 @@ const ServiceRequest = ({ serviceType }: Props) => {
             <span className="sr-only">Download Service </span>
           </Button>
 
-          <Button onClick={handleSubmit} disabled={status === "LOADING"}>
+          <Button onClick={handleSubmit} disabled={status === "PENDING"}>
             Submit
           </Button>
         </Group>

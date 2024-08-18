@@ -7,18 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Privilege {
-  ADMIN
-  USER
-  PROVIDER
-}
-
 model User {
   id       String @id @default(uuid())
   name     String
   password String
 
-  privilege Privilege @default(USER)
+  privilege String @default("USER")
 
   services  Service[] @relation("account")
   providers Service[] @relation("provider")
@@ -37,28 +31,6 @@ model ServiceDeliveryOffice {
   services Service[]
 
   @@map("service_delivery_offices")
-}
-
-enum CustomerType {
-  Individual
-  Organization
-}
-
-enum CustomerServiceType {
-  Saler
-  Buyer
-  Witness
-  Lessor
-  Renter
-  Giver
-  Receiver
-  Grantor
-  Representative
-}
-
-enum Gender {
-  Male
-  Female
 }
 
 model Customer {
@@ -304,40 +276,17 @@ model Vehiclespare {
   @@map("vehiclespares")
 }
 
-enum ServiceType {
-  Sale
-  Loan
-  Lease
-  Rental
-}
-
-enum ServiceSubType {
-  Vehicle
-  Residence
-  Business
-  OtherPropery
-  VehicleSparePart
-  Motorcycle
-  ConstructionMachine
-  Lease
-}
-
-enum ConfirmStatus {
-  Approved
-  Rejected
-  Pending
-}
 
 model Service {
   id                      String                @id @default(uuid())
-  confirmStatus           ConfirmStatus         @default(Pending)
+  confirmStatus           String         @default("PENDING")
   printStatus             Boolean
   fileLocation            String
   numberOfPages           Int
   filePath                String
   caseNumber              Int                   @default(autoincrement())
-  serviceType             ServiceType
-  serviceSubType          ServiceSubType
+  serviceType             String
+  serviceSubType          String
   serviceRequestDate      DateTime
   serviceDeliveryDate     DateTime
   fileNumber              Int
