@@ -30,5 +30,7 @@ export const useAsyncWrapper = () => {
     };
   };
 
-  return { status, asyncWrapper };
+  const isSubmitting = status === "LOADING";
+
+  return { status, isSubmitting, asyncWrapper };
 };

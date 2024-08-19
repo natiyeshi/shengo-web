@@ -2,7 +2,7 @@ import { UseEmblaCarouselType } from "embla-carousel-react";
 import React, { useEffect, useState, useRef } from "react";
 import { toast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
-
+import { motion, MotionConfig } from "framer-motion";
 type Props = {
   current: number;
   tabsMap: Record<string, string>;
@@ -34,7 +34,7 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
   return (
     <div
       className={cn(
-        "sticky left-0 top-0 mb-4 mt-1 border-b z-[99] bg-zinc-50",
+        "sticky left-0 top-0 z-[19] mb-4 mt-1 border-t border-b border-zinc-200 bg-white p-1",
         classNames?.wrapper,
       )}
       ref={tabRef}
@@ -42,9 +42,9 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
       {Object.keys(tabsMap).map((tabKey, ind) => (
         <div
           className={cn(
-            `inline-flex cursor-pointer items-center justify-center border-b-[2px] border-transparent px-3 py-2.5 text-sm font-medium text-zinc-500/80 transition-all`,
+            `relative inline-flex cursor-pointer items-center justify-center px-3.5 py-2.5 text-sm text-zinc-500 transition-all duration-300`,
             {
-              "border-primary text-primary": current - 1 === ind,
+              "font-medium text-zinc-800": current - 1 === ind,
             },
             classNames?.tabItem,
           )}
@@ -61,7 +61,13 @@ const Tabs = ({ current, tabsMap, carouselApi, classNames }: Props) => {
           }}
           key={tabKey}
         >
-          {tabsMap[tabKey]}
+          <span className="relative z-[9] capitalize">{tabsMap[tabKey]}</span>
+          {current - 1 === ind && (
+            <motion.div
+              layoutId="active"
+              className="absolute inset-0 -z-[9] rounded-lg bg-primary/10 shadow-sm"
+            ></motion.div>
+          )}
         </div>
       ))}
     </div>

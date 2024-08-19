@@ -72,7 +72,7 @@ type Props = {};
 const Sidebar = (props: Props) => {
   const { isSidebarOpended, setIsSidebarOpended } =
     useSidebarVisibilityDeterminer({
-      minViewportSize: 650,
+      minViewportSize: 750,
     });
   const pathname = usePathname();
   const menus = pathname.split("/").slice(1); // removing first empty path

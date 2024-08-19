@@ -30,7 +30,7 @@ const Header = (props: Props) => {
           <Link
             key={link.title}
             className={cn(
-              "text-sm capitalize text-zinc-500 transition hover:text-primary",
+              "capitalize text-zinc-500 transition hover:text-primary",
               {
                 "text-zinc-800": pathname === link.href,
               },

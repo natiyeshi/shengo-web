@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { Download } from "lucide-react";
-import { Group, Select, Stack } from "@mantine/core";
+
+import { Group, Select, Stack, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 
 import jsPDF from "jspdf";
@@ -12,13 +12,9 @@ import {
   ServiceProviders,
   ServiceType,
 } from "@/app/(protected)/dashboard/_utils/constants";
-import { useServiceData } from "@/app/(protected)/dashboard/_hooks/use-serviceData";
-import { saleVehicle } from "@/app/(protected)/dashboard/sales/vehicle/service";
-import { toCustomerDb, toVehicleDb } from "@/_utils/dto";
 
 import { toast } from "../ui/use-toast";
-
-import { useAsyncWrapper } from "@/app/(protected)/dashboard/_hooks/use-async-wrapper";
+import { useServices } from "@/app/(protected)/dashboard/_services/useServices";
 
 const ServiceMap = dynamic(() => import("./map/service-map"), { ssr: false });
 
@@ -26,74 +22,15 @@ type Props = {
   serviceType: ServiceType;
 };
 
-const defaultServiceDeliveringOffice = {
-  name: "Doro Bet",
-  phoneNumber: "09777777",
-  description: "Service delivering office description",
-  latitude: 12,
-  longitude: 12,
-};
-
-const defaultUser = {
-  name: "John Doe",
-  password: "password",
-  privilege: "USER",
-};
-
-const showNotification = (message: string, title = "Failed") => {
-  return toast({
-    title,
-    description: message || "Operation completed successfully",
-    duration: 3000,
-  });
-};
-
 const ServiceRequest = ({ serviceType }: Props) => {
   const [serviceProvier, setServiceProvider] = useState(ServiceProviders[0]);
   const [open, setOpen] = useState(false);
   const reportTemplateRef = useRef<HTMLDivElement>(null);
-  const data = useServiceData(serviceType);
-  // const { status, asyncWrapper } = useAsyncWrapper();
-  const [status, setStatus] = useState<"IDEL" | "PENDING" | "ERROR">("IDEL");
+  const { isSubmitting, requestService } = useServices(serviceType);
 
-  const handleSubmit = async () => {
-    switch (serviceType) {
-      case ServiceType.SALES_VEHICLE:
-        if (!data?.customers)
-          return showNotification("Please fill customers information!");
-        if (!data?.vehicles)
-          return showNotification("Please fill vehicle information!");
-        try {
-          setStatus("PENDING");
-          await saleVehicle({
-            customers: data.customers.map((customer) =>
-              toCustomerDb(customer, "Saler"),
-            ),
-            vehicle: data.vehicles.map((vehicle) => toVehicleDb(vehicle)),
-            serviceDeliveringOffice: defaultServiceDeliveringOffice,
-            user: defaultUser,
-          });
-
-          toast({
-            title: "Success",
-            description: "Vehicle sale service created successfully",
-            duration: 3000,
-          });
-        } catch (error) {
-          toast({
-            title: "Failed",
-            description: "Failed to create vehicle sale service",
-            variant: "destructive",
-            duration: 3000,
-          });
-        } finally {
-          setStatus("IDEL");
-        }
-
-        break;
-      default:
-        console.log({ serviceType, data });
-    }
+  const handleSubmit = () => {
+    console.log({ serviceType });
+    requestService();
   };
 
   const handleGeneratePdf = async () => {
@@ -135,26 +72,32 @@ const ServiceRequest = ({ serviceType }: Props) => {
               ServiceProviders.find((provider) => provider.value === value)!,
             )
           }
-          searchable
           allowDeselect={false}
         />
 
         <Group>
-          <Button size="icon" variant="secondary" onClick={() => setOpen(true)}>
-            <Download />
-            <span className="sr-only">Download Service </span>
-          </Button>
-
-          <Button onClick={handleSubmit} disabled={status === "PENDING"}>
-            Submit
+          <Button variant="outline" onClick={() => setOpen(true)}>
+            {/* <Download /> */}
+            Download File
           </Button>
         </Group>
       </Group>
 
-      <ServiceMap
-        position={serviceProvier.position}
-        popUpMessage={serviceProvier.popUpMessage}
-      />
+      <section className="grid grid-cols-1 items-start gap-8 md:grid-cols-[4fr_3fr]">
+        <ServiceMap
+          position={serviceProvier.position}
+          popUpMessage={serviceProvier.popUpMessage}
+        />
+        <OfficeAddress
+          description="Information about the selected office location."
+          address={serviceProvier.label}
+          phoneNumber={"0912121213"}
+          officeStartHour={1}
+          officeEndHour={12}
+          handleSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
+        />
+      </section>
 
       <DocumentDdf
         download={handleGeneratePdf}
@@ -165,5 +108,59 @@ const ServiceRequest = ({ serviceType }: Props) => {
     </Stack>
   );
 };
+type OfficeAddressProps = {
+  description: string;
+  address: string;
+  phoneNumber: string;
+  officeStartHour: number;
+  officeEndHour: number;
+  handleSubmit: () => void;
+  isSubmitting: boolean;
+};
+const OfficeAddress = ({
+  description,
+  address,
+  phoneNumber,
+  officeStartHour,
+  officeEndHour,
+  handleSubmit,
+  isSubmitting,
+}: OfficeAddressProps) => {
+  return (
+    <Stack gap="lg">
+      <Stack gap={3}>
+        <Title className="font-medium">Office Detail</Title>
+        <p className="font-light leading-relaxed text-zinc-600">
+          {description}
+        </p>
+      </Stack>
 
+      <OfficeAddressContent
+        title="Address"
+        detail={`123 Main St, ${address}`}
+      />
+      <OfficeAddressContent title="Phone" detail={phoneNumber} />
+      <OfficeAddressContent title="Hours" detail={`Mon-Fri: 8am - 5pm`} />
+      <Button onClick={handleSubmit} disabled={isSubmitting}>
+        Request Service
+      </Button>
+    </Stack>
+  );
+};
+
+type OfficeAddressContentProps = {
+  title: string;
+  detail: string;
+};
+
+const OfficeAddressContent = ({ title, detail }: OfficeAddressContentProps) => {
+  return (
+    <Stack gap={3}>
+      <Title className="font-medium" order={3}>
+        {title}
+      </Title>
+      <p className="font-light leading-relaxed text-zinc-600">{detail}</p>
+    </Stack>
+  );
+};
 export default ServiceRequest;
