@@ -1,11 +1,18 @@
 "use client";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  MapContainerProps,
+  Marker,
+  Popup,
+  TileLayer,
+  useMap,
+} from "react-leaflet";
 
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { divIcon, LatLngTuple } from "leaflet";
+import { divIcon } from "leaflet";
 
 import * as ReactDomServer from "react-dom/server";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import "leaflet/dist/leaflet.css";
 import "./style.css";
@@ -21,10 +28,18 @@ type Props = {
 };
 
 const ServiceMap = ({ position, popUpMessage }: Props) => {
+  const mapContainerRef = useRef<any>(null);
+
+  useEffect(() => {
+    return () => {
+      mapContainerRef.current?.remove();
+    };
+  }, []);
   return (
     <MapContainer
-      className="aspect-[11/8] w-full rounded-lg md:aspect-[11/6]"
+      className="aspect-[11/7]  w-full rounded-lg md:aspect-[11/8]"
       center={position}
+      ref={mapContainerRef}
       zoom={12}
       scrollWheelZoom={false}
       doubleClickZoom={true}
